@@ -4,14 +4,70 @@
     "href": "1.exposure.html",
     "title": "环境暴露评估",
     "section": "",
-    "text": "环境暴露种类（空气污染、温湿度、绿地等）\n\npacman::p_load(ggplot2, dplyr)\n\nsessionInfo()\n\nR version 4.2.2 (2022-10-31 ucrt)\nPlatform: x86_64-w64-mingw32/x64 (64-bit)\nRunning under: Windows 10 x64 (build 22621)\n\nMatrix products: default\n\nlocale:\n[1] LC_COLLATE=Chinese (Simplified)_China.utf8 \n[2] LC_CTYPE=Chinese (Simplified)_China.utf8   \n[3] LC_MONETARY=Chinese (Simplified)_China.utf8\n[4] LC_NUMERIC=C                               \n[5] LC_TIME=Chinese (Simplified)_China.utf8    \n\nattached base packages:\n[1] stats     graphics  grDevices utils     datasets  methods   base     \n\nother attached packages:\n[1] dplyr_1.0.10  ggplot2_3.4.0\n\nloaded via a namespace (and not attached):\n [1] compiler_4.2.2    pillar_1.8.1      tools_4.2.2       digest_0.6.30    \n [5] jsonlite_1.8.3    evaluate_0.18     lifecycle_1.0.3   tibble_3.1.8     \n [9] gtable_0.3.1      pkgconfig_2.0.3   rlang_1.0.6       cli_3.4.1        \n[13] DBI_1.1.3         rstudioapi_0.14   yaml_2.3.6        xfun_0.35        \n[17] fastmap_1.1.0     withr_2.5.0       stringr_1.4.1     knitr_1.41       \n[21] generics_0.1.3    vctrs_0.5.0       htmlwidgets_1.5.4 grid_4.2.2       \n[25] tidyselect_1.2.0  glue_1.6.2        R6_2.5.1          fansi_1.0.3      \n[29] rmarkdown_2.18    pacman_0.5.1      magrittr_2.0.3    scales_1.2.1     \n[33] htmltools_0.5.3   assertthat_0.2.1  colorspace_2.0-3  utf8_1.2.2       \n[37] stringi_1.7.8     munsell_0.5.0    \n\n\n\n\n10+文章的环境暴露评估方式\n\n\nR代码及展示"
+    "text": "韦晶的CHAP"
+  },
+  {
+    "objectID": "1.exposure.html#短期",
+    "href": "1.exposure.html#短期",
+    "title": "环境暴露评估",
+    "section": "短期",
+    "text": "短期"
+  },
+  {
+    "objectID": "1.exposure.html#长期",
+    "href": "1.exposure.html#长期",
+    "title": "环境暴露评估",
+    "section": "长期",
+    "text": "长期"
+  },
+  {
+    "objectID": "1.exposure.html#地区水平",
+    "href": "1.exposure.html#地区水平",
+    "title": "环境暴露评估",
+    "section": "地区水平",
+    "text": "地区水平"
+  },
+  {
+    "objectID": "1.exposure.html#个体水平",
+    "href": "1.exposure.html#个体水平",
+    "title": "环境暴露评估",
+    "section": "个体水平",
+    "text": "个体水平\n双线性插值"
+  },
+  {
+    "objectID": "2.ts.html",
+    "href": "2.ts.html",
+    "title": "时间序列研究",
+    "section": "",
+    "text": "Chen, R., Yin, P., Meng, X., Liu, C., Wang, L., Xu, X., … & Zhou, M. (2017). Fine particulate air pollution and daily mortality. A nationwide analysis in 272 Chinese cities. American journal of Respiratory and Critical Care Medicine, 196(1), 73-81.\nChen, R., Yin, P., Wang, L., Liu, C., Niu, Y., Wang, W., … & Zhou, M. (2018). Association between ambient temperature and mortality risk and burden: time series study in 272 main Chinese cities. BMJ, 363.\nLiu, C., Chen, R., Sera, F., Vicedo-Cabrera, A. M., Guo, Y., Tong, S., … & Kan, H. (2019). Ambient particulate air pollution and daily mortality in 652 cities. New England Journal of Medicine, 381(8), 705-715.\nChen, G., Guo, Y., Yue, X., Tong, S., Gasparrini, A., Bell, M. L., … & Li, S. (2021). Mortality risk attributable to wildfire-related PM2· 5 pollution: a global time series study in 749 locations. The Lancet Planetary Health, 5(9), e579-e587.\nWang, X., Leng, M., Liu, Y., Qian, Z. M., Zhang, J., Li, Z., … & Lin, H. (2021). Different sized particles associated with all-cause and cause-specific emergency ambulance calls: a multicity time-series analysis in China. Science of The Total Environment, 783, 147060.\n\n\n\n\n两阶段模型法\n\n\n广义加性线性模型（generalized additive model）：\n\n计数型因变量（如发病人数）–> 类泊松连接函数\n连续型因变量（如YLL ） –> 高斯连接函数\n\n\\[\\log E(Y_t) = \\alpha + \\beta_0 \\times\\text{PM}_{2.5} \\\\\n+ \\beta_1 \\times\\text{day of week}\\\\\n+ \\beta_2 \\times\\text{public holidays}\\\\\ns(t, \\text{df} = \\frac{6}{\\text{year}}) \\\\\n+ s(\\text{temperature}, \\text{df} = 6)\\\\\n+ s(\\text{relative humidity}, \\text{df} = 6) \\]\n\n\n\nI\\(^2\\)统计量用来评价不同城市间的异质性。"
   },
   {
     "objectID": "3.cco.html",
     "href": "3.cco.html",
     "title": "时间分层的病例交叉研究",
     "section": "",
-    "text": "样例论文\n\nCai, M., Wei, J., Zhang, S., Liu, W., Wang, L., Qian, Z., Lin, H., Liu, E., McMillin, S.E., Cao, Y., Yin, P. (2023). Short-term air pollution exposure associated with death from kidney diseases: a nationwide time-stratified case-crossover study in China from 2015 to 2019. BMC medicine, 21(1), 32. DOI: 10.1186/s12916-023-02734-9"
+    "text": "研究设计\n\n\n文献实例\n\nChen, R., Jiang, Y., Hu, J., Chen, H., Li, H., Meng, X., … & Kan, H. (2022). Hourly air pollutants and acute coronary syndrome onset in 1.29 million patients. Circulation (IF=39.9), 145(24), 1749-1760.\nLiu, Y., Pan, J., Fan, C., Xu, R., Wang, Y., Xu, C., … & Zhang, L. (2021). Short-term exposure to ambient air pollution and mortality from myocardial infarction. Journal of the American College of Cardiology (IF=27.2), 77(3), 271-281.\nCai, M., Wei, J., Zhang, S., Liu, W., Wang, L., Qian, Z., Lin, H., Liu, E., McMillin, S.E., Cao, Y., Yin, P. (2023). Short-term air pollution exposure associated with death from kidney diseases: a nationwide time-stratified case-crossover study in China from 2015 to 2019. BMC Medicine (IF=11.8), 21(1), 32. PDF \n\n\n\nR语言代码实战"
+  },
+  {
+    "objectID": "4.cross-sec.html",
+    "href": "4.cross-sec.html",
+    "title": "横截面研究",
+    "section": "",
+    "text": "研究设计\n\n\n文献实例\n\nCai, M., Zhang, S., Lin, X., Qian, Z., McMillin, S.E., Yang, Y., Zhang, Z., Pan, J., Lin, H.. (2022) Association of ambient particulate matter pollution of different sizes with in-hospital case fatality among stroke patients in China. Neurology. (IF=12.3) 98(4), e2474-e2486. PDF  DOI: 10.1212/WNL.0000000000200546\nCai, M., Lin, X., Wang, X., Zhang, S., Wang, C., Zhang, Z., Pan, J., Lin, H. (2023). Long-term exposure to ambient fine particulate matter chemical composition and in-hospital case fatality among patients with stroke in China. The Lancet Regional Health-Western Pacific (IF=8.6), 100679. PDF  DOI: 10.1016/j.lanwpc.2022.100679\n\n\n\nR语言代码实战"
+  },
+  {
+    "objectID": "5.cohort.html",
+    "href": "5.cohort.html",
+    "title": "队列研究",
+    "section": "",
+    "text": "Time-to-event data数据"
+  },
+  {
+    "objectID": "6.writing.html",
+    "href": "6.writing.html",
+    "title": "10+文章的写作套路",
+    "section": "",
+    "text": "图片\n图片一定要精美。"
   },
   {
     "objectID": "7.journal.html",
@@ -25,13 +81,6 @@
     "href": "index.html",
     "title": "引言",
     "section": "",
-    "text": "环境健康类研究的特点\n近年来由于环境健康领域研究的热门趋势，环境类英文期刊的影响因子水涨船高。相较于临床和基础类研究，环境健康类人群研究的成果产出周期短，IF 10+杂志多，发文量大，对国人友好，研究门槛相对低，因此十分适合想要冲击IF=10+领域的老师和学生入门，环境健康类期刊具有以下特点：\n\n期刊众多、IF相对高： 2021年环境健康领域IF位于10-20区间的期间有23本， 而临床类相同IF区间的仅13本\n发文量大、国人友好：部分优秀环境类期刊IF>10，年发文量>5000篇，且对中国人比较友好（国人占比40%）\n研究成本低、难度不高： 与费用高、周期长的基础实验相比，环境健康类人群研究往往使用现存的二手数据与环境暴露链接，上手容易且发表周期相对短（3-6个月）。\n\n\n\n课程目的 \n介绍环境暴露的人群健康效应的研究套路、数据分析模型、期刊论文写作、以及相关投稿技巧，争取帮助听众在环境健康类高影响因子的期刊（IF>10）取得发表。\n\n\n课程安排 \n\n\n授课教师 \n近五年以第一作者于JAMA Network Open、Neurology、Environmental Health Perspectives、BMC Medicine、The Lancet Regional Health - Western Pacific、Science of the Total Environment等环境健康和临床流行病等领域发表16篇SCI期刊原创性研究论文。近五年累计被引用1132次，研究论文得到Nature, Nature Medicine, Lancet, BMJ, Circulation等期刊的正面引用，并且得到CNN, U.S. News, AAN, Physicians Weekly等国外主流媒体报道。为Nat. Commun., EClinicalMedicine, J. Am. Soc. Nephrol.等30余种英文期刊审稿。\n\n\n环境健康研究的代表性论文 \n\nCai, M., Li, H., Wu, Y., Zhang. S., Wang. X., Zhang. Z., Lin. H.* (2022) Ambient Air Pollution Associated with Body Fat Percentages at Different Body Compartments: A Cohort Study of UK Biobank Participants. Environmental Health Perspectives. 130(6): 067702. pdf DOI: 10.1289/EHP10920\nCai, M., Zhang, S., Lin, X., Qian, Z., McMillin, S.E., Yang, Y., Zhang, Z., Pan, J., Lin, H.. (2022) Association of ambient particulate matter pollution of different sizes with in-hospital case fatality among stroke patients in China. Neurology. 98(4), e2474-e2486. PDF DOI: 10.1212/WNL.0000000000200546\nCai, M., Lin, X., Wang, X., Zhang, S., Qian, Z., McMillin, S.E., Aaron, H.E., Lin, H., Wei, J., Zhang, Z., Pan, J. (2022) Ambient particulate matter pollution of different sizes associated with recurrent stroke hospitalization in China: a cohort study of 1.07 million stroke patients. Science of the Total Environment. 159104. PDF DOI: 10.1016/j.scitotenv.2022.159104\nCai, M., Lin, X., Wang, X., Zhang, S., Wang, C., Zhang, Z., Pan, J., Lin, H. (2023). Long-term exposure to ambient fine particulate matter chemical composition and in-hospital case fatality among patients with stroke in China. The Lancet Regional Health-Western Pacific, 100679. pdf DOI: 10.1016/j.lanwpc.2022.100679\nCai, M., Wei, J., Zhang, S., Liu, W., Wang, L., Qian, Z., Lin, H., Liu, E., McMillin, S.E., Cao, Y., Yin, P. (2023). Short-term air pollution exposure associated with death from kidney diseases: a nationwide time-stratified case-crossover study in China from 2015 to 2019. BMC Medicine, 21(1), 32. PDF DOI: 10.1186/s12916-023-02734-9"
-  },
-  {
-    "objectID": "index.html#环境健康研究的代表性论文",
-    "href": "index.html#环境健康研究的代表性论文",
-    "title": "引言",
-    "section": "环境健康研究的代表性论文",
-    "text": "环境健康研究的代表性论文\n\nCai, M., Li, H., Wu, Y., Zhang. S., Wang. X., Zhang. Z., Lin. H.* (2022) Ambient Air Pollution Associated with Body Fat Percentages at Different Body Compartments: A Cohort Study of UK Biobank Participants. Environmental Health Perspectives. 130(6): 067702. DOI: 10.1289/EHP10920\nCai, M., Zhang, S., Lin, X., Qian, Z., McMillin, S.E., Yang, Y., Zhang, Z., Pan, J., Lin, H.. (2022) Association of ambient particulate matter pollution of different sizes with in-hospital case fatality among stroke patients in China. Neurology. 98(4), e2474-e2486. DOI: 10.1212/WNL.0000000000200546\nCai, M., Lin, X., Wang, X., Zhang, S., Qian, Z., McMillin, S.E., Aaron, H.E., Lin, H., Wei, J., Zhang, Z., Pan, J. (2022) Ambient particulate matter pollution of different sizes associated with recurrent stroke hospitalization in China: a cohort study of 1.07 million stroke patients. Science of the Total Environment. 159104. DOI: 10.1016/j.scitotenv.2022.159104\nCai, M., Lin, X., Wang, X., Zhang, S., Wang, C., Zhang, Z., Pan, J., Lin, H. (2023). Long-term exposure to ambient fine particulate matter chemical composition and in-hospital case fatality among patients with stroke in China. The Lancet Regional Health-Western Pacific, 100679. DOI: 10.1016/j.lanwpc.2022.100679\nCai, M., Wei, J., Zhang, S., Liu, W., Wang, L., Qian, Z., Lin, H., Liu, E., McMillin, S.E., Cao, Y., Yin, P. (2023). Short-term air pollution exposure associated with death from kidney diseases: a nationwide time-stratified case-crossover study in China from 2015 to 2019. BMC medicine, 21(1), 32. DOI: 10.1186/s12916-023-02734-9"
+    "text": "环境健康类研究的特点\n近年来由于环境健康领域研究的热门趋势，环境类英文期刊的影响因子水涨船高。相较于临床和基础类研究，环境健康类人群研究的成果产出周期短，IF 10+杂志多，发文量大，对国人友好，研究门槛相对低，因此十分适合想要冲击IF=10+领域的老师和学生入门，环境健康类期刊具有以下特点：\n\n期刊众多、IF相对高： 2021年环境健康领域IF位于10-20区间的期间有23本， 而临床类相同IF区间的仅13本\n发文量大、国人友好：部分优秀环境类期刊IF>10，年发文量>5000篇，且对中国人比较友好（国人占比40%）\n研究成本低、难度不高： 与费用高、周期长的基础实验相比，环境健康类人群研究往往使用现存的二手数据与环境暴露链接，上手容易且发表周期相对短（3-6个月）。\n\n\n\n课程目的 \n介绍环境暴露的人群健康效应的研究套路、数据分析模型、期刊论文写作、以及相关投稿技巧，争取帮助听众在环境健康类高影响因子的期刊（IF>10）取得发表。\n\n\n课程安排 \n\n第一天\n\n总论（~1H）\n环境暴露评估（~1.5H）理论+文献实例+R代码实战\n\n第二天\n\n时间序列研究（~1.5H）理论+文献实例+R代码实战\n病例交叉研究（~1.5H）理论+文献实例+R代码实战\n\n第三天\n\n横截面研究（~1.5H）理论+文献实例+R代码实战\n队列研究（~1.5H）理论+文献实例+R代码实战\n\n第四天\n\n10+文献的写作（~1.5H）理论+文献实例\n环境健康类文章选刊与投稿（~1.5H）\n\n\n\n\n授课教师 \n近五年以第一作者于JAMA Network Open、Neurology、Environmental Health Perspectives、BMC Medicine、The Lancet Regional Health - Western Pacific、Science of the Total Environment等环境健康和临床流行病等领域发表16篇SCI期刊原创性研究论文。近五年累计被引用1132次，研究论文得到Nature, Nature Medicine, Lancet, BMJ, Circulation等期刊的正面引用，并且得到CNN, U.S. News, AAN, Physicians Weekly等国外主流媒体报道。为Nat. Commun., EClinicalMedicine, J. Am. Soc. Nephrol.等30余种英文期刊审稿。\n\n\n环境健康研究的代表性论文 \n\nCai, M., Li, H., Wu, Y., Zhang. S., Wang. X., Zhang. Z., Lin. H.* (2022) Ambient Air Pollution Associated with Body Fat Percentages at Different Body Compartments: A Cohort Study of UK Biobank Participants. Environmental Health Perspectives (IF=11.0). 130(6): 067702. PDF  DOI: 10.1289/EHP10920\nCai, M., Zhang, S., Lin, X., Qian, Z., McMillin, S.E., Yang, Y., Zhang, Z., Pan, J., Lin, H.. (2022) Association of ambient particulate matter pollution of different sizes with in-hospital case fatality among stroke patients in China. Neurology. (IF=12.3) 98(4), e2474-e2486. PDF  DOI: 10.1212/WNL.0000000000200546\nCai, M., Lin, X., Wang, X., Zhang, S., Qian, Z., McMillin, S.E., Aaron, H.E., Lin, H., Wei, J., Zhang, Z., Pan, J. (2022) Ambient particulate matter pollution of different sizes associated with recurrent stroke hospitalization in China: a cohort study of 1.07 million stroke patients. Science of the Total Environment (IF=10.8). 159104. PDF  DOI: 10.1016/j.scitotenv.2022.159104\nCai, M., Lin, X., Wang, X., Zhang, S., Wang, C., Zhang, Z., Pan, J., Lin, H. (2023). Long-term exposure to ambient fine particulate matter chemical composition and in-hospital case fatality among patients with stroke in China. The Lancet Regional Health-Western Pacific (IF=8.6), 100679. PDF  DOI: 10.1016/j.lanwpc.2022.100679\nCai, M., Wei, J., Zhang, S., Liu, W., Wang, L., Qian, Z., Lin, H., Liu, E., McMillin, S.E., Cao, Y., Yin, P. (2023). Short-term air pollution exposure associated with death from kidney diseases: a nationwide time-stratified case-crossover study in China from 2015 to 2019. BMC Medicine (IF=11.2), 21(1), 32. PDF  DOI: 10.1186/s12916-023-02734-9"
   }
 ]

@@ -4,3 +4,19 @@ linkcolor: '#08519c'
 navbar: right
 ---
 
+# 研究设计
+
+
+
+
+
+# 文献实例
+
+
+- **Cai, M.**, Zhang, S., Lin, X., Qian, Z., McMillin, S.E., Yang, Y., Zhang, Z., Pan, J., Lin, H.. (2022) Association of ambient particulate matter pollution of different sizes with in-hospital case fatality among stroke patients in China. ***Neurology.*** ([IF=12.3]{style="color:#9A0000;font-weight: bold;"}) 98(4), e2474-e2486. [PDF {{< fa book-open >}}](https://caimiao0714.github.io/SC-ENV-2023/Papers/2022_1_Neurology_Different_Sizes_PM_Stroke_mortality.pdf) DOI: [10.1212/WNL.0000000000200546](https://doi.org/10.1212/WNL.0000000000200546)
+
+- **Cai, M.**, Lin, X., Wang, X., Zhang, S., Wang, C., Zhang, Z., Pan, J., Lin, H. (2023). Long-term exposure to ambient fine particulate matter chemical composition and in-hospital case fatality among patients with stroke in China. ***The Lancet Regional Health-Western Pacific*** ([IF=8.6]{style="color:#9A0000;font-weight: bold;"}), 100679. [PDF {{< fa book-open >}}](https://caimiao0714.github.io/SC-ENV-2023/Papers/2023_1_LRHWP.pdf) DOI: [10.1016/j.lanwpc.2022.100679](https://doi.org/10.1016/j.lanwpc.2022.100679)
+
+
+
+# R语言代码实战

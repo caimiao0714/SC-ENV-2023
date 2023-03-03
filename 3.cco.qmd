@@ -4,8 +4,24 @@ linkcolor: '#08519c'
 navbar: right
 ---
 
+# 研究设计
 
-样例论文
 
-- **Cai, M.**, Wei, J., Zhang, S., Liu, W., Wang, L., Qian, Z., Lin, H., Liu, E., McMillin, S.E., Cao, Y., Yin, P. (2023). Short-term air pollution exposure associated with death from kidney diseases: a nationwide time-stratified case-crossover study in China from 2015 to 2019. BMC medicine, 21(1), 32. DOI: [10.1186/s12916-023-02734-9](https://doi.org/10.1186/s12916-023-02734-9)
+
+
+
+# 文献实例
+
+- Chen, R., Jiang, Y., Hu, J., Chen, H., Li, H., Meng, X., ... & Kan, H. (2022). Hourly air pollutants and acute coronary syndrome onset in 1.29 million patients. ***Circulation*** ([IF=39.9]{style="color:#9A0000;font-weight: bold;"}), 145(24), 1749-1760.
+
+- Liu, Y., Pan, J., Fan, C., Xu, R., Wang, Y., Xu, C., ... & Zhang, L. (2021). Short-term exposure to ambient air pollution and mortality from myocardial infarction. ***Journal of the American College of Cardiology*** ([IF=27.2]{style="color:#9A0000;font-weight: bold;"}), 77(3), 271-281.
+
+- **Cai, M.**, Wei, J., Zhang, S., Liu, W., Wang, L., Qian, Z., Lin, H., Liu, E., McMillin, S.E., Cao, Y., Yin, P. (2023). Short-term air pollution exposure associated with death from kidney diseases: a nationwide time-stratified case-crossover study in China from 2015 to 2019. ***BMC Medicine*** ([IF=11.8]{style="color:#9A0000;font-weight: bold;"}), 21(1), 32. [PDF {{< fa book-open >}}](https://caimiao0714.github.io/SC-ENV-2023/Papers/2023_1_BMC_Med_Air_pollution_kidney_death.pdf) 
+
+
+
+
+# R语言代码实战
+
+
 

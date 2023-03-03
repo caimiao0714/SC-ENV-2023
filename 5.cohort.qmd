@@ -3,3 +3,30 @@ title: "队列研究"
 linkcolor: '#08519c'
 navbar: right
 ---
+
+# 研究设计
+
+## 生存数据变量
+
+Time-to-event data数据
+
+## 连续型多次测量变量
+
+
+
+
+
+
+# 文献实例
+
+- **Cai, M.**, Li, H., Wu, Y., Zhang. S., Wang. X., Zhang. Z., Lin. H.\* (2022) Ambient Air Pollution Associated with Body Fat Percentages at Different Body Compartments: A Cohort Study of UK Biobank Participants. ***Environmental Health Perspectives*** ([IF=11.0]{style="color:#9A0000;font-weight: bold;"}). 130(6): 067702. [PDF {{< fa book-open >}}](https://caimiao0714.github.io/SC-ENV-2023/Papers/2022_1_EHP10920_PM_body_fat_composition.pdf) DOI: [10.1289/EHP10920](https://doi.org/10.1289/EHP10920)
+
+- **Cai, M.**, Lin, X., Wang, X., Zhang, S., Qian, Z., McMillin, S.E., Aaron, H.E., Lin, H., Wei, J., Zhang, Z., Pan, J. (2022) Ambient particulate matter pollution of different sizes associated with recurrent stroke hospitalization in China: a cohort study of 1.07 million stroke patients. ***Science of the Total Environment*** ([IF=10.8]{style="color:#9A0000;font-weight: bold;"}). 159104. [PDF {{< fa book-open >}}](https://caimiao0714.github.io/SC-ENV-2023/Papers/2022_1_STOTEN_PM_stroke_rehospitalization.pdf) DOI: [10.1016/j.scitotenv.2022.159104](https://doi.org/10.1016/j.scitotenv.2022.159104)
+
+
+
+# R语言代码实战
+
+
+
+

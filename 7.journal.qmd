@@ -40,6 +40,18 @@ navbar: right
 5. [Heliyon](https://www.cell.com/heliyon/home)
 5. [BMJ Open](https://bmjopen.bmj.com/)
 
+# 投稿注意事项
+
+- 投稿信（Cover letter）
+- 亮点（Highlights）
+- 推荐审稿人
+- 图片摘要（graphic abstract）
+
+# 返修
+
+如何回答难搞的审稿人。
+
+
 
 
 

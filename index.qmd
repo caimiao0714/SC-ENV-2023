@@ -16,7 +16,18 @@ title: "引言"
 
 # 课程安排 {{< fa calendar >}}
 
-
+- 第一天
+  * 总论（~1H）
+  * 环境暴露评估（~1.5H）理论+文献实例+R代码实战
+- 第二天
+  * 时间序列研究（~1.5H）理论+文献实例+R代码实战
+  * 病例交叉研究（~1.5H）理论+文献实例+R代码实战
+- 第三天
+  * 横截面研究（~1.5H）理论+文献实例+R代码实战
+  * 队列研究（~1.5H）理论+文献实例+R代码实战
+- 第四天
+  * 10+文献的写作（~1.5H）理论+文献实例
+  * 环境健康类文章选刊与投稿（~1.5H）
 
 # 授课教师 {{< fa user >}}
 
@@ -24,10 +35,10 @@ title: "引言"
  
 # 环境健康研究的代表性论文 {{< fa book-open >}}
 
-- **Cai, M.**, Li, H., Wu, Y., Zhang. S., Wang. X., Zhang. Z., Lin. H.\* (2022) Ambient Air Pollution Associated with Body Fat Percentages at Different Body Compartments: A Cohort Study of UK Biobank Participants. ***Environmental Health Perspectives***. 130(6): 067702. [pdf](https://caimiao0714.github.io/SC-ENV-2023/Papers/2022_1_EHP10920_PM_body_fat_composition.pdf) DOI: [10.1289/EHP10920](https://doi.org/10.1289/EHP10920)
-- **Cai, M.**, Zhang, S., Lin, X., Qian, Z., McMillin, S.E., Yang, Y., Zhang, Z., Pan, J., Lin, H.. (2022) Association of ambient particulate matter pollution of different sizes with in-hospital case fatality among stroke patients in China. ***Neurology.*** 98(4), e2474-e2486. [PDF](2022_1_Neurology_Different_Sizes_PM_Stroke_mortality.pdf) DOI: [10.1212/WNL.0000000000200546](https://doi.org/10.1212/WNL.0000000000200546)
-- **Cai, M.**, Lin, X., Wang, X., Zhang, S., Qian, Z., McMillin, S.E., Aaron, H.E., Lin, H., Wei, J., Zhang, Z., Pan, J. (2022) Ambient particulate matter pollution of different sizes associated with recurrent stroke hospitalization in China: a cohort study of 1.07 million stroke patients. ***Science of the Total Environment***. 159104. [PDF](2022_1_STOTEN_PM_stroke_rehospitalization.pdf) DOI: [10.1016/j.scitotenv.2022.159104](https://doi.org/10.1016/j.scitotenv.2022.159104)
-- **Cai, M.**, Lin, X., Wang, X., Zhang, S., Wang, C., Zhang, Z., Pan, J., Lin, H. (2023). Long-term exposure to ambient fine particulate matter chemical composition and in-hospital case fatality among patients with stroke in China. The Lancet Regional Health-Western Pacific, 100679. [pdf](https://caimiao0714.github.io/SC-ENV-2023/Papers/2023_1_LRHWP.pdf) DOI: [10.1016/j.lanwpc.2022.100679](https://doi.org/10.1016/j.lanwpc.2022.100679)
-- **Cai, M.**, Wei, J., Zhang, S., Liu, W., Wang, L., Qian, Z., Lin, H., Liu, E., McMillin, S.E., Cao, Y., Yin, P. (2023). Short-term air pollution exposure associated with death from kidney diseases: a nationwide time-stratified case-crossover study in China from 2015 to 2019. BMC Medicine, 21(1), 32. [PDF](2023_1_BMC_Med_Air_pollution_kidney_death.pdf) DOI: [10.1186/s12916-023-02734-9](https://doi.org/10.1186/s12916-023-02734-9)
+- **Cai, M.**, Li, H., Wu, Y., Zhang. S., Wang. X., Zhang. Z., Lin. H.\* (2022) Ambient Air Pollution Associated with Body Fat Percentages at Different Body Compartments: A Cohort Study of UK Biobank Participants. ***Environmental Health Perspectives*** ([IF=11.0]{style="color:#9A0000;font-weight: bold;"}). 130(6): 067702. [PDF {{< fa book-open >}}](https://caimiao0714.github.io/SC-ENV-2023/Papers/2022_1_EHP10920_PM_body_fat_composition.pdf) DOI: [10.1289/EHP10920](https://doi.org/10.1289/EHP10920)
+- **Cai, M.**, Zhang, S., Lin, X., Qian, Z., McMillin, S.E., Yang, Y., Zhang, Z., Pan, J., Lin, H.. (2022) Association of ambient particulate matter pollution of different sizes with in-hospital case fatality among stroke patients in China. ***Neurology.*** ([IF=12.3]{style="color:#9A0000;font-weight: bold;"}) 98(4), e2474-e2486. [PDF {{< fa book-open >}}](https://caimiao0714.github.io/SC-ENV-2023/Papers/2022_1_Neurology_Different_Sizes_PM_Stroke_mortality.pdf) DOI: [10.1212/WNL.0000000000200546](https://doi.org/10.1212/WNL.0000000000200546)
+- **Cai, M.**, Lin, X., Wang, X., Zhang, S., Qian, Z., McMillin, S.E., Aaron, H.E., Lin, H., Wei, J., Zhang, Z., Pan, J. (2022) Ambient particulate matter pollution of different sizes associated with recurrent stroke hospitalization in China: a cohort study of 1.07 million stroke patients. ***Science of the Total Environment*** ([IF=10.8]{style="color:#9A0000;font-weight: bold;"}). 159104. [PDF {{< fa book-open >}}](https://caimiao0714.github.io/SC-ENV-2023/Papers/2022_1_STOTEN_PM_stroke_rehospitalization.pdf) DOI: [10.1016/j.scitotenv.2022.159104](https://doi.org/10.1016/j.scitotenv.2022.159104)
+- **Cai, M.**, Lin, X., Wang, X., Zhang, S., Wang, C., Zhang, Z., Pan, J., Lin, H. (2023). Long-term exposure to ambient fine particulate matter chemical composition and in-hospital case fatality among patients with stroke in China. ***The Lancet Regional Health-Western Pacific*** ([IF=8.6]{style="color:#9A0000;font-weight: bold;"}), 100679. [PDF {{< fa book-open >}}](https://caimiao0714.github.io/SC-ENV-2023/Papers/2023_1_LRHWP.pdf) DOI: [10.1016/j.lanwpc.2022.100679](https://doi.org/10.1016/j.lanwpc.2022.100679)
+- **Cai, M.**, Wei, J., Zhang, S., Liu, W., Wang, L., Qian, Z., Lin, H., Liu, E., McMillin, S.E., Cao, Y., Yin, P. (2023). Short-term air pollution exposure associated with death from kidney diseases: a nationwide time-stratified case-crossover study in China from 2015 to 2019. ***BMC Medicine*** ([IF=11.2]{style="color:#9A0000;font-weight: bold;"}), 21(1), 32.  [PDF {{< fa book-open >}}](https://caimiao0714.github.io/SC-ENV-2023/Papers/2023_1_BMC_Med_Air_pollution_kidney_death.pdf) DOI: [10.1186/s12916-023-02734-9](https://doi.org/10.1186/s12916-023-02734-9)
 
 

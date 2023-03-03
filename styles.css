@@ -1,4 +1,6 @@
 /* css styles */
+$theme-scu: #9A0000;
+
 h1 {
   font-size: 1.5em;
 }
@@ -6,15 +8,15 @@ h2, h3 {
   font-size: 1em;
 }
 h1, h2, h3, h4, h5, h6, tagline {
-  font-family: 'Candara', 'Palatino', 'STZhongsong', "Palatino Linotype", "Palatino LT STD", "Georgia";
+  font-family: 'Candara', 'Roboto', 'Palatino', 'STZhongsong', "Palatino Linotype", "Palatino LT STD", "Georgia";
 }
 
 .masthead .tagline {
-  font-family: 'Palatino', "Palatino Linotype", "Palatino LT STD", 'STZhongsong', "Georgia";
+  font-family: 'Palatino', 'Roboto', "Palatino Linotype", "Palatino LT STD", 'STZhongsong', "Georgia";
 }
 
 body {
-  font-family:  'Candara', "Palatino Linotype", 'Palatino', 'Source Han Serif CN', "Palatino LT STD",'Calibri','Candara',serif,'source-han-serif-sc', 'Source Han Serif SC', 'Source Han Serif TC', 'Source Han Serif TW', 'Source Han Serif';
+  font-family:  'Candara', 'Roboto', "Palatino Linotype", 'Palatino', 'Source Han Serif CN', "Palatino LT STD",'Calibri','Candara',serif,'source-han-serif-sc', 'Source Han Serif SC', 'Source Han Serif TC', 'Source Han Serif TW', 'Source Han Serif';
 }
 
 .home blockquote, .cn blockquote {
@@ -28,4 +30,9 @@ code {
 pre, code {
   font-size: .95em;
   font-family: monospace, Consolas, Courier, "Courier New", 'STKaiti', 'KaiTi', 'SimKai';
+}
+
+.colscu {
+  color: $theme-scu;
+  font-weight: bold;
 }
