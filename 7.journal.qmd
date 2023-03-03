@@ -1,0 +1,50 @@
+---
+title: "选刊与投稿"
+linkcolor: '#08519c'
+navbar: right
+---
+
+# 期刊选择
+
+根据主观发表难度进行排序
+
+## 环境健康类
+
+1. [Lancet Planetary Health](https://www.thelancet.com/journals/lanplh/home) IF=28.8
+2. [Environmental Health Perspectives](https://ehp.niehs.nih.gov/) IF=11.0
+2. [Environmental Science & Technology](https://pubs.acs.org/journal/esthag) IF=11.4
+3. [Journal of Hazardous Materials](https://www.sciencedirect.com/journal/journal-of-hazardous-materials) IF=14.2
+4. [Environment International](https://www.sciencedirect.com/journal/environment-international) IF=13.35
+5. [International Journal of Epidemiology](https://academic.oup.com/ije) IF=9.7
+6. [Science of the Total Environment](https://www.sciencedirect.com/journal/science-of-the-total-environment) IF=10.8
+7. [Environmental Pollution](https://www.sciencedirect.com/journal/environmental-pollution) IF=9.988
+8. [Chemosphere](https://www.sciencedirect.com/journal/chemosphere) IF=8.9
+9. [Environmental Research](https://www.sciencedirect.com/journal/environmental-research) IF=8.4
+10. [Ecotoxicology and Environmental Safety](https://www.sciencedirect.com/journal/ecotoxicology-and-environmental-safety) IF=7.1
+11. [Environmental Research Letters](https://iopscience.iop.org/journal/1748-9326) IF=6.9
+12. [Epidemiology](https://journals.lww.com/epidem/pages/default.aspx) IF=4.86
+12. [International Journal of Hygiene and Environmental Health](https://www.sciencedirect.com/journal/international-journal-of-hygiene-and-environmental-health) IF=7.4
+12. [Environmental Health](https://ehjournal.biomedcentral.com/) IF=7.1
+12. [Journal of Exposure Science and Environmental Epidemiology](https://www.nature.com/jes/) IF=5.563
+13. [Environmental Science and Pollution Research](https://www.springer.com/journal/11356) IF=5.2
+12. [Atmospheric Environment](https://www.sciencedirect.com/journal/atmospheric-environment) IF=4.0
+
+## 综合医学类
+
+1. [JAMA Network Open](https://jamanetwork.com/journals/jamanetworkopen)
+2. [ElinicalMedicine](https://www.thelancet.com/journals/eclinm/home)
+3. [PLoS Medicine](https://journals.plos.org/plosmedicine/)
+3. [EBioMedicine](https://www.thelancet.com/journals/ebiom/home)
+4. [BMC Medicine](https://bmcmedicine.biomedcentral.com/) IF=11.8
+5. [iScience](https://www.cell.com/iscience/home)
+5. [Heliyon](https://www.cell.com/heliyon/home)
+5. [BMJ Open](https://bmjopen.bmj.com/)
+
+
+
+
+
+
+
+
+

@@ -1,0 +1,11 @@
+---
+title: "时间分层的病例交叉研究"
+linkcolor: '#08519c'
+navbar: right
+---
+
+
+样例论文
+
+- **Cai, M.**, Wei, J., Zhang, S., Liu, W., Wang, L., Qian, Z., Lin, H., Liu, E., McMillin, S.E., Cao, Y., Yin, P. (2023). Short-term air pollution exposure associated with death from kidney diseases: a nationwide time-stratified case-crossover study in China from 2015 to 2019. BMC medicine, 21(1), 32. DOI: [10.1186/s12916-023-02734-9](https://doi.org/10.1186/s12916-023-02734-9)
+

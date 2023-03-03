@@ -1,0 +1,49 @@
+project:
+  type: website
+  output-dir: docs
+
+website:
+  sidebar:
+    style: "docked"
+    search: true
+    contents:
+      - index.qmd
+      - section: "第一天"
+        contents:
+          - 1.exposure.qmd
+          - 1.exposure.qmd
+          
+      - section: "第二天"
+        contents:
+          - 2.ts.qmd
+          - 3.cco.qmd
+      - section: "第三天"
+        contents:
+          - 4.cross-sec.qmd
+          - 5.cohort.qmd
+      - section: "第四天"
+        contents:
+          - 6.writing.qmd
+          - 7.journal.qmd
+  # title: "环境健康效应研究"
+  # navbar:
+  #   left:
+  #     - href: index.qmd
+  #       text: 主页
+  #     - 1.exposure.qmd
+  #     - 2.ts.qmd
+  #     - 3.cco.qmd
+  #     - 4.cross-sec.qmd
+  #     - 5.cohort.qmd
+  #     - 6.writing.qmd
+  #     - 7.journal.qmd
+
+format:
+  html:
+    theme: yeti
+    css: styles.css
+    toc: true
+    toc-title: '内容'
+
+
+

@@ -1,0 +1,29 @@
+{
+  "about.qmd": {
+    "about.html": "faa53ba8"
+  },
+  "index.qmd": {
+    "index.html": "ad54d5db"
+  },
+  "1.exposure.qmd": {
+    "1.exposure.html": "2b4c8be1"
+  },
+  "2.ts.qmd": {
+    "2.ts.html": "8bf97507"
+  },
+  "3.cco.qmd": {
+    "3.cco.html": "d44c71ad"
+  },
+  "4.cross-sec.qmd": {
+    "4.cross-sec.html": "88ca138b"
+  },
+  "5.cohort.qmd": {
+    "5.cohort.html": "e46d1e0d"
+  },
+  "6.writing.qmd": {
+    "6.writing.html": "8fcff011"
+  },
+  "7.journal.qmd": {
+    "7.journal.html": "359d18e7"
+  }
+}
