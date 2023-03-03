@@ -4,6 +4,13 @@ title: "环境暴露评估"
 
 # 环境暴露种类（空气污染、温湿度、绿地等）
 
+```{r}
+pacman::p_load(ggplot2, dplyr)
+
+sessionInfo()
+```
+
+
 
 # 10+文章的环境暴露评估方式
 

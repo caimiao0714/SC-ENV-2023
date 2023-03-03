@@ -1,6 +1,9 @@
 /* css styles */
-h1, h2, h3 {
+h1 {
   font-size: 1.5em;
+}
+h2, h3 {
+  font-size: 1em;
 }
 h1, h2, h3, h4, h5, h6, tagline {
   font-family: 'Candara', 'Palatino', 'STZhongsong', "Palatino Linotype", "Palatino LT STD", "Georgia";
@@ -24,4 +27,5 @@ code {
 
 pre, code {
   font-size: .95em;
+  font-family: monospace, Consolas, Courier, "Courier New", 'STKaiti', 'KaiTi', 'SimKai';
 }
