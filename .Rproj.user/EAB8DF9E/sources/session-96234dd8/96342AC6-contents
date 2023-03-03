@@ -25,18 +25,6 @@ website:
         contents:
           - 6.writing.qmd
           - 7.journal.qmd
-  # title: "环境健康效应研究"
-  # navbar:
-  #   left:
-  #     - href: index.qmd
-  #       text: 主页
-  #     - 1.exposure.qmd
-  #     - 2.ts.qmd
-  #     - 3.cco.qmd
-  #     - 4.cross-sec.qmd
-  #     - 5.cohort.qmd
-  #     - 6.writing.qmd
-  #     - 7.journal.qmd
 
 format:
   html:
@@ -45,5 +33,6 @@ format:
     toc: true
     toc-title: '内容'
 
-
+execute:
+  freeze: auto
 
