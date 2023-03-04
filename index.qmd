@@ -31,7 +31,7 @@ title: "引言"
 
 # 授课教师 {{< fa user >}}
 
-近五年以第一作者于JAMA Network Open、Neurology、Environmental Health Perspectives、BMC Medicine、The Lancet Regional Health - Western Pacific、Science of the Total Environment等环境健康和临床流行病等领域发表16篇SCI期刊原创性研究论文。近五年累计被引用1132次，研究论文得到Nature, Nature Medicine,  Lancet, BMJ,  Circulation等期刊的正面引用，并且得到CNN, U.S. News, AAN, Physicians Weekly等国外主流媒体报道。为Nat. Commun., EClinicalMedicine, J. Am. Soc. Nephrol.等30余种英文期刊审稿。
+近五年以第一作者于JAMA Network Open、Neurology、Environmental Health Perspectives、BMC Medicine、The Lancet Regional Health - Western Pacific、Science of the Total Environment等环境健康和临床流行病等领域发表16篇SCI期刊原创性研究论文。近五年累计被引用1138次，研究论文得到Nature, Nature Medicine,  Lancet, BMJ,  Circulation等期刊的正面引用，并且得到CNN, U.S. News, AAN, Physicians Weekly等国外主流媒体报道。为Nat. Commun., EClinicalMedicine, J. Am. Soc. Nephrol.等30余种英文期刊审稿。
  
 # 环境健康研究的代表性论文 {{< fa book-open >}}
 

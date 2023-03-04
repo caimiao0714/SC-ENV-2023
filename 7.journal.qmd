@@ -27,6 +27,7 @@ navbar: right
 12. [Environmental Health](https://ehjournal.biomedcentral.com/) IF=7.1
 12. [Journal of Exposure Science and Environmental Epidemiology](https://www.nature.com/jes/) IF=5.563
 13. [Environmental Science and Pollution Research](https://www.springer.com/journal/11356) IF=5.2
+13. [Atmospheric Pollution Research](https://www.sciencedirect.com/journal/atmospheric-pollution-research) IF=4.831
 12. [Atmospheric Environment](https://www.sciencedirect.com/journal/atmospheric-environment) IF=4.0
 
 ## 综合医学类
@@ -44,8 +45,8 @@ navbar: right
 
 - 投稿信（Cover letter）
 - 亮点（Highlights）
-- 推荐审稿人
 - 图片摘要（graphic abstract）
+- 推荐审稿人
 
 # 返修
 

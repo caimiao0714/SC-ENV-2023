@@ -2,7 +2,7 @@
 <html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en"><head>
 
 <meta charset="utf-8">
-<meta name="generator" content="quarto-1.2.269">
+<meta name="generator" content="quarto-1.2.335">
 
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 
@@ -123,6 +123,7 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 }</script>
 <style>html{ scroll-behavior: smooth; }</style>
 
+  <script src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml-full.js" type="text/javascript"></script>
 
 <link rel="stylesheet" href="styles.css">
 </head>
@@ -250,7 +251,17 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
     <h2 id="toc-title">内容</h2>
    
   <ul>
-  <li><a href="#环境暴露种类空气污染温湿度绿地等" id="toc-环境暴露种类空气污染温湿度绿地等" class="nav-link active" data-scroll-target="#环境暴露种类空气污染温湿度绿地等">环境暴露种类（空气污染、温湿度、绿地等）</a></li>
+  <li><a href="#环境暴露数据种类" id="toc-环境暴露数据种类" class="nav-link active" data-scroll-target="#环境暴露数据种类">环境暴露数据种类</a>
+  <ul class="collapse">
+  <li><a href="#空气污染" id="toc-空气污染" class="nav-link" data-scroll-target="#空气污染">空气污染</a>
+  <ul class="collapse">
+  <li><a href="#chap" id="toc-chap" class="nav-link" data-scroll-target="#chap">CHAP</a></li>
+  <li><a href="#tap" id="toc-tap" class="nav-link" data-scroll-target="#tap">TAP</a></li>
+  </ul></li>
+  <li><a href="#温度" id="toc-温度" class="nav-link" data-scroll-target="#温度">温度</a></li>
+  <li><a href="#绿植覆盖" id="toc-绿植覆盖" class="nav-link" data-scroll-target="#绿植覆盖">绿植覆盖</a></li>
+  <li><a href="#夜晚灯光" id="toc-夜晚灯光" class="nav-link" data-scroll-target="#夜晚灯光">夜晚灯光</a></li>
+  </ul></li>
   <li><a href="#环境暴露评估的时间窗口" id="toc-环境暴露评估的时间窗口" class="nav-link" data-scroll-target="#环境暴露评估的时间窗口">环境暴露评估的时间窗口</a>
   <ul class="collapse">
   <li><a href="#短期" id="toc-短期" class="nav-link" data-scroll-target="#短期">短期</a></li>
@@ -259,9 +270,17 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
   <li><a href="#环境暴露评估方式" id="toc-环境暴露评估方式" class="nav-link" data-scroll-target="#环境暴露评估方式">环境暴露评估方式</a>
   <ul class="collapse">
   <li><a href="#地区水平" id="toc-地区水平" class="nav-link" data-scroll-target="#地区水平">地区水平</a></li>
-  <li><a href="#个体水平" id="toc-个体水平" class="nav-link" data-scroll-target="#个体水平">个体水平</a></li>
+  <li><a href="#个体水平" id="toc-个体水平" class="nav-link" data-scroll-target="#个体水平">个体水平：</a>
+  <ul class="collapse">
+  <li><a href="#个体文本地址转经纬度" id="toc-个体文本地址转经纬度" class="nav-link" data-scroll-target="#个体文本地址转经纬度">个体文本地址转经纬度</a></li>
+  <li><a href="#根据经纬度的双线性插值暴露评估" id="toc-根据经纬度的双线性插值暴露评估" class="nav-link" data-scroll-target="#根据经纬度的双线性插值暴露评估">根据经纬度的双线性插值暴露评估</a></li>
   </ul></li>
-  <li><a href="#r代码及展示" id="toc-r代码及展示" class="nav-link" data-scroll-target="#r代码及展示">R代码及展示</a></li>
+  </ul></li>
+  <li><a href="#r代码及展示" id="toc-r代码及展示" class="nav-link" data-scroll-target="#r代码及展示">R代码及展示</a>
+  <ul class="collapse">
+  <li><a href="#文本地址转经纬度r代码" id="toc-文本地址转经纬度r代码" class="nav-link" data-scroll-target="#文本地址转经纬度r代码">文本地址转经纬度R代码</a></li>
+  <li><a href="#双线性插值暴露评估r代码" id="toc-双线性插值暴露评估r代码" class="nav-link" data-scroll-target="#双线性插值暴露评估r代码">双线性插值暴露评估R代码</a></li>
+  </ul></li>
   </ul>
 </nav>
     </div>
@@ -285,9 +304,77 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 
 </header>
 
-<section id="环境暴露种类空气污染温湿度绿地等" class="level1">
-<h1>环境暴露种类（空气污染、温湿度、绿地等）</h1>
-<p>韦晶的CHAP <a href=""></a></p>
+<section id="环境暴露数据种类" class="level1">
+<h1>环境暴露数据种类</h1>
+<section id="空气污染" class="level2">
+<h2 class="anchored" data-anchor-id="空气污染">空气污染</h2>
+<section id="chap" class="level3">
+<h3 class="anchored" data-anchor-id="chap">CHAP</h3>
+<p><a href="https://weijing-rs.github.io/product.html">CHAP</a> (ChinaHighAirPollutants)，由马里兰大学的研究院韦晶博士团队生成，使用数据免费，但需要跟韦博士签订协议， 高质量的文章需要带韦博士为共同通讯作者。CHAP数据种类多，空间精度高（大部分为1*1km的空间精度和日均数据），包含的污染物包括：</p>
+<ul>
+<li><p>PM<span class="math inline">\(_{1}\)</span> （1*1km，日均数据）2000-2021年</p></li>
+<li><p>PM<span class="math inline">\(_{2.5}\)</span> （1*1km，日均数据）2000-2021年</p></li>
+<li><p>PM<span class="math inline">\(_{10}\)</span> （1*1km，日均数据）2000-2021年</p></li>
+<li><p>臭氧（O<span class="math inline">\(_3\)</span>）（1*1km，日均数据）2000年至今</p></li>
+<li><p>二氧化氮（NO<span class="math inline">\(_2\)</span>）（10*10km，日均数据）2008年至今</p></li>
+<li><p>二氧化硫（NO<span class="math inline">\(_2\)</span>）（10*10km，日均数据）2008年至今</p></li>
+<li><p>一氧化碳（CO）（10*10km，日均数据）2013年至今</p></li>
+<li><p>6种PM<span class="math inline">\(_{2.5}\)</span>化学组分（10*10km，日均数据）2000年至今</p>
+<ul>
+<li>黑碳（black carbon）</li>
+<li>有机物（organic matter）</li>
+<li>硫酸盐（sulphate, SO<span class="math inline">\(_4^{2-}\)</span>）</li>
+<li>硝酸盐（nitrate, NO<span class="math inline">\(_3^-\)</span>）</li>
+<li>铵盐（ammonium, NH<span class="math inline">\(_4^+\)</span>）</li>
+<li>氯化物（ammonium, Cl<span class="math inline">\(^-\)</span>）</li>
+</ul></li>
+<li><p>16种环境多环芳烃（outdoor polycyclic aromatic hydrocarbons, PAHs）</p>
+<ul>
+<li>naphthalene (Nap)</li>
+<li>acenaphthene (Ace),</li>
+<li>acenaphthylene (Acy),</li>
+<li>fluorene (Flu),</li>
+<li>phenanthrene (Phe),</li>
+<li>anthracene (Ant),</li>
+<li>fluoranthene (Fla),</li>
+<li>pyrene (Pyr),</li>
+<li>benz[a]anthracene (BaA),</li>
+<li>chrysene (Chr),</li>
+<li>benzo[b]fluoranthene (BbF),</li>
+<li>benzo[k]fluoranthene (BkF),</li>
+<li>benzo[a]pyrene (BaP),</li>
+<li>dibenz[a,h]anthracene (DahA),</li>
+<li>benzo[ghi]perylene (BghiP)</li>
+<li>indeno[1,2,3-cd] pyrene (IcdP))</li>
+</ul></li>
+</ul>
+</section>
+<section id="tap" class="level3">
+<h3 class="anchored" data-anchor-id="tap">TAP</h3>
+<p><a href="https://tapdata.org.cn/">TAP</a> (Tracking Air Pollution in China) 中国大气成分近实时追踪数据集，由清华大学的TAP团队开发。免费+开源，空间精度较低，现有10*10km的网格化数据产品，包含的污染物包括：</p>
+<ul>
+<li>PM<span class="math inline">\(_{2.5}\)</span> （1*1km，日均数据）2000年至今</li>
+<li>PM<span class="math inline">\(_{2.5}\)</span>化学组分 （10*10km，日均数据）2000年至今
+<ul>
+<li>黑碳（black carbon）</li>
+<li>有机物（organic matter）</li>
+<li>硫酸盐（sulphate, SO<span class="math inline">\(_4^{2-}\)</span>）</li>
+<li>硝酸盐（nitrate, NO<span class="math inline">\({_3^-}\)</span>）</li>
+<li>铵盐（ammonium, NH<span class="math inline">\(_4^+\)</span>）</li>
+</ul></li>
+<li>臭氧（O<span class="math inline">\(_3\)</span>）（10*10km，日均数据）2013年至今</li>
+</ul>
+</section>
+</section>
+<section id="温度" class="level2">
+<h2 class="anchored" data-anchor-id="温度">温度</h2>
+</section>
+<section id="绿植覆盖" class="level2">
+<h2 class="anchored" data-anchor-id="绿植覆盖">绿植覆盖</h2>
+</section>
+<section id="夜晚灯光" class="level2">
+<h2 class="anchored" data-anchor-id="夜晚灯光">夜晚灯光</h2>
+</section>
 </section>
 <section id="环境暴露评估的时间窗口" class="level1">
 <h1>环境暴露评估的时间窗口</h1>
@@ -304,8 +391,14 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <h2 class="anchored" data-anchor-id="地区水平">地区水平</h2>
 </section>
 <section id="个体水平" class="level2">
-<h2 class="anchored" data-anchor-id="个体水平">个体水平</h2>
-<p>双线性插值</p>
+<h2 class="anchored" data-anchor-id="个体水平">个体水平：</h2>
+<section id="个体文本地址转经纬度" class="level3">
+<h3 class="anchored" data-anchor-id="个体文本地址转经纬度">个体文本地址转经纬度</h3>
+<p>四川大学公共卫生学院的林小军教授开发的<a href="https://github.com/xiaojunlin/amapR">amapR</a>，可使用高德地图API把具体的文本类型的地址转换成数值型的经纬度。</p>
+</section>
+<section id="根据经纬度的双线性插值暴露评估" class="level3">
+<h3 class="anchored" data-anchor-id="根据经纬度的双线性插值暴露评估">根据经纬度的双线性插值暴露评估</h3>
+</section>
 </section>
 </section>
 <section id="r代码及展示" class="level1">
@@ -313,8 +406,21 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <div class="cell">
 <div class="sourceCode cell-code" id="cb1"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb1-1"><a href="#cb1-1"></a>pacman<span class="sc">::</span><span class="fu">p_load</span>(ggplot2, dplyr, raster)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
+<section id="文本地址转经纬度r代码" class="level3">
+<h3 class="anchored" data-anchor-id="文本地址转经纬度r代码">文本地址转经纬度R代码</h3>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb2"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb2-1"><a href="#cb2-1"></a><span class="co"># devtools::install_github("xiaojunlin/amapR") </span></span>
+<span id="cb2-2"><a href="#cb2-2"></a><span class="fu">library</span>(amapR)</span>
+<span id="cb2-3"><a href="#cb2-3"></a><span class="fu">options</span>(<span class="at">amap.key =</span> <span class="st">'xxxxxxxx'</span>)</span>
+<span id="cb2-4"><a href="#cb2-4"></a>test <span class="ot">&lt;-</span> <span class="fu">data.frame</span>(<span class="at">n =</span> <span class="dv">1</span><span class="sc">:</span><span class="dv">100</span>, <span class="at">address =</span> <span class="fu">c</span>(<span class="st">"华中科技大学"</span>, <span class="st">"四川大学"</span>))</span>
+<span id="cb2-5"><a href="#cb2-5"></a>result <span class="ot">&lt;-</span> <span class="fu">geocoord</span>(<span class="at">data =</span> test, <span class="at">address =</span> <span class="st">"address"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+</section>
+<section id="双线性插值暴露评估r代码" class="level3">
+<h3 class="anchored" data-anchor-id="双线性插值暴露评估r代码">双线性插值暴露评估R代码</h3>
 
 
+</section>
 </section>
 
 </main> <!-- /main -->
