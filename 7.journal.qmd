@@ -10,15 +10,15 @@ navbar: right
 
 ## 环境健康类
 
-1. [Lancet Planetary Health](https://www.thelancet.com/journals/lanplh/home) IF=28.8
-2. [Environmental Health Perspectives](https://ehp.niehs.nih.gov/) IF=11.0
+1. [Lancet Planetary Health](https://www.thelancet.com/journals/lanplh/home) IF=28.8 版面费：	USD 5,780
+2. [Environmental Health Perspectives](https://ehp.niehs.nih.gov/) IF=11.0  版面费：无
 2. [Environmental Science & Technology](https://pubs.acs.org/journal/esthag) IF=11.4
 3. [Journal of Hazardous Materials](https://www.sciencedirect.com/journal/journal-of-hazardous-materials) IF=14.2
 4. [Environment International](https://www.sciencedirect.com/journal/environment-international) IF=13.35
 5. [International Journal of Epidemiology](https://academic.oup.com/ije) IF=9.7
-6. [Science of the Total Environment](https://www.sciencedirect.com/journal/science-of-the-total-environment) IF=10.8
-7. [Environmental Pollution](https://www.sciencedirect.com/journal/environmental-pollution) IF=9.988
-8. [Chemosphere](https://www.sciencedirect.com/journal/chemosphere) IF=8.9
+6. [Science of the Total Environment](https://www.sciencedirect.com/journal/science-of-the-total-environment) IF=10.8 版面费：无
+7. [Environmental Pollution](https://www.sciencedirect.com/journal/environmental-pollution) IF=9.988 版面费：无
+8. [Chemosphere](https://www.sciencedirect.com/journal/chemosphere) IF=8.9 版面费：无
 9. [Environmental Research](https://www.sciencedirect.com/journal/environmental-research) IF=8.4
 10. [Ecotoxicology and Environmental Safety](https://www.sciencedirect.com/journal/ecotoxicology-and-environmental-safety) IF=7.1
 11. [Environmental Research Letters](https://iopscience.iop.org/journal/1748-9326) IF=6.9
@@ -32,10 +32,11 @@ navbar: right
 
 ## 综合医学类
 
-1. [JAMA Network Open](https://jamanetwork.com/journals/jamanetworkopen) IF=13.353
-2. [ElinicalMedicine](https://www.thelancet.com/journals/eclinm/home) IF=17.033
-3. [PLoS Medicine](https://journals.plos.org/plosmedicine/) IF=11.613
-3. [EBioMedicine](https://www.thelancet.com/journals/ebiom/home) IF=11.2
+1. [JAMA Network Open](https://jamanetwork.com/journals/jamanetworkopen) IF=13.353 版面费：$3000 USD
+2. [ElinicalMedicine](https://www.thelancet.com/journals/eclinm/home) IF=17.033 版面费：$5,000 USD
+3. [PLoS Medicine](https://journals.plos.org/plosmedicine/) IF=11.613 版面费：$6,300 USD
+3. [The Lancet Regional Health — Western Pacific](https://www.thelancet.com/lanwpc/about) IF=8.9 版面费：USD 3,680
+3. [EBioMedicine](https://www.thelancet.com/journals/ebiom/home) IF=11.2 版面费：$5,000 USD
 4. [BMC Medicine](https://bmcmedicine.biomedcentral.com/) IF=11.8
 5. [iScience](https://www.cell.com/iscience/home) IF=6.107 Cell旗下的子杂志，综合类（不限于医学），不知道以后Science出版社会不会出个杂志叫iNature，Nature出版社出个杂志叫iCell
 5. [Clinical Medicine](https://www.rcpjournals.org/content/clinmedicine) IF=5.41
@@ -49,8 +50,8 @@ navbar: right
 1. [Epidemiology](https://journals.lww.com/epidem/pages/default.aspx) IF=4.822
 1. [Journal of Epidemiology and Community Health](https://jech.bmj.com/) IF=6.286 BMJ旗下的期刊
 2. [Journal of Epidemiology and Global Health](https://www.springer.com/journal/44197) IF=5.959 
-3. [Epidemiology and Health](https://www.e-epih.org/) IF=5.919 韩国出版社
-1. [Journal of Epidemiology](https://www.jstage.jst.go.jp/browse/jea) IF=3.809 日本的出版社
+3. [Epidemiology and Health](https://www.e-epih.org/) IF=5.919 韩国出版社 排版不错
+1. [Journal of Epidemiology](https://www.jstage.jst.go.jp/browse/jea) IF=3.809 日本的出版社 排版难看
 4. 新刊-BMJ Public Health [to be launched]()
 
 ## 公共卫生类
@@ -58,8 +59,9 @@ navbar: right
 1. [Journal of Public Health](https://academic.oup.com/jpubhealth) IF=5.058
 2. [International Journal of Public Health](https://www.ssph-journal.org/journals/international-journal-of-public-health) IF=5.1
 3. [Public Health](https://www.sciencedirect.com/journal/public-health) IF=4.984
-3. [Annals of Epidemiology](https://www.sciencedirect.com/journal/annals-of-epidemiology) if=6.996
+3. [Annals of Epidemiology](https://www.sciencedirect.com/journal/annals-of-epidemiology) IF=6.996
 3. [American Journal of Preventive Medicine](https://www.ajpmonline.org/) IF=6.604
+3. [Global Public Health](https://journals.plos.org/globalpublichealth/) IF=3.356 版面费：$2,650 USD 出版社：Taylor & Francis Group
 2. [BMC Public Health](https://bmcpublichealth.biomedcentral.com/) IF=4.135
 
 # 投稿注意事项
