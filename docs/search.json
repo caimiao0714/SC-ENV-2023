@@ -70,6 +70,20 @@
     "text": "Time-to-event data数据"
   },
   {
+    "objectID": "5.cohort.html#materials-for-auto-survival",
+    "href": "5.cohort.html#materials-for-auto-survival",
+    "title": "队列研究",
+    "section": "Materials for auto-survival",
+    "text": "Materials for auto-survival\n\nBlog: auton-survival: An Open-Source Package for Regression, Counterfactual Estimation, Evaluation and Phenotyping Censored Time-to-Event Data\nPaper: auton-survival: an Open-Source Package for Regression, Counterfactual Estimation, Evaluation and Phenotyping with Censored Time-to-Event Data\nDocumentation: auton_survival documentation\nJupyter Notebook examples: auton_survival examples"
+  },
+  {
+    "objectID": "5.cohort.html#smaller-papers",
+    "href": "5.cohort.html#smaller-papers",
+    "title": "队列研究",
+    "section": "Smaller papers",
+    "text": "Smaller papers\nChirag Nagpal\n\nCounterfactual Phenotyping with Censored Time-to-Events\nDeep Cox Mixtures for Survival Regression.\nDeep Survival Machines: Fully Parametric Survival Regression and Representation Learning for Censored Data with Competing Risks"
+  },
+  {
     "objectID": "6.writing.html",
     "href": "6.writing.html",
     "title": "10+文章的写作套路",
