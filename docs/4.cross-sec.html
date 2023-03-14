@@ -20,6 +20,69 @@ ul.task-list li input[type="checkbox"] {
   margin: 0 0.8em 0.2em -1.6em;
   vertical-align: middle;
 }
+pre > code.sourceCode { white-space: pre; position: relative; }
+pre > code.sourceCode > span { display: inline-block; line-height: 1.25; }
+pre > code.sourceCode > span:empty { height: 1.2em; }
+.sourceCode { overflow: visible; }
+code.sourceCode > span { color: inherit; text-decoration: inherit; }
+div.sourceCode { margin: 1em 0; }
+pre.sourceCode { margin: 0; }
+@media screen {
+div.sourceCode { overflow: auto; }
+}
+@media print {
+pre > code.sourceCode { white-space: pre-wrap; }
+pre > code.sourceCode > span { text-indent: -5em; padding-left: 5em; }
+}
+pre.numberSource code
+  { counter-reset: source-line 0; }
+pre.numberSource code > span
+  { position: relative; left: -4em; counter-increment: source-line; }
+pre.numberSource code > span > a:first-child::before
+  { content: counter(source-line);
+    position: relative; left: -1em; text-align: right; vertical-align: baseline;
+    border: none; display: inline-block;
+    -webkit-touch-callout: none; -webkit-user-select: none;
+    -khtml-user-select: none; -moz-user-select: none;
+    -ms-user-select: none; user-select: none;
+    padding: 0 4px; width: 4em;
+    color: #aaaaaa;
+  }
+pre.numberSource { margin-left: 3em; border-left: 1px solid #aaaaaa;  padding-left: 4px; }
+div.sourceCode
+  {   }
+@media screen {
+pre > code.sourceCode > span > a:first-child::before { text-decoration: underline; }
+}
+code span.al { color: #ff0000; font-weight: bold; } /* Alert */
+code span.an { color: #60a0b0; font-weight: bold; font-style: italic; } /* Annotation */
+code span.at { color: #7d9029; } /* Attribute */
+code span.bn { color: #40a070; } /* BaseN */
+code span.bu { color: #008000; } /* BuiltIn */
+code span.cf { color: #007020; font-weight: bold; } /* ControlFlow */
+code span.ch { color: #4070a0; } /* Char */
+code span.cn { color: #880000; } /* Constant */
+code span.co { color: #60a0b0; font-style: italic; } /* Comment */
+code span.cv { color: #60a0b0; font-weight: bold; font-style: italic; } /* CommentVar */
+code span.do { color: #ba2121; font-style: italic; } /* Documentation */
+code span.dt { color: #902000; } /* DataType */
+code span.dv { color: #40a070; } /* DecVal */
+code span.er { color: #ff0000; font-weight: bold; } /* Error */
+code span.ex { } /* Extension */
+code span.fl { color: #40a070; } /* Float */
+code span.fu { color: #06287e; } /* Function */
+code span.im { color: #008000; font-weight: bold; } /* Import */
+code span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Information */
+code span.kw { color: #007020; font-weight: bold; } /* Keyword */
+code span.op { color: #666666; } /* Operator */
+code span.ot { color: #007020; } /* Other */
+code span.pp { color: #bc7a00; } /* Preprocessor */
+code span.sc { color: #4070a0; } /* SpecialChar */
+code span.ss { color: #bb6688; } /* SpecialString */
+code span.st { color: #4070a0; } /* String */
+code span.va { color: #19177c; } /* Variable */
+code span.vs { color: #4070a0; } /* VerbatimString */
+code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warning */
 </style>
 
 
@@ -191,7 +254,10 @@ ul.task-list li input[type="checkbox"] {
   <ul>
   <li><a href="#研究设计" id="toc-研究设计" class="nav-link active" data-scroll-target="#研究设计">研究设计</a></li>
   <li><a href="#文献实例" id="toc-文献实例" class="nav-link" data-scroll-target="#文献实例">文献实例</a></li>
-  <li><a href="#r语言代码实战" id="toc-r语言代码实战" class="nav-link" data-scroll-target="#r语言代码实战">R语言代码实战</a></li>
+  <li><a href="#r语言代码实战" id="toc-r语言代码实战" class="nav-link" data-scroll-target="#r语言代码实战">R语言代码实战</a>
+  <ul class="collapse">
+  <li><a href="#横截面研究" id="toc-横截面研究" class="nav-link" data-scroll-target="#横截面研究">横截面研究</a></li>
+  </ul></li>
   </ul>
 </nav>
     </div>
@@ -227,8 +293,103 @@ ul.task-list li input[type="checkbox"] {
 </section>
 <section id="r语言代码实战" class="level1">
 <h1>R语言代码实战</h1>
+<section id="横截面研究" class="level2">
+<h2 class="anchored" data-anchor-id="横截面研究">横截面研究</h2>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb1"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb1-1"><a href="#cb1-1"></a>pacman<span class="sc">::</span><span class="fu">p_load</span>(</span>
+<span id="cb1-2"><a href="#cb1-2"></a>  arrow, dplyr, ggplot2, data.table, broom, splines, purrr)</span>
+<span id="cb1-3"><a href="#cb1-3"></a></span>
+<span id="cb1-4"><a href="#cb1-4"></a>cs_pm <span class="ot">=</span> arrow<span class="sc">::</span><span class="fu">read_parquet</span>(</span>
+<span id="cb1-5"><a href="#cb1-5"></a>  <span class="st">'Data/cs_synthetic_pm_components.parquet'</span>)</span>
+<span id="cb1-6"><a href="#cb1-6"></a>cs_pm</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code># A tibble: 50,000 × 19
+   Province inhosp…¹   age sex   ethni…² occup…³ marri…⁴ strok…⁵ hospi…⁶ hyper…⁷
+   &lt;chr&gt;       &lt;dbl&gt; &lt;dbl&gt; &lt;chr&gt; &lt;chr&gt;   &lt;chr&gt;   &lt;chr&gt;   &lt;chr&gt;   &lt;chr&gt;     &lt;dbl&gt;
+ 1 Sichuan         0  74.1 Male  Han     Farmer  Married Ischem… Non-Te…       1
+ 2 Guangxi         0  81.4 Male  Han     Farmer  Married Hemorr… Non-Te…       0
+ 3 Guangxi         1  72.6 Male  Han     Farmer  Married Ischem… Non-Te…       0
+ 4 Shanxi          0  72.1 Fema… Han     Retired Married Ischem… Non-Te…       0
+ 5 Sichuan         0  51.0 Male  Han     Farmer  Married Ischem… Non-Te…       0
+ 6 Shanxi          0  81.9 Male  Han     Farmer  Married Ischem… Non-Te…       1
+ 7 Shanxi          0  66.4 Fema… Han     Retired Married Ischem… Tertia…       0
+ 8 Sichuan         0  49.1 Fema… Han     Farmer  Married Ischem… Non-Te…       0
+ 9 Guangxi         0  59.4 Male  Han     Farmer  Married Hemorr… Non-Te…       0
+10 Sichuan         0  66.2 Male  Han     Farmer  Married Hemorr… Tertia…       1
+# … with 49,990 more rows, 9 more variables: diabetes &lt;dbl&gt;,
+#   Temperature_MA_07 &lt;dbl&gt;, RH_MA_07 &lt;dbl&gt;, PM2.5_MA_365 &lt;dbl&gt;,
+#   SO4_MA_365 &lt;dbl&gt;, NO3_MA_365 &lt;dbl&gt;, NH4_MA_365 &lt;dbl&gt;, OM_MA_365 &lt;dbl&gt;,
+#   BC_MA_365 &lt;dbl&gt;, and abbreviated variable names ¹​inhosp_death, ²​ethnicity,
+#   ³​occupation, ⁴​marriage, ⁵​stroke_subtype, ⁶​hospital_level, ⁷​hypertension</code></pre>
+</div>
+</div>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb3"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb3-1"><a href="#cb3-1"></a>fit_logistic <span class="ot">=</span> <span class="cf">function</span>(x, <span class="at">data =</span> cs_pm, <span class="at">outcome_var =</span> <span class="st">'inhosp_death'</span>){</span>
+<span id="cb3-2"><a href="#cb3-2"></a>  <span class="fu">cat</span>(<span class="fu">paste0</span>(x, <span class="st">'</span><span class="sc">\n</span><span class="st">'</span>))</span>
+<span id="cb3-3"><a href="#cb3-3"></a>  x_iqr <span class="ot">=</span> <span class="fu">IQR</span>(data[[x]], <span class="at">na.rm =</span> <span class="cn">TRUE</span>)</span>
+<span id="cb3-4"><a href="#cb3-4"></a>  </span>
+<span id="cb3-5"><a href="#cb3-5"></a>  clean_fit <span class="ot">=</span> <span class="fu">glm</span>(</span>
+<span id="cb3-6"><a href="#cb3-6"></a>    <span class="at">formula =</span> <span class="fu">as.formula</span>(<span class="fu">paste0</span>(outcome_var, <span class="st">" ~ "</span>, </span>
+<span id="cb3-7"><a href="#cb3-7"></a>                    x, </span>
+<span id="cb3-8"><a href="#cb3-8"></a>                    <span class="st">' + age + sex + ethnicity + occupation + marriage + stroke_subtype + </span></span>
+<span id="cb3-9"><a href="#cb3-9"></a><span class="st">                    hypertension + diabetes + hospital_level + </span></span>
+<span id="cb3-10"><a href="#cb3-10"></a><span class="st">                    ns(Temperature_MA_07 , df = 5) + ns(RH_MA_07, df = 5) + Province'</span>)),</span>
+<span id="cb3-11"><a href="#cb3-11"></a>    <span class="at">family =</span> binomial,</span>
+<span id="cb3-12"><a href="#cb3-12"></a>    <span class="at">data =</span> data) <span class="sc">%&gt;%</span> </span>
+<span id="cb3-13"><a href="#cb3-13"></a>    <span class="fu">tidy</span>() <span class="sc">%&gt;%</span> </span>
+<span id="cb3-14"><a href="#cb3-14"></a>    <span class="co">#filter(grepl('PM|O3|CO|NO2|SO2', term)) %&gt;% </span></span>
+<span id="cb3-15"><a href="#cb3-15"></a>    <span class="fu">mutate</span>(<span class="at">OR =</span> <span class="fu">exp</span>(estimate<span class="sc">*</span>x_iqr), <span class="dv">3</span>,</span>
+<span id="cb3-16"><a href="#cb3-16"></a>           <span class="at">OR_round =</span> <span class="fu">round</span>(<span class="fu">exp</span>(estimate<span class="sc">*</span>x_iqr), <span class="dv">3</span>),</span>
+<span id="cb3-17"><a href="#cb3-17"></a>           <span class="at">CI_low =</span> <span class="fu">exp</span>(estimate<span class="sc">*</span>x_iqr <span class="sc">-</span> <span class="fl">1.96</span><span class="sc">*</span>std.error<span class="sc">*</span>x_iqr),</span>
+<span id="cb3-18"><a href="#cb3-18"></a>           <span class="at">CI_high =</span> <span class="fu">exp</span>(estimate<span class="sc">*</span>x_iqr <span class="sc">+</span> <span class="fl">1.96</span><span class="sc">*</span>std.error<span class="sc">*</span>x_iqr),</span>
+<span id="cb3-19"><a href="#cb3-19"></a>           <span class="at">CI_low_round =</span> <span class="fu">round</span>(<span class="fu">exp</span>(estimate<span class="sc">*</span>x_iqr <span class="sc">-</span> <span class="fl">1.96</span><span class="sc">*</span>std.error<span class="sc">*</span>x_iqr), <span class="dv">3</span>),</span>
+<span id="cb3-20"><a href="#cb3-20"></a>           <span class="at">CI_high_round =</span> <span class="fu">round</span>(<span class="fu">exp</span>(estimate<span class="sc">*</span>x_iqr <span class="sc">+</span> <span class="fl">1.96</span><span class="sc">*</span>std.error<span class="sc">*</span>x_iqr), <span class="dv">3</span>),</span>
+<span id="cb3-21"><a href="#cb3-21"></a>           <span class="at">predictor =</span> x) <span class="sc">%&gt;%</span> </span>
+<span id="cb3-22"><a href="#cb3-22"></a>    <span class="fu">mutate</span>(<span class="at">result =</span> <span class="fu">paste0</span>(<span class="fu">format</span>(OR_round, <span class="at">nsmall =</span> <span class="dv">3</span>), </span>
+<span id="cb3-23"><a href="#cb3-23"></a>                           <span class="st">' ('</span>, </span>
+<span id="cb3-24"><a href="#cb3-24"></a>                           <span class="fu">format</span>(CI_low_round, <span class="at">nsmall =</span> <span class="dv">3</span>), </span>
+<span id="cb3-25"><a href="#cb3-25"></a>                           <span class="st">'-'</span>, </span>
+<span id="cb3-26"><a href="#cb3-26"></a>                           <span class="fu">format</span>(CI_high_round, <span class="at">nsmall =</span> <span class="dv">3</span>),</span>
+<span id="cb3-27"><a href="#cb3-27"></a>                           <span class="st">')'</span>) <span class="sc">%&gt;%</span> </span>
+<span id="cb3-28"><a href="#cb3-28"></a>             <span class="fu">gsub</span>(<span class="st">' '</span>, <span class="st">''</span>, .) <span class="sc">%&gt;%</span> </span>
+<span id="cb3-29"><a href="#cb3-29"></a>             <span class="fu">gsub</span>(<span class="st">'</span><span class="sc">\\</span><span class="st">('</span>, <span class="st">' ('</span>, .),</span>
+<span id="cb3-30"><a href="#cb3-30"></a>           <span class="at">pollutant_IQR =</span> x_iqr) <span class="sc">%&gt;%</span> </span>
+<span id="cb3-31"><a href="#cb3-31"></a>    <span class="fu">mutate</span>(<span class="at">result =</span> <span class="fu">gsub</span>(<span class="st">'000e</span><span class="sc">\\</span><span class="st">+00'</span>, <span class="st">''</span>, result)) <span class="sc">%&gt;%</span> </span>
+<span id="cb3-32"><a href="#cb3-32"></a>    <span class="fu">select</span>(predictor, term, pollutant_IQR, result, OR, CI_low, CI_high, p.value) </span>
+<span id="cb3-33"><a href="#cb3-33"></a>  </span>
+<span id="cb3-34"><a href="#cb3-34"></a>  <span class="fu">return</span>(clean_fit)</span>
+<span id="cb3-35"><a href="#cb3-35"></a>}</span>
+<span id="cb3-36"><a href="#cb3-36"></a></span>
+<span id="cb3-37"><a href="#cb3-37"></a>fit_longterm_365 <span class="ot">=</span> purrr<span class="sc">::</span><span class="fu">map_df</span>(</span>
+<span id="cb3-38"><a href="#cb3-38"></a>  <span class="fu">c</span>(<span class="st">"PM2.5_MA_365"</span>, <span class="st">"SO4_MA_365"</span>, <span class="st">"NO3_MA_365"</span>, </span>
+<span id="cb3-39"><a href="#cb3-39"></a>    <span class="st">"NH4_MA_365"</span>, <span class="st">"OM_MA_365"</span>, <span class="st">"BC_MA_365"</span>), </span>
+<span id="cb3-40"><a href="#cb3-40"></a>  fit_logistic)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>PM2.5_MA_365
+SO4_MA_365
+NO3_MA_365
+NH4_MA_365
+OM_MA_365
+BC_MA_365</code></pre>
+</div>
+<div class="sourceCode cell-code" id="cb5"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb5-1"><a href="#cb5-1"></a>fit_longterm_365 <span class="sc">%&gt;%</span> </span>
+<span id="cb5-2"><a href="#cb5-2"></a>  <span class="fu">filter</span>(<span class="fu">grepl</span>(<span class="st">'_MA_365'</span>, term))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code># A tibble: 6 × 8
+  predictor    term         pollutant_IQR result       OR CI_low CI_high p.value
+  &lt;chr&gt;        &lt;chr&gt;                &lt;dbl&gt; &lt;chr&gt;     &lt;dbl&gt;  &lt;dbl&gt;   &lt;dbl&gt;   &lt;dbl&gt;
+1 PM2.5_MA_365 PM2.5_MA_365        15.0   1.042 (0…  1.04  0.902    1.20 5.76e-1
+2 SO4_MA_365   SO4_MA_365           2.65  1.317 (1…  1.32  1.14     1.52 1.82e-4
+3 NO3_MA_365   NO3_MA_365           3.51  1.135 (0…  1.14  0.974    1.32 1.04e-1
+4 NH4_MA_365   NH4_MA_365           2.00  1.016 (0…  1.02  0.877    1.18 8.31e-1
+5 OM_MA_365    OM_MA_365            3.61  1.187 (1…  1.19  1.03     1.37 1.78e-2
+6 BC_MA_365    BC_MA_365            0.637 1.148 (1…  1.15  1.02     1.30 2.50e-2</code></pre>
+</div>
+</div>
+<p>```</p>
 
 
+</section>
 </section>
 
 </main> <!-- /main -->
