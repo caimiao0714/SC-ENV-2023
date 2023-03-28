@@ -241,6 +241,11 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
   <a href="./7.journal.html" class="sidebar-item-text sidebar-link">选刊与投稿</a>
   </div>
 </li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./8.DL.html" class="sidebar-item-text sidebar-link">深度学习</a>
+  </div>
+</li>
       </ul>
   </li>
     </ul>
@@ -289,7 +294,7 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <h1>文献实例</h1>
 <ul>
 <li><p>Chen, R., Jiang, Y., Hu, J., Chen, H., Li, H., Meng, X., … &amp; Kan, H. (2022). Hourly air pollutants and acute coronary syndrome onset in 1.29 million patients. <strong><em>Circulation</em></strong> (<span style="color:#9A0000;font-weight: bold;">IF=39.9</span>), 145(24), 1749-1760.</p></li>
-<li><p>Liu, Y., Pan, J., Fan, C., Xu, R., Wang, Y., Xu, C., … &amp; Zhang, L. (2021). Short-term exposure to ambient air pollution and mortality from myocardial infarction. <strong><em>Journal of the American College of Cardiology</em></strong> (<span style="color:#9A0000;font-weight: bold;">IF=27.2</span>), 77(3), 271-281.</p></li>
+<li><p>Liu, Y., Pan, J., Fan, C., Xu, R., Wang, Y., Xu, C., … &amp; Zhang, L. (2021). Short-term exposure to ambient air pollution and mortality from myocardial infarction. <strong><em>Journal of the American College of Cardiology</em></strong> (<span style="color:#9A0000;font-weight: bold;">IF=27.2</span>), 77(3), 271-281. <a href="https://caimiao0714.github.io/SC-ENV-2023/Papers/Liu_2021_JACC_time_stratified_case_crossover.pdf">PDF <i class="fa-solid fa-book-open" aria-label="book-open"></i></a></p></li>
 <li><p><strong>Cai, M.</strong>, Wei, J., Zhang, S., Liu, W., Wang, L., Qian, Z., Lin, H., Liu, E., McMillin, S.E., Cao, Y., Yin, P. (2023). Short-term air pollution exposure associated with death from kidney diseases: a nationwide time-stratified case-crossover study in China from 2015 to 2019. <strong><em>BMC Medicine</em></strong> (<span style="color:#9A0000;font-weight: bold;">IF=11.8</span>), 21(1), 32. <a href="https://caimiao0714.github.io/SC-ENV-2023/Papers/2023_1_BMC_Med_Air_pollution_kidney_death.pdf">PDF <i class="fa-solid fa-book-open" aria-label="book-open"></i></a></p></li>
 </ul>
 </section>
@@ -297,7 +302,7 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <h1>R语言代码实战</h1>
 <section id="数据读取" class="level2">
 <h2 class="anchored" data-anchor-id="数据读取">数据读取</h2>
-<div class="cell">
+<div class="cell" data-hash="3.cco_cache/html/unnamed-chunk-1_64033ec8d91edce96b2b45f95764d69d">
 <div class="sourceCode cell-code" id="cb1"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb1-1"><a href="#cb1-1"></a>pacman<span class="sc">::</span><span class="fu">p_load</span>(</span>
 <span id="cb1-2"><a href="#cb1-2"></a>  arrow, dplyr, ggplot2, data.table, broom, survival, splines, purrr)</span>
 <span id="cb1-3"><a href="#cb1-3"></a></span>
@@ -346,7 +351,7 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 </section>
 <section id="统计建模-条件逻辑回归" class="level2">
 <h2 class="anchored" data-anchor-id="统计建模-条件逻辑回归">统计建模-条件逻辑回归</h2>
-<div class="cell">
+<div class="cell" data-hash="3.cco_cache/html/unnamed-chunk-2_5a747bd459134d3d234350b3c84c0f3e">
 <div class="sourceCode cell-code" id="cb3"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb3-1"><a href="#cb3-1"></a>fit_clogit <span class="ot">=</span> <span class="cf">function</span>(x, <span class="at">tm_RH_lag =</span> <span class="st">'MA_07'</span>, <span class="at">data =</span> cco_pm){</span>
 <span id="cb3-2"><a href="#cb3-2"></a>  <span class="fu">print</span>(glue<span class="sc">::</span><span class="fu">glue</span>(<span class="st">'</span><span class="sc">\n</span><span class="st">----------{x}; {tm_RH_lag}----------</span><span class="sc">\n</span><span class="st">'</span>))</span>
 <span id="cb3-3"><a href="#cb3-3"></a>  iqr_x <span class="ot">=</span> <span class="fu">IQR</span>(data[[x]], <span class="at">na.rm =</span> <span class="cn">TRUE</span>)</span>
