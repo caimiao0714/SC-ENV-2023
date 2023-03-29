@@ -1,5 +1,7 @@
 /.quarto/
 /_site/
+/3.cco_cache/
+/4.cross-sec_cache/
 /Papers/
 .Rproj.user
 *.qmd
