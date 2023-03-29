@@ -7,7 +7,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 
 
-<title>环境暴露的人群健康效应的研究、写作与发表 - 引言</title>
+<title>环境暴露的人群健康效应的研究、写作与发表 - 深度学习</title>
 <style>
 code{white-space: pre-wrap;}
 span.smallcaps{font-variant: small-caps;}
@@ -39,8 +39,6 @@ ul.task-list li input[type="checkbox"] {
 <script src="site_libs/bootstrap/bootstrap.min.js"></script>
 <link href="site_libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
 <link href="site_libs/bootstrap/bootstrap.min.css" rel="stylesheet" id="quarto-bootstrap" data-mode="light">
-<link href="site_libs/quarto-contrib/fontawesome6-0.1.0/all.css" rel="stylesheet">
-<link href="site_libs/quarto-contrib/fontawesome6-0.1.0/latex-fontsize.css" rel="stylesheet">
 <script id="quarto-search-options" type="application/json">{
   "location": "sidebar",
   "copy-button": false,
@@ -72,7 +70,7 @@ ul.task-list li input[type="checkbox"] {
   <header id="quarto-header" class="headroom fixed-top">
   <nav class="quarto-secondary-nav" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
     <div class="container-fluid d-flex justify-content-between">
-      <h1 class="quarto-secondary-nav-title">引言</h1>
+      <h1 class="quarto-secondary-nav-title">深度学习</h1>
       <button type="button" class="quarto-btn-toggle btn" aria-label="Show secondary navigation">
         <i class="bi bi-chevron-right"></i>
       </button>
@@ -97,7 +95,7 @@ ul.task-list li input[type="checkbox"] {
     <ul class="list-unstyled mt-1">
         <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="./index.html" class="sidebar-item-text sidebar-link active">引言</a>
+  <a href="./index.html" class="sidebar-item-text sidebar-link">引言</a>
   </div>
 </li>
         <li class="sidebar-item sidebar-item-section">
@@ -180,7 +178,7 @@ ul.task-list li input[type="checkbox"] {
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="./8.DL.html" class="sidebar-item-text sidebar-link">深度学习</a>
+  <a href="./8.DL.html" class="sidebar-item-text sidebar-link active">深度学习</a>
   </div>
 </li>
       </ul>
@@ -194,11 +192,21 @@ ul.task-list li input[type="checkbox"] {
     <h2 id="toc-title">内容</h2>
    
   <ul>
-  <li><a href="#环境健康类研究的特点" id="toc-环境健康类研究的特点" class="nav-link active" data-scroll-target="#环境健康类研究的特点">环境健康类研究的特点</a></li>
-  <li><a href="#课程目的-fa-bullseye" id="toc-课程目的-fa-bullseye" class="nav-link" data-scroll-target="#课程目的-fa-bullseye">课程目的 <i class="fa-solid fa-bullseye" aria-label="bullseye"></i></a></li>
-  <li><a href="#课程安排-fa-calendar" id="toc-课程安排-fa-calendar" class="nav-link" data-scroll-target="#课程安排-fa-calendar">课程安排 <i class="fa-solid fa-calendar" aria-label="calendar"></i></a></li>
-  <li><a href="#授课教师-fa-user" id="toc-授课教师-fa-user" class="nav-link" data-scroll-target="#授课教师-fa-user">授课教师 <i class="fa-solid fa-user" aria-label="user"></i></a></li>
-  <li><a href="#环境健康研究的代表性论文-fa-book-open" id="toc-环境健康研究的代表性论文-fa-book-open" class="nav-link" data-scroll-target="#环境健康研究的代表性论文-fa-book-open">环境健康研究的代表性论文 <i class="fa-solid fa-book-open" aria-label="book-open"></i></a></li>
+  <li><a href="#automl" id="toc-automl" class="nav-link active" data-scroll-target="#automl">autoML</a>
+  <ul class="collapse">
+  <li><a href="#automl框架" id="toc-automl框架" class="nav-link" data-scroll-target="#automl框架">autoML框架</a></li>
+  <li><a href="#autogluon-for-tabular-prediction" id="toc-autogluon-for-tabular-prediction" class="nav-link" data-scroll-target="#autogluon-for-tabular-prediction"><code>AutoGLuon</code> for tabular prediction</a>
+  <ul class="collapse">
+  <li><a href="#安装包" id="toc-安装包" class="nav-link" data-scroll-target="#安装包">安装包</a></li>
+  <li><a href="#拟合模型和结果预测" id="toc-拟合模型和结果预测" class="nav-link" data-scroll-target="#拟合模型和结果预测">拟合模型和结果预测</a></li>
+  </ul></li>
+  </ul></li>
+  <li><a href="#生存数据的深度学习模型框架" id="toc-生存数据的深度学习模型框架" class="nav-link" data-scroll-target="#生存数据的深度学习模型框架">生存数据的深度学习模型框架</a>
+  <ul class="collapse">
+  <li><a href="#materials-for-auto-survival" id="toc-materials-for-auto-survival" class="nav-link" data-scroll-target="#materials-for-auto-survival">Materials for auto-survival</a></li>
+  <li><a href="#smaller-papers" id="toc-smaller-papers" class="nav-link" data-scroll-target="#smaller-papers">Smaller papers</a></li>
+  </ul></li>
+  <li><a href="#合成数据" id="toc-合成数据" class="nav-link" data-scroll-target="#合成数据">合成数据</a></li>
   </ul>
 </nav>
     </div>
@@ -207,7 +215,7 @@ ul.task-list li input[type="checkbox"] {
 
 <header id="title-block-header" class="quarto-title-block default">
 <div class="quarto-title">
-<h1 class="title d-none d-lg-block">引言</h1>
+<h1 class="title d-none d-lg-block">深度学习</h1>
 </div>
 
 
@@ -222,56 +230,75 @@ ul.task-list li input[type="checkbox"] {
 
 </header>
 
-<section id="环境健康类研究的特点" class="level1">
-<h1>环境健康类研究的特点</h1>
-<p>近年来由于环境健康领域研究的热门趋势，环境类英文期刊的影响因子水涨船高。相较于临床和基础类研究，环境健康类人群研究的成果<strong>产出周期短</strong>，<strong>IF 10+杂志多</strong>，<strong>发文量大</strong>，<strong>对国人友好</strong>，<strong>研究门槛相对低</strong>，因此十分适合想要冲击IF=10+领域的老师和学生入门，环境健康类期刊具有以下特点：</p>
+<section id="automl" class="level1">
+<h1>autoML</h1>
 <ul>
-<li><strong>期刊众多、IF相对高</strong>： 2021年环境健康领域IF位于10-20区间的期间有23本， 而临床类相同IF区间的仅13本</li>
-<li><strong>发文量大、国人友好</strong>：部分优秀环境类期刊IF&gt;10，年发文量&gt;5000篇，且对中国人比较友好（国人占比40%）</li>
-<li><strong>研究成本低、难度不高</strong>： 与费用高、周期长的基础实验相比，环境健康类人群研究往往使用现存的二手数据与环境暴露链接，上手容易且发表周期相对短（3-6个月）。</li>
+<li><a href="https://www.exxactcorp.com/blog/Deep-Learning/automl-an-introduction-using-auto-sklearn-and-auto-pytorch">AutoML: An Introduction Using Auto-Sklearn and Auto-PyTorch</a></li>
+<li><a href="https://sites.google.com/view/automl-fall-school-2022/home">2nd AutoML Fall School 2022</a></li>
+</ul>
+<section id="automl框架" class="level2">
+<h2 class="anchored" data-anchor-id="automl框架">autoML框架</h2>
+<ul>
+<li><a href="https://auto.gluon.ai/0.2.0/tutorials/tabular_prediction/tabular-quickstart.html">AutoGluon for tabular prediction</a>
+<ul>
+<li><a href="https://auto.gluon.ai/stable/index.html">AutoGluon documentation</a>: AutoGluon enables easy-to-use and easy-to-extend AutoML with a focus on automated stack ensembling, deep learning, and real-world applications spanning text, image, and tabular data. Intended for both ML beginners and experts, AutoGluon enables you to:</li>
+<li>Quickly prototype deep learning and classical ML solutions for your raw data with a few lines of code.</li>
+<li>Automatically utilize state-of-the-art techniques (where appropriate) without expert knowledge.</li>
+<li>Leverage automatic hyperparameter tuning, model selection/ensembling, architecture search, and data processing.</li>
+<li>Easily improve/tune your bespoke models and data pipelines, or customize AutoGluon for your use-case.</li>
+</ul></li>
+<li><a href="https://github.com/h2oai/h2o4gpu">H2O4GPU</a>: The Python API builds upon the easy-to-use scikit-learn API and its well-tested CPU-based algorithms. It can be used as a drop-in replacement for scikit-learn (i.e.&nbsp;import h2o4gpu as sklearn) with support for GPUs on selected (and ever-growing) algorithms.</li>
+<li><a href="https://github.com/automl/Auto-PyTorch">Auto-PyTorch</a>: While early AutoML frameworks focused on optimizing traditional <strong>ML pipelines</strong> and their <strong>hyperparameters</strong>, another trend in AutoML is to focus on <strong>neural architecture search</strong>. To bring the best of these two worlds together, we developed Auto-PyTorch, which jointly and robustly optimizes the network architecture and the training hyperparameters to enable fully automated deep learning (AutoDL).</li>
 </ul>
 </section>
-<section id="课程目的-fa-bullseye" class="level1">
-<h1>课程目的 <i class="fa-solid fa-bullseye" aria-label="bullseye"></i></h1>
-<p>介绍环境暴露的人群健康效应的研究套路、数据分析模型、期刊论文写作、以及相关投稿技巧，争取帮助听众在环境健康类高影响因子的期刊（IF&gt;10）取得发表。</p>
+<section id="autogluon-for-tabular-prediction" class="level2">
+<h2 class="anchored" data-anchor-id="autogluon-for-tabular-prediction"><code>AutoGLuon</code> for tabular prediction</h2>
+<p><a href="https://nbviewer.org/github/Innixma/autogluon-doc-utils/blob/main/docs/cheatsheets/stable/autogluon-cheat-sheet.pdf"><code>AutoGLuon</code> cheat sheet</a></p>
+<section id="安装包" class="level3">
+<h3 class="anchored" data-anchor-id="安装包">安装包</h3>
+<p>以下展示的是Linux系统上使用<code>pip</code>安装基于GPU的<code>AutoGLuon</code>。</p>
+<pre><code>python3 -m pip install -U pip
+python3 -m pip install -U setuptools wheel
+
+# Here we assume CUDA 10.1 is installed.  You should change the number
+# according to your own CUDA version (e.g. mxnet_cu100 for CUDA 10.0).
+python3 -m pip install -U "mxnet_cu101&lt;2.0.0"
+python3 -m pip install autogluon</code></pre>
 </section>
-<section id="课程安排-fa-calendar" class="level1">
-<h1>课程安排 <i class="fa-solid fa-calendar" aria-label="calendar"></i></h1>
+<section id="拟合模型和结果预测" class="level3">
+<h3 class="anchored" data-anchor-id="拟合模型和结果预测">拟合模型和结果预测</h3>
+<pre><code>from autogluon.tabular import TabularPredictor
+predictor = TabularPredictor(label=COLUMN_NAME).fit(train_data=TRAIN_DATA.csv)
+predictions = predictor.predict(TEST_DATA.csv)</code></pre>
+</section>
+</section>
+</section>
+<section id="生存数据的深度学习模型框架" class="level1">
+<h1>生存数据的深度学习模型框架</h1>
+<section id="materials-for-auto-survival" class="level2">
+<h2 class="anchored" data-anchor-id="materials-for-auto-survival">Materials for auto-survival</h2>
 <ul>
-<li>第一天
-<ul>
-<li>总论（~1H）</li>
-<li>环境暴露评估（~1.5H）理论+文献实例+R代码实战</li>
-</ul></li>
-<li>第二天
-<ul>
-<li>时间序列研究（~1.5H）理论+文献实例+R代码实战</li>
-<li>病例交叉研究（~1.5H）理论+文献实例+R代码实战</li>
-</ul></li>
-<li>第三天
-<ul>
-<li>横截面研究（~1.5H）理论+文献实例+R代码实战</li>
-<li>队列研究（~1.5H）理论+文献实例+R代码实战</li>
-</ul></li>
-<li>第四天
-<ul>
-<li>10+文献的写作（~1.5H）理论+文献实例</li>
-<li>环境健康类文章选刊与投稿（~1.5H）</li>
-</ul></li>
+<li>Blog: <a href="https://blog.ml.cmu.edu/2022/08/05/auton-survival-an-open-source-package-for-regression-counterfactual-estimation-evaluation-and-phenotyping-censored-time-to-event-data/">auton-survival: An Open-Source Package for Regression, Counterfactual Estimation, Evaluation and Phenotyping Censored Time-to-Event Data</a></li>
+<li>Paper: <a href="https://arxiv.org/abs/2204.07276">auton-survival: an Open-Source Package for Regression, Counterfactual Estimation, Evaluation and Phenotyping with Censored Time-to-Event Data</a></li>
+<li>Documentation: <a href="https://autonlab.org/auton-survival/">auton_survival documentation</a></li>
+<li>Jupyter Notebook examples: <a href="https://nbviewer.org/github/autonlab/auton-survival/tree/master/examples/">auton_survival examples</a></li>
 </ul>
 </section>
-<section id="授课教师-fa-user" class="level1">
-<h1>授课教师 <i class="fa-solid fa-user" aria-label="user"></i></h1>
-<p>近五年以第一作者于JAMA Network Open、Neurology、Environmental Health Perspectives、BMC Medicine、The Lancet Regional Health - Western Pacific、Science of the Total Environment等环境健康和临床流行病等领域发表16篇SCI期刊原创性研究论文。近五年累计被引用1138次，研究论文得到Nature, Nature Medicine, Lancet, BMJ, Circulation等期刊的正面引用，并且得到CNN, U.S. News, AAN, Physicians Weekly等国外主流媒体报道。为Nat. Commun., EClinicalMedicine, J. Am. Soc. Nephrol.等30余种英文期刊审稿。</p>
-</section>
-<section id="环境健康研究的代表性论文-fa-book-open" class="level1">
-<h1>环境健康研究的代表性论文 <i class="fa-solid fa-book-open" aria-label="book-open"></i></h1>
+<section id="smaller-papers" class="level2">
+<h2 class="anchored" data-anchor-id="smaller-papers">Smaller papers</h2>
+<p><a href="https://chiragnagpal.github.io/">Chirag Nagpal</a></p>
 <ul>
-<li><strong>Cai, M.</strong>, Li, H., Wu, Y., Zhang. S., Wang. X., Zhang. Z., Lin. H.* (2022) Ambient Air Pollution Associated with Body Fat Percentages at Different Body Compartments: A Cohort Study of UK Biobank Participants. <strong><em>Environmental Health Perspectives</em></strong> (<span style="color:#9A0000;font-weight: bold;">IF=11.0</span>). 130(6): 067702. <a href="https://caimiao0714.github.io/SC-ENV-2023/Papers/2022_1_EHP10920_PM_body_fat_composition.pdf">PDF <i class="fa-solid fa-book-open" aria-label="book-open"></i></a> DOI: <a href="https://doi.org/10.1289/EHP10920">10.1289/EHP10920</a></li>
-<li><strong>Cai, M.</strong>, Zhang, S., Lin, X., Qian, Z., McMillin, S.E., Yang, Y., Zhang, Z., Pan, J., Lin, H.. (2022) Association of ambient particulate matter pollution of different sizes with in-hospital case fatality among stroke patients in China. <strong><em>Neurology.</em></strong> (<span style="color:#9A0000;font-weight: bold;">IF=12.3</span>) 98(4), e2474-e2486. <a href="https://caimiao0714.github.io/SC-ENV-2023/Papers/2022_1_Neurology_Different_Sizes_PM_Stroke_mortality.pdf">PDF <i class="fa-solid fa-book-open" aria-label="book-open"></i></a> DOI: <a href="https://doi.org/10.1212/WNL.0000000000200546">10.1212/WNL.0000000000200546</a></li>
-<li><strong>Cai, M.</strong>, Lin, X., Wang, X., Zhang, S., Qian, Z., McMillin, S.E., Aaron, H.E., Lin, H., Wei, J., Zhang, Z., Pan, J. (2022) Ambient particulate matter pollution of different sizes associated with recurrent stroke hospitalization in China: a cohort study of 1.07 million stroke patients. <strong><em>Science of the Total Environment</em></strong> (<span style="color:#9A0000;font-weight: bold;">IF=10.8</span>). 159104. <a href="https://caimiao0714.github.io/SC-ENV-2023/Papers/2022_1_STOTEN_PM_stroke_rehospitalization.pdf">PDF <i class="fa-solid fa-book-open" aria-label="book-open"></i></a> DOI: <a href="https://doi.org/10.1016/j.scitotenv.2022.159104">10.1016/j.scitotenv.2022.159104</a></li>
-<li><strong>Cai, M.</strong>, Lin, X., Wang, X., Zhang, S., Wang, C., Zhang, Z., Pan, J., Lin, H. (2023). Long-term exposure to ambient fine particulate matter chemical composition and in-hospital case fatality among patients with stroke in China. <strong><em>The Lancet Regional Health-Western Pacific</em></strong> (<span style="color:#9A0000;font-weight: bold;">IF=8.6</span>), 100679. <a href="https://caimiao0714.github.io/SC-ENV-2023/Papers/2023_1_LRHWP.pdf">PDF <i class="fa-solid fa-book-open" aria-label="book-open"></i></a> DOI: <a href="https://doi.org/10.1016/j.lanwpc.2022.100679">10.1016/j.lanwpc.2022.100679</a></li>
-<li><strong>Cai, M.</strong>, Wei, J., Zhang, S., Liu, W., Wang, L., Qian, Z., Lin, H., Liu, E., McMillin, S.E., Cao, Y., Yin, P. (2023). Short-term air pollution exposure associated with death from kidney diseases: a nationwide time-stratified case-crossover study in China from 2015 to 2019. <strong><em>BMC Medicine</em></strong> (<span style="color:#9A0000;font-weight: bold;">IF=11.2</span>), 21(1), 32. <a href="https://caimiao0714.github.io/SC-ENV-2023/Papers/2023_1_BMC_Med_Air_pollution_kidney_death.pdf">PDF <i class="fa-solid fa-book-open" aria-label="book-open"></i></a> DOI: <a href="https://doi.org/10.1186/s12916-023-02734-9">10.1186/s12916-023-02734-9</a></li>
+<li><a href="https://arxiv.org/abs/2202.11089">Counterfactual Phenotyping with Censored Time-to-Events</a></li>
+<li><a href="https://proceedings.mlr.press/v149/nagpal21a/nagpal21a.pdf">Deep Cox Mixtures for Survival Regression.</a></li>
+<li><a href="https://arxiv.org/abs/2003.01176">Deep Survival Machines: Fully Parametric Survival Regression and Representation Learning for Censored Data with Competing Risks</a></li>
+</ul>
+</section>
+</section>
+<section id="合成数据" class="level1">
+<h1>合成数据</h1>
+<ul>
+<li>CTGAN, Conditional General Adversarial Networks: <a href="https://towardsdatascience.com/5-best-python-synthetic-data-generators-and-how-to-use-them-when-you-lack-data-f62bcf62d43c">CTGAN using python</a></li>
+<li>SDV, Synthetic Data Vault: <a href="https://towardsdatascience.com/top-3-python-packages-to-generate-synthetic-data-33a351a5de0c">SDV using python</a></li>
 </ul>
 
 
