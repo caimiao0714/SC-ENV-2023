@@ -1,5 +1,5 @@
 /.quarto/
 /_site/
+/Papers/
 .Rproj.user
 *.qmd
-/*_cache/
