@@ -2,7 +2,7 @@
 <html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en"><head>
 
 <meta charset="utf-8">
-<meta name="generator" content="quarto-1.2.335">
+<meta name="generator" content="quarto-1.3.302">
 
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 
@@ -17,9 +17,10 @@ div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
 ul.task-list{list-style: none;}
 ul.task-list li input[type="checkbox"] {
   width: 0.8em;
-  margin: 0 0.8em 0.2em -1.6em;
+  margin: 0 0.8em 0.2em -1em; /* quarto-specific, see https://github.com/quarto-dev/quarto-cli/issues/4556 */ 
   vertical-align: middle;
 }
+/* CSS for syntax highlighting */
 pre > code.sourceCode { white-space: pre; position: relative; }
 pre > code.sourceCode > span { display: inline-block; line-height: 1.25; }
 pre > code.sourceCode > span:empty { height: 1.2em; }
@@ -46,43 +47,13 @@ pre.numberSource code > span > a:first-child::before
     -khtml-user-select: none; -moz-user-select: none;
     -ms-user-select: none; user-select: none;
     padding: 0 4px; width: 4em;
-    color: #aaaaaa;
   }
-pre.numberSource { margin-left: 3em; border-left: 1px solid #aaaaaa;  padding-left: 4px; }
+pre.numberSource { margin-left: 3em;  padding-left: 4px; }
 div.sourceCode
   {   }
 @media screen {
 pre > code.sourceCode > span > a:first-child::before { text-decoration: underline; }
 }
-code span.al { color: #ff0000; font-weight: bold; } /* Alert */
-code span.an { color: #60a0b0; font-weight: bold; font-style: italic; } /* Annotation */
-code span.at { color: #7d9029; } /* Attribute */
-code span.bn { color: #40a070; } /* BaseN */
-code span.bu { color: #008000; } /* BuiltIn */
-code span.cf { color: #007020; font-weight: bold; } /* ControlFlow */
-code span.ch { color: #4070a0; } /* Char */
-code span.cn { color: #880000; } /* Constant */
-code span.co { color: #60a0b0; font-style: italic; } /* Comment */
-code span.cv { color: #60a0b0; font-weight: bold; font-style: italic; } /* CommentVar */
-code span.do { color: #ba2121; font-style: italic; } /* Documentation */
-code span.dt { color: #902000; } /* DataType */
-code span.dv { color: #40a070; } /* DecVal */
-code span.er { color: #ff0000; font-weight: bold; } /* Error */
-code span.ex { } /* Extension */
-code span.fl { color: #40a070; } /* Float */
-code span.fu { color: #06287e; } /* Function */
-code span.im { color: #008000; font-weight: bold; } /* Import */
-code span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Information */
-code span.kw { color: #007020; font-weight: bold; } /* Keyword */
-code span.op { color: #666666; } /* Operator */
-code span.ot { color: #007020; } /* Other */
-code span.pp { color: #bc7a00; } /* Preprocessor */
-code span.sc { color: #4070a0; } /* SpecialChar */
-code span.ss { color: #bb6688; } /* SpecialString */
-code span.st { color: #4070a0; } /* String */
-code span.va { color: #19177c; } /* Variable */
-code span.vs { color: #4070a0; } /* VerbatimString */
-code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warning */
 </style>
 
 
@@ -125,6 +96,7 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 }</script>
 <style>html{ scroll-behavior: smooth; }</style>
 
+  <script src="https://polyfill.io/v3/polyfill.min.js?features=es6"></script>
   <script src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml-full.js" type="text/javascript"></script>
 
 <link rel="stylesheet" href="styles.css">
@@ -134,11 +106,16 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 
 <div id="quarto-search-results"></div>
   <header id="quarto-header" class="headroom fixed-top">
-  <nav class="quarto-secondary-nav" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
-    <div class="container-fluid d-flex justify-content-between">
-      <h1 class="quarto-secondary-nav-title">时间序列研究</h1>
-      <button type="button" class="quarto-btn-toggle btn" aria-label="Show secondary navigation">
-        <i class="bi bi-chevron-right"></i>
+  <nav class="quarto-secondary-nav">
+    <div class="container-fluid d-flex">
+      <button type="button" class="quarto-btn-toggle btn" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar,#quarto-sidebar-glass" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
+        <i class="bi bi-layout-text-sidebar-reverse"></i>
+      </button>
+      <nav class="quarto-page-breadcrumbs" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="./2.ts.html">第二天</a></li><li class="breadcrumb-item"><a href="./2.ts.html">时间序列研究</a></li></ol></nav>
+      <a class="flex-grow-1" role="button" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar,#quarto-sidebar-glass" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">      
+      </a>
+      <button type="button" class="btn quarto-search-button" aria-label="Search" onclick="window.quartoOpenSearch();">
+        <i class="bi bi-search"></i>
       </button>
     </div>
   </nav>
@@ -146,105 +123,113 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <!-- content -->
 <div id="quarto-content" class="quarto-container page-columns page-rows-contents page-layout-article">
 <!-- sidebar -->
-  <nav id="quarto-sidebar" class="sidebar collapse sidebar-navigation docked overflow-auto">
+  <nav id="quarto-sidebar" class="sidebar collapse collapse-horizontal sidebar-navigation docked overflow-auto">
     <div class="pt-lg-2 mt-2 text-left sidebar-header">
     <div class="sidebar-title mb-0 py-0">
       <a href="./">环境暴露的人群健康效应的研究、写作与发表</a> 
     </div>
       </div>
-      <div class="mt-2 flex-shrink-0 align-items-center">
+        <div class="mt-2 flex-shrink-0 align-items-center">
         <div class="sidebar-search">
         <div id="quarto-search" class="" title="Search"></div>
         </div>
-      </div>
+        </div>
     <div class="sidebar-menu-container"> 
     <ul class="list-unstyled mt-1">
         <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="./index.html" class="sidebar-item-text sidebar-link">引言</a>
+  <a href="./index.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">引言</span></a>
   </div>
 </li>
         <li class="sidebar-item sidebar-item-section">
       <div class="sidebar-item-container"> 
-            <a class="sidebar-item-text sidebar-link text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-1" aria-expanded="true">第一天</a>
-          <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-1" aria-expanded="true">
+            <a class="sidebar-item-text sidebar-link text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-1" aria-expanded="true">
+ <span class="menu-text">第一天</span></a>
+          <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-1" aria-expanded="true" aria-label="Toggle section">
             <i class="bi bi-chevron-right ms-2"></i>
           </a> 
       </div>
       <ul id="quarto-sidebar-section-1" class="collapse list-unstyled sidebar-section depth1 show">  
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="./0.intro.html" class="sidebar-item-text sidebar-link">环境健康领域简介</a>
+  <a href="./0.intro.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">环境健康领域简介</span></a>
   </div>
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="./1.exposure.html" class="sidebar-item-text sidebar-link">环境暴露评估</a>
+  <a href="./1.exposure.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">环境暴露评估</span></a>
   </div>
 </li>
       </ul>
   </li>
         <li class="sidebar-item sidebar-item-section">
       <div class="sidebar-item-container"> 
-            <a class="sidebar-item-text sidebar-link text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-2" aria-expanded="true">第二天</a>
-          <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-2" aria-expanded="true">
+            <a class="sidebar-item-text sidebar-link text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-2" aria-expanded="true">
+ <span class="menu-text">第二天</span></a>
+          <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-2" aria-expanded="true" aria-label="Toggle section">
             <i class="bi bi-chevron-right ms-2"></i>
           </a> 
       </div>
       <ul id="quarto-sidebar-section-2" class="collapse list-unstyled sidebar-section depth1 show">  
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="./2.ts.html" class="sidebar-item-text sidebar-link active">时间序列研究</a>
+  <a href="./2.ts.html" class="sidebar-item-text sidebar-link active">
+ <span class="menu-text">时间序列研究</span></a>
   </div>
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="./3.cco.html" class="sidebar-item-text sidebar-link">时间分层的病例交叉研究</a>
+  <a href="./3.cco.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">时间分层的病例交叉研究</span></a>
   </div>
 </li>
       </ul>
   </li>
         <li class="sidebar-item sidebar-item-section">
       <div class="sidebar-item-container"> 
-            <a class="sidebar-item-text sidebar-link text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-3" aria-expanded="true">第三天</a>
-          <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-3" aria-expanded="true">
+            <a class="sidebar-item-text sidebar-link text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-3" aria-expanded="true">
+ <span class="menu-text">第三天</span></a>
+          <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-3" aria-expanded="true" aria-label="Toggle section">
             <i class="bi bi-chevron-right ms-2"></i>
           </a> 
       </div>
       <ul id="quarto-sidebar-section-3" class="collapse list-unstyled sidebar-section depth1 show">  
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="./4.cross-sec.html" class="sidebar-item-text sidebar-link">横截面研究</a>
+  <a href="./4.cross-sec.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">横截面研究</span></a>
   </div>
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="./5.cohort.html" class="sidebar-item-text sidebar-link">队列研究</a>
+  <a href="./5.cohort.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">队列研究</span></a>
   </div>
 </li>
       </ul>
   </li>
         <li class="sidebar-item sidebar-item-section">
       <div class="sidebar-item-container"> 
-            <a class="sidebar-item-text sidebar-link text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-4" aria-expanded="true">第四天</a>
-          <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-4" aria-expanded="true">
+            <a class="sidebar-item-text sidebar-link text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-4" aria-expanded="true">
+ <span class="menu-text">第四天</span></a>
+          <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-4" aria-expanded="true" aria-label="Toggle section">
             <i class="bi bi-chevron-right ms-2"></i>
           </a> 
       </div>
       <ul id="quarto-sidebar-section-4" class="collapse list-unstyled sidebar-section depth1 show">  
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="./6.writing.html" class="sidebar-item-text sidebar-link">10+文章的写作套路</a>
+  <a href="./6.writing.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">10+文章的写作套路</span></a>
   </div>
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="./7.journal.html" class="sidebar-item-text sidebar-link">选刊与投稿</a>
-  </div>
-</li>
-          <li class="sidebar-item">
-  <div class="sidebar-item-container"> 
-  <a href="./8.DL.html" class="sidebar-item-text sidebar-link">深度学习</a>
+  <a href="./7.journal.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">选刊与投稿</span></a>
   </div>
 </li>
       </ul>
@@ -252,6 +237,7 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
     </ul>
     </div>
 </nav>
+<div id="quarto-sidebar-glass" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar,#quarto-sidebar-glass"></div>
 <!-- margin-sidebar -->
     <div id="quarto-margin-sidebar" class="sidebar margin-sidebar">
         <nav id="TOC" role="doc-toc" class="toc-active">
@@ -268,7 +254,18 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
   </ul></li>
   </ul></li>
   <li><a href="#文献实例" id="toc-文献实例" class="nav-link" data-scroll-target="#文献实例">文献实例</a></li>
-  <li><a href="#r语言代码实战" id="toc-r语言代码实战" class="nav-link" data-scroll-target="#r语言代码实战">R语言代码实战</a></li>
+  <li><a href="#r语言代码实战" id="toc-r语言代码实战" class="nav-link" data-scroll-target="#r语言代码实战">R语言代码实战</a>
+  <ul class="collapse">
+  <li><a href="#数据读取与检查" id="toc-数据读取与检查" class="nav-link" data-scroll-target="#数据读取与检查">数据读取与检查</a></li>
+  <li><a href="#第一阶段gam建模" id="toc-第一阶段gam建模" class="nav-link" data-scroll-target="#第一阶段gam建模">第一阶段GAM建模</a>
+  <ul class="collapse">
+  <li><a href="#计算各污染物的四分位间距" id="toc-计算各污染物的四分位间距" class="nav-link" data-scroll-target="#计算各污染物的四分位间距">计算各污染物的四分位间距</a></li>
+  <li><a href="#设置各个城市的观测时长的自由度" id="toc-设置各个城市的观测时长的自由度" class="nav-link" data-scroll-target="#设置各个城市的观测时长的自由度">设置各个城市的观测时长的自由度</a></li>
+  <li><a href="#分城市进行建模" id="toc-分城市进行建模" class="nav-link" data-scroll-target="#分城市进行建模">分城市进行建模</a></li>
+  <li><a href="#计算各城市的模型估计值" id="toc-计算各城市的模型估计值" class="nav-link" data-scroll-target="#计算各城市的模型估计值">计算各城市的模型估计值</a></li>
+  </ul></li>
+  <li><a href="#第二阶段meta分析" id="toc-第二阶段meta分析" class="nav-link" data-scroll-target="#第二阶段meta分析">第二阶段meta分析</a></li>
+  </ul></li>
   </ul>
 </nav>
     </div>
@@ -277,7 +274,7 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 
 <header id="title-block-header" class="quarto-title-block default">
 <div class="quarto-title">
-<h1 class="title d-none d-lg-block">时间序列研究</h1>
+<h1 class="title">时间序列研究</h1>
 </div>
 
 
@@ -297,11 +294,10 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <section id="背景与参考文献" class="level2">
 <h2 class="anchored" data-anchor-id="背景与参考文献">背景与参考文献</h2>
 <ul>
-<li><p>Chen, R., Yin, P., Meng, X., Liu, C., Wang, L., Xu, X., … &amp; Zhou, M. (2017). Fine particulate air pollution and daily mortality. A nationwide analysis in 272 Chinese cities. <strong><em>American journal of Respiratory and Critical Care Medicine</em></strong>, 196(1), 73-81.</p></li>
-<li><p>Chen, R., Yin, P., Wang, L., Liu, C., Niu, Y., Wang, W., … &amp; Zhou, M. (2018). Association between ambient temperature and mortality risk and burden: time series study in 272 main Chinese cities. <strong><em>BMJ</em></strong>, 363.</p></li>
-<li><p>Liu, C., Chen, R., Sera, F., Vicedo-Cabrera, A. M., Guo, Y., Tong, S., … &amp; Kan, H. (2019). Ambient particulate air pollution and daily mortality in 652 cities. <strong><em>New England Journal of Medicine</em></strong>, 381(8), 705-715. <a href="https://caimiao0714.github.io/SC-ENV-2023/Papers/Liu_2019_NEJM.pdf">PDF <i class="fa-solid fa-book-open" aria-label="book-open"></i></a></p></li>
-<li><p>Chen, G., Guo, Y., Yue, X., Tong, S., Gasparrini, A., Bell, M. L., … &amp; Li, S. (2021). Mortality risk attributable to wildfire-related PM2· 5 pollution: a global time series study in 749 locations. <strong><em>The Lancet Planetary Health</em></strong>, 5(9), e579-e587.</p></li>
-<li><p>Wang, X., Leng, M., Liu, Y., Qian, Z. M., Zhang, J., Li, Z., … &amp; Lin, H. (2021). Different sized particles associated with all-cause and cause-specific emergency ambulance calls: a multicity time-series analysis in China. <strong><em>Science of The Total Environment</em></strong>, 783, 147060.</p></li>
+<li><p>Liu, C., Chen, R., Sera, F., Vicedo-Cabrera, A. M., Guo, Y., Tong, S., … &amp; Kan, H. (2019). Ambient particulate air pollution and daily mortality in 652 cities. <strong><em>New England Journal of Medicine</em></strong> (<span style="color:#9A0000;font-weight: bold;">IF=176</span>), 381(8), 705-715. <a href="https://caimiao0714.github.io/SC-ENV-2023/Papers/Liu_2019_NEJM.pdf">PDF <i class="fa-solid fa-book-open" aria-label="book-open"></i></a></p></li>
+<li><p>Chen, G., Guo, Y., Yue, X., Tong, S., Gasparrini, A., Bell, M. L., … &amp; Li, S. (2021). Mortality risk attributable to wildfire-related PM<span class="math inline">\(_{2.5}\)</span> pollution: a global time series study in 749 locations. <strong><em>The Lancet Planetary Health</em></strong> (<span style="color:#9A0000;font-weight: bold;">IF=29</span>), 5(9), e579-e587. <a href="https://caimiao0714.github.io/SC-ENV-2023/Papers/Chen_2021_Lancet_Planetary_Health_wildfire.pdf">PDF <i class="fa-solid fa-book-open" aria-label="book-open"></i></a></p></li>
+<li><p>Chen, R., Yin, P., Wang, L., Liu, C., Niu, Y., Wang, W., … &amp; Zhou, M. (2018). Association between ambient temperature and mortality risk and burden: time series study in 272 main Chinese cities. <strong><em>BMJ</em></strong> (<span style="color:#9A0000;font-weight: bold;">IF=93</span>), 363.</p></li>
+<li><p>Chen, R., Yin, P., Meng, X., Liu, C., Wang, L., Xu, X., … &amp; Zhou, M. (2017). Fine particulate air pollution and daily mortality. A nationwide analysis in 272 Chinese cities. <strong><em>American journal of Respiratory and Critical Care Medicine</em></strong> (<span style="color:#9A0000;font-weight: bold;">IF=31</span>), 196(1), 73-81.</p></li>
 </ul>
 </section>
 <section id="模型" class="level2">
@@ -335,109 +331,267 @@ s(t, \text{df} = \frac{6}{\text{year}}) \\
 </section>
 <section id="r语言代码实战" class="level1">
 <h1>R语言代码实战</h1>
+<section id="数据读取与检查" class="level2">
+<h2 class="anchored" data-anchor-id="数据读取与检查">数据读取与检查</h2>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb1"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb1-1"><a href="#cb1-1"></a>pacman<span class="sc">::</span><span class="fu">p_load</span>(lubridate, glue, tidyr, purrr, broom, mgcv, dplyr, data.table, </span>
-<span id="cb1-2"><a href="#cb1-2"></a>               fst, ggplot2)</span>
-<span id="cb1-3"><a href="#cb1-3"></a></span>
-<span id="cb1-4"><a href="#cb1-4"></a>fit_ts_sep <span class="ot">=</span> <span class="cf">function</span>(pm_components, df_date, y, dat){</span>
-<span id="cb1-5"><a href="#cb1-5"></a>  </span>
-<span id="cb1-6"><a href="#cb1-6"></a>  fit_model <span class="ot">=</span> <span class="fu">glue</span>(<span class="st">'{y} ~ {pm_components} +</span></span>
-<span id="cb1-7"><a href="#cb1-7"></a><span class="st">                    s(admit_date_int, k = {df_date}, fx = T, bs = "cr") +</span></span>
-<span id="cb1-8"><a href="#cb1-8"></a><span class="st">                    dow + s(Temperature_MA_07, k = 6) +</span></span>
-<span id="cb1-9"><a href="#cb1-9"></a><span class="st">                    s(RH_MA_07, k = 6)'</span>) <span class="sc">%&gt;%</span></span>
-<span id="cb1-10"><a href="#cb1-10"></a>    <span class="fu">as.formula</span>() <span class="sc">%&gt;%</span></span>
-<span id="cb1-11"><a href="#cb1-11"></a>    <span class="fu">gam</span>(<span class="at">family =</span> <span class="fu">quasipoisson</span>(<span class="at">link =</span> <span class="st">"log"</span>),</span>
-<span id="cb1-12"><a href="#cb1-12"></a>        <span class="at">scale =</span> <span class="sc">-</span><span class="dv">1</span>,</span>
-<span id="cb1-13"><a href="#cb1-13"></a>        <span class="at">control =</span> <span class="fu">gam.control</span>(<span class="at">epsilon =</span> <span class="fl">0.0000001</span>,</span>
-<span id="cb1-14"><a href="#cb1-14"></a>                              <span class="at">maxit =</span> <span class="dv">1000</span>),</span>
-<span id="cb1-15"><a href="#cb1-15"></a>        <span class="at">na.action =</span> na.omit,</span>
-<span id="cb1-16"><a href="#cb1-16"></a>        <span class="at">data =</span> dat)</span>
-<span id="cb1-17"><a href="#cb1-17"></a>  </span>
-<span id="cb1-18"><a href="#cb1-18"></a>  coef_vec <span class="ot">=</span> <span class="fu">summary</span>(fit_model)<span class="sc">$</span>p.coeff</span>
-<span id="cb1-19"><a href="#cb1-19"></a>  se_vec <span class="ot">=</span> <span class="fu">summary</span>(fit_model)<span class="sc">$</span>se</span>
-<span id="cb1-20"><a href="#cb1-20"></a>  pval_vec <span class="ot">=</span> <span class="fu">summary</span>(fit_model)<span class="sc">$</span>p.pv</span>
-<span id="cb1-21"><a href="#cb1-21"></a>  </span>
-<span id="cb1-22"><a href="#cb1-22"></a>  coef_point <span class="ot">=</span> coef_vec[<span class="fu">names</span>(coef_vec) <span class="sc">==</span> pm_components]</span>
-<span id="cb1-23"><a href="#cb1-23"></a>  se_point <span class="ot">=</span> se_vec[<span class="fu">names</span>(se_vec) <span class="sc">==</span> pm_components]</span>
-<span id="cb1-24"><a href="#cb1-24"></a>  pval_point <span class="ot">=</span> pval_vec[<span class="fu">names</span>(pval_vec) <span class="sc">==</span> pm_components]</span>
-<span id="cb1-25"><a href="#cb1-25"></a>  </span>
-<span id="cb1-26"><a href="#cb1-26"></a>  ER <span class="ot">=</span> (<span class="fu">exp</span>(coef_point) <span class="sc">-</span> <span class="dv">1</span>)<span class="sc">*</span><span class="dv">100</span></span>
-<span id="cb1-27"><a href="#cb1-27"></a>  CI_lower <span class="ot">=</span> (<span class="fu">exp</span>(coef_point <span class="sc">-</span> <span class="fl">1.96</span><span class="sc">*</span>se_point) <span class="sc">-</span> <span class="dv">1</span>)<span class="sc">*</span><span class="dv">100</span></span>
-<span id="cb1-28"><a href="#cb1-28"></a>  CI_upper <span class="ot">=</span> (<span class="fu">exp</span>(coef_point <span class="sc">+</span> <span class="fl">1.96</span><span class="sc">*</span>se_point) <span class="sc">-</span> <span class="dv">1</span>)<span class="sc">*</span><span class="dv">100</span></span>
-<span id="cb1-29"><a href="#cb1-29"></a>  </span>
-<span id="cb1-30"><a href="#cb1-30"></a>  ER_95CI <span class="ot">=</span> <span class="fu">glue</span>(<span class="st">"{formatC(round(ER, 2), format = 'f', digits = 2)} "</span>,</span>
-<span id="cb1-31"><a href="#cb1-31"></a>                 <span class="st">"({formatC(round(CI_lower, 2), format = 'f', digits = 2)} to "</span>,</span>
-<span id="cb1-32"><a href="#cb1-32"></a>                 <span class="st">"{formatC(round(CI_upper, 2), format = 'f', digits = 2)})"</span>)</span>
-<span id="cb1-33"><a href="#cb1-33"></a>  </span>
-<span id="cb1-34"><a href="#cb1-34"></a>  output <span class="ot">=</span> <span class="fu">data.table</span>(</span>
-<span id="cb1-35"><a href="#cb1-35"></a>    <span class="at">pm_components =</span> pm_components, </span>
-<span id="cb1-36"><a href="#cb1-36"></a>    <span class="co">#pm_component_IQR = formatC(round(IQR_range, 2), format = 'f', digits = 2), </span></span>
-<span id="cb1-37"><a href="#cb1-37"></a>    <span class="at">n =</span> dat[,.N],</span>
-<span id="cb1-38"><a href="#cb1-38"></a>    <span class="at">ER_95CI =</span> ER_95CI,</span>
-<span id="cb1-39"><a href="#cb1-39"></a>    <span class="at">ER =</span> ER, </span>
-<span id="cb1-40"><a href="#cb1-40"></a>    <span class="at">CI_lower =</span> CI_lower, </span>
-<span id="cb1-41"><a href="#cb1-41"></a>    <span class="at">CI_upper =</span> CI_upper, </span>
-<span id="cb1-42"><a href="#cb1-42"></a>    <span class="at">p_value =</span> pval_point,</span>
-<span id="cb1-43"><a href="#cb1-43"></a>    <span class="at">log_OR =</span> coef_point, </span>
-<span id="cb1-44"><a href="#cb1-44"></a>    <span class="at">log_OR_se =</span> se_point)</span>
-<span id="cb1-45"><a href="#cb1-45"></a>  </span>
-<span id="cb1-46"><a href="#cb1-46"></a>  <span class="fu">return</span>(output)</span>
-<span id="cb1-47"><a href="#cb1-47"></a>}</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb1"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb1-1"><a href="#cb1-1"></a>pacman<span class="sc">::</span><span class="fu">p_load</span>(lubridate, glue, tidyr, purrr, broom, mgcv, dplyr, data.table, ggplot2)</span>
+<span id="cb1-2"><a href="#cb1-2"></a></span>
+<span id="cb1-3"><a href="#cb1-3"></a>ts_city <span class="ot">=</span> arrow<span class="sc">::</span><span class="fu">read_parquet</span>(<span class="st">'Data/ts_synthetic.parquet'</span>) <span class="sc">%&gt;%</span> </span>
+<span id="cb1-4"><a href="#cb1-4"></a>  <span class="fu">mutate</span>(<span class="at">admit_date_int =</span> <span class="fu">as.integer</span>(admit_date))</span>
+<span id="cb1-5"><a href="#cb1-5"></a></span>
+<span id="cb1-6"><a href="#cb1-6"></a><span class="fu">glimpse</span>(ts_city)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>Rows: 22,958
+Columns: 13
+$ City              &lt;chr&gt; "city_01", "city_01", "city_01", "city_01", "city_01…
+$ admit_date        &lt;date&gt; 2014-01-01, 2014-01-02, 2014-01-03, 2014-01-04, 201…
+$ N                 &lt;int&gt; 71, 30, 53, 37, 33, 27, 26, 41, 46, 38, 30, 30, 40, …
+$ PM2.5_MA_07       &lt;dbl&gt; 43.48810, 47.60833, 53.47381, 59.12381, 61.48333, 62…
+$ SO4_MA_07         &lt;dbl&gt; 8.103643, 8.859619, 9.862833, 10.802631, 10.981190, …
+$ NO3_MA_07         &lt;dbl&gt; 11.321107, 12.452488, 14.035452, 15.446714, 15.80534…
+$ NH4_MA_07         &lt;dbl&gt; 7.374893, 8.115286, 9.126012, 10.078940, 10.428202, …
+$ OM_MA_07          &lt;dbl&gt; 10.740298, 11.796440, 13.649619, 15.619893, 16.65766…
+$ BC_MA_07          &lt;dbl&gt; 1.664417, 1.873250, 2.214726, 2.557393, 2.782690, 2.…
+$ Temperature_MA_07 &lt;dbl&gt; 8.647635, 8.697264, 9.145584, 9.433634, 9.423733, 10…
+$ RH_MA_07          &lt;dbl&gt; 75.89122, 74.89766, 76.77965, 79.10466, 80.76195, 79…
+$ dow               &lt;ord&gt; Sunday, Monday, Tuesday, Wednesday, Thursday, Friday…
+$ admit_date_int    &lt;int&gt; 16071, 16072, 16073, 16074, 16075, 16076, 16077, 160…</code></pre>
+</div>
 </div>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb2"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb2-1"><a href="#cb2-1"></a>pollutant_vec7 <span class="ot">=</span> <span class="fu">c</span>(</span>
-<span id="cb2-2"><a href="#cb2-2"></a>  <span class="st">"PM2.5_MA_07"</span>, <span class="st">"SO4_MA_07"</span>, <span class="st">"NO3_MA_07"</span>, <span class="st">"NH4_MA_07"</span>, <span class="st">"OM_MA_07"</span>, <span class="st">"BC_MA_07"</span>)</span>
-<span id="cb2-3"><a href="#cb2-3"></a></span>
-<span id="cb2-4"><a href="#cb2-4"></a></span>
-<span id="cb2-5"><a href="#cb2-5"></a>IQR_pollutant_county <span class="ot">=</span> <span class="fu">map_dfr</span>(</span>
-<span id="cb2-6"><a href="#cb2-6"></a>  pollutant_vec7,</span>
-<span id="cb2-7"><a href="#cb2-7"></a>  <span class="sc">~</span><span class="fu">data.table</span>(<span class="at">pollutant =</span> .x, </span>
-<span id="cb2-8"><a href="#cb2-8"></a>              <span class="at">IQR =</span> <span class="fu">IQR</span>(d_sub1[[.x]], <span class="at">na.rm =</span> <span class="cn">TRUE</span>)))</span>
-<span id="cb2-9"><a href="#cb2-9"></a></span>
-<span id="cb2-10"><a href="#cb2-10"></a>prov_county_obs_length <span class="ot">=</span> d_sub1 <span class="sc">%&gt;%</span> </span>
-<span id="cb2-11"><a href="#cb2-11"></a>  <span class="fu">group_by</span>(Province_CN, Province, City_code, City, County, Cnty_code) <span class="sc">%&gt;%</span> </span>
-<span id="cb2-12"><a href="#cb2-12"></a>  <span class="fu">summarise</span>(<span class="at">admit_date_min =</span> <span class="fu">min</span>(admit_date),</span>
-<span id="cb2-13"><a href="#cb2-13"></a>            <span class="at">admit_date_max =</span> <span class="fu">max</span>(admit_date),</span>
-<span id="cb2-14"><a href="#cb2-14"></a>            <span class="at">obs_length =</span> <span class="fu">as.integer</span>(<span class="fu">max</span>(admit_date) <span class="sc">-</span> <span class="fu">min</span>(admit_date))<span class="sc">/</span><span class="dv">365</span>,</span>
-<span id="cb2-15"><a href="#cb2-15"></a>            <span class="at">df =</span> <span class="fu">round</span>(obs_length)<span class="sc">*</span><span class="dv">6</span>) <span class="sc">%&gt;%</span> </span>
-<span id="cb2-16"><a href="#cb2-16"></a>  <span class="fu">ungroup</span>()</span>
-<span id="cb2-17"><a href="#cb2-17"></a></span>
-<span id="cb2-18"><a href="#cb2-18"></a></span>
-<span id="cb2-19"><a href="#cb2-19"></a>map_city <span class="ot">=</span> <span class="cf">function</span>(dat, y, df_date, county_id){</span>
-<span id="cb2-20"><a href="#cb2-20"></a>  </span>
-<span id="cb2-21"><a href="#cb2-21"></a>  <span class="co">#pb$tick()$print()</span></span>
-<span id="cb2-22"><a href="#cb2-22"></a>  df_date_vector <span class="ot">=</span> <span class="fu">rep</span>(df_date, <span class="fu">length</span>(pollutant_vec7))</span>
-<span id="cb2-23"><a href="#cb2-23"></a>  </span>
-<span id="cb2-24"><a href="#cb2-24"></a>  res <span class="ot">=</span> <span class="fu">map2_dfr</span>(pollutant_vec7, df_date, <span class="at">.f =</span> fit_ts_sep, <span class="at">dat =</span> dat, <span class="at">y =</span> y)</span>
-<span id="cb2-25"><a href="#cb2-25"></a>  </span>
-<span id="cb2-26"><a href="#cb2-26"></a>  <span class="fu">fwrite</span>(res, <span class="fu">glue</span>(<span class="st">'Results/{y}_{county_id}.csv'</span>))</span>
-<span id="cb2-27"><a href="#cb2-27"></a>  </span>
-<span id="cb2-28"><a href="#cb2-28"></a>  <span class="fu">return</span>(res)</span>
-<span id="cb2-29"><a href="#cb2-29"></a>}</span>
-<span id="cb2-30"><a href="#cb2-30"></a></span>
-<span id="cb2-31"><a href="#cb2-31"></a>est_prov_county <span class="ot">=</span> d_sub1 <span class="sc">%&gt;%</span> </span>
-<span id="cb2-32"><a href="#cb2-32"></a>  .[,N_obs <span class="sc">:</span><span class="er">=</span> .N,.(Cnty_code)] <span class="sc">%&gt;%</span> </span>
-<span id="cb2-33"><a href="#cb2-33"></a>  <span class="fu">filter</span>(<span class="sc">!</span><span class="fu">is.na</span>(BC_MA_07) <span class="sc">&amp;</span> <span class="sc">!</span><span class="fu">is.na</span>(Temperature_MA_07) <span class="sc">&amp;</span> N_obs <span class="sc">&gt;</span> <span class="dv">100</span>) <span class="sc">%&gt;%</span> </span>
-<span id="cb2-34"><a href="#cb2-34"></a>  <span class="fu">mutate</span>(<span class="fu">across</span>(PM2<span class="fl">.5</span>_MA_07<span class="sc">:</span>BC_MA_07, <span class="sc">~</span>.x<span class="sc">/</span><span class="fu">IQR</span>(.x))) <span class="sc">%&gt;%</span> </span>
-<span id="cb2-35"><a href="#cb2-35"></a>  <span class="fu">group_by</span>(Province_CN, Province, City_code, City, County, Cnty_code) <span class="sc">%&gt;%</span> </span>
-<span id="cb2-36"><a href="#cb2-36"></a>  <span class="fu">nest</span>() <span class="sc">%&gt;%</span></span>
-<span id="cb2-37"><a href="#cb2-37"></a>  <span class="fu">left_join</span>(prov_county_obs_length <span class="sc">%&gt;%</span> </span>
-<span id="cb2-38"><a href="#cb2-38"></a>              dplyr<span class="sc">::</span><span class="fu">select</span>(Cnty_code, df),</span>
-<span id="cb2-39"><a href="#cb2-39"></a>            <span class="at">by =</span> <span class="st">'Cnty_code'</span>) <span class="sc">%&gt;%</span> </span>
-<span id="cb2-40"><a href="#cb2-40"></a>            <span class="co">#filter(Cnty_code == 140105) %&gt;%</span></span>
-<span id="cb2-41"><a href="#cb2-41"></a>  <span class="fu">mutate</span>(<span class="co">#hospitallevel_tertiary = pmap(.l = list(data, df, Cnty_code), </span></span>
-<span id="cb2-42"><a href="#cb2-42"></a>         <span class="co">#                              .f = map_city, </span></span>
-<span id="cb2-43"><a href="#cb2-43"></a>         <span class="co">#                              y = 'hospitallevel_tertiary'),</span></span>
-<span id="cb2-44"><a href="#cb2-44"></a>         <span class="at">hospitallevel_secondary =</span> <span class="fu">pmap</span>(<span class="at">.l =</span> <span class="fu">list</span>(data, df, Cnty_code), </span>
-<span id="cb2-45"><a href="#cb2-45"></a>                                        <span class="at">.f =</span> map_city, </span>
-<span id="cb2-46"><a href="#cb2-46"></a>                                        <span class="at">y =</span> <span class="st">'hospitallevel_secondary'</span>))</span>
-<span id="cb2-47"><a href="#cb2-47"></a></span>
-<span id="cb2-48"><a href="#cb2-48"></a></span>
-<span id="cb2-49"><a href="#cb2-49"></a>res_county_sub <span class="ot">=</span> est_prov_county <span class="sc">%&gt;%</span> </span>
-<span id="cb2-50"><a href="#cb2-50"></a>  dplyr<span class="sc">::</span><span class="fu">select</span>(<span class="sc">-</span>data)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb3"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb3-1"><a href="#cb3-1"></a>fit_ts_sep <span class="ot">=</span> <span class="cf">function</span>(pm_components, df_date, y, dat){</span>
+<span id="cb3-2"><a href="#cb3-2"></a>  </span>
+<span id="cb3-3"><a href="#cb3-3"></a>  fit_model <span class="ot">=</span> <span class="fu">glue</span>(<span class="st">'{y} ~ {pm_components} +</span></span>
+<span id="cb3-4"><a href="#cb3-4"></a><span class="st">                    s(admit_date_int, k = {df_date}, fx = T, bs = "cr") +</span></span>
+<span id="cb3-5"><a href="#cb3-5"></a><span class="st">                    dow + s(Temperature_MA_07, k = 6) +</span></span>
+<span id="cb3-6"><a href="#cb3-6"></a><span class="st">                    s(RH_MA_07, k = 6)'</span>) <span class="sc">%&gt;%</span></span>
+<span id="cb3-7"><a href="#cb3-7"></a>    <span class="fu">as.formula</span>() <span class="sc">%&gt;%</span></span>
+<span id="cb3-8"><a href="#cb3-8"></a>    <span class="fu">gam</span>(<span class="at">family =</span> <span class="fu">quasipoisson</span>(<span class="at">link =</span> <span class="st">"log"</span>),</span>
+<span id="cb3-9"><a href="#cb3-9"></a>        <span class="at">scale =</span> <span class="sc">-</span><span class="dv">1</span>,</span>
+<span id="cb3-10"><a href="#cb3-10"></a>        <span class="at">control =</span> <span class="fu">gam.control</span>(<span class="at">epsilon =</span> <span class="fl">0.0000001</span>,</span>
+<span id="cb3-11"><a href="#cb3-11"></a>                              <span class="at">maxit =</span> <span class="dv">1000</span>),</span>
+<span id="cb3-12"><a href="#cb3-12"></a>        <span class="at">na.action =</span> na.omit,</span>
+<span id="cb3-13"><a href="#cb3-13"></a>        <span class="at">data =</span> dat)</span>
+<span id="cb3-14"><a href="#cb3-14"></a>  </span>
+<span id="cb3-15"><a href="#cb3-15"></a>  coef_vec <span class="ot">=</span> <span class="fu">summary</span>(fit_model)<span class="sc">$</span>p.coeff</span>
+<span id="cb3-16"><a href="#cb3-16"></a>  se_vec <span class="ot">=</span> <span class="fu">summary</span>(fit_model)<span class="sc">$</span>se</span>
+<span id="cb3-17"><a href="#cb3-17"></a>  pval_vec <span class="ot">=</span> <span class="fu">summary</span>(fit_model)<span class="sc">$</span>p.pv</span>
+<span id="cb3-18"><a href="#cb3-18"></a>  </span>
+<span id="cb3-19"><a href="#cb3-19"></a>  coef_point <span class="ot">=</span> coef_vec[<span class="fu">names</span>(coef_vec) <span class="sc">==</span> pm_components]</span>
+<span id="cb3-20"><a href="#cb3-20"></a>  se_point <span class="ot">=</span> se_vec[<span class="fu">names</span>(se_vec) <span class="sc">==</span> pm_components]</span>
+<span id="cb3-21"><a href="#cb3-21"></a>  pval_point <span class="ot">=</span> pval_vec[<span class="fu">names</span>(pval_vec) <span class="sc">==</span> pm_components]</span>
+<span id="cb3-22"><a href="#cb3-22"></a>  </span>
+<span id="cb3-23"><a href="#cb3-23"></a>  ER <span class="ot">=</span> (<span class="fu">exp</span>(coef_point) <span class="sc">-</span> <span class="dv">1</span>)<span class="sc">*</span><span class="dv">100</span></span>
+<span id="cb3-24"><a href="#cb3-24"></a>  CI_lower <span class="ot">=</span> (<span class="fu">exp</span>(coef_point <span class="sc">-</span> <span class="fl">1.96</span><span class="sc">*</span>se_point) <span class="sc">-</span> <span class="dv">1</span>)<span class="sc">*</span><span class="dv">100</span></span>
+<span id="cb3-25"><a href="#cb3-25"></a>  CI_upper <span class="ot">=</span> (<span class="fu">exp</span>(coef_point <span class="sc">+</span> <span class="fl">1.96</span><span class="sc">*</span>se_point) <span class="sc">-</span> <span class="dv">1</span>)<span class="sc">*</span><span class="dv">100</span></span>
+<span id="cb3-26"><a href="#cb3-26"></a>  </span>
+<span id="cb3-27"><a href="#cb3-27"></a>  ER_95CI <span class="ot">=</span> <span class="fu">glue</span>(<span class="st">"{formatC(round(ER, 2), format = 'f', digits = 2)} "</span>,</span>
+<span id="cb3-28"><a href="#cb3-28"></a>                 <span class="st">"({formatC(round(CI_lower, 2), format = 'f', digits = 2)} to "</span>,</span>
+<span id="cb3-29"><a href="#cb3-29"></a>                 <span class="st">"{formatC(round(CI_upper, 2), format = 'f', digits = 2)})"</span>)</span>
+<span id="cb3-30"><a href="#cb3-30"></a>  </span>
+<span id="cb3-31"><a href="#cb3-31"></a>  output <span class="ot">=</span> <span class="fu">data.table</span>(</span>
+<span id="cb3-32"><a href="#cb3-32"></a>    <span class="at">pm_components =</span> pm_components, </span>
+<span id="cb3-33"><a href="#cb3-33"></a>    <span class="co">#pm_component_IQR = formatC(round(IQR_range, 2), format = 'f', digits = 2), </span></span>
+<span id="cb3-34"><a href="#cb3-34"></a>    <span class="at">n =</span> dat[,.N],</span>
+<span id="cb3-35"><a href="#cb3-35"></a>    <span class="at">ER_95CI =</span> ER_95CI,</span>
+<span id="cb3-36"><a href="#cb3-36"></a>    <span class="at">ER =</span> ER, </span>
+<span id="cb3-37"><a href="#cb3-37"></a>    <span class="at">CI_lower =</span> CI_lower, </span>
+<span id="cb3-38"><a href="#cb3-38"></a>    <span class="at">CI_upper =</span> CI_upper, </span>
+<span id="cb3-39"><a href="#cb3-39"></a>    <span class="at">p_value =</span> pval_point,</span>
+<span id="cb3-40"><a href="#cb3-40"></a>    <span class="at">log_OR =</span> coef_point, </span>
+<span id="cb3-41"><a href="#cb3-41"></a>    <span class="at">log_OR_se =</span> se_point)</span>
+<span id="cb3-42"><a href="#cb3-42"></a>  </span>
+<span id="cb3-43"><a href="#cb3-43"></a>  <span class="fu">return</span>(output)</span>
+<span id="cb3-44"><a href="#cb3-44"></a>}</span>
+<span id="cb3-45"><a href="#cb3-45"></a></span>
+<span id="cb3-46"><a href="#cb3-46"></a>map_city <span class="ot">=</span> <span class="cf">function</span>(dat, df_date, y){</span>
+<span id="cb3-47"><a href="#cb3-47"></a>  </span>
+<span id="cb3-48"><a href="#cb3-48"></a>  <span class="co">#pb$tick()$print()</span></span>
+<span id="cb3-49"><a href="#cb3-49"></a>  df_date_vector <span class="ot">=</span> <span class="fu">rep</span>(df_date, <span class="fu">length</span>(pollutant_vec7))</span>
+<span id="cb3-50"><a href="#cb3-50"></a>  </span>
+<span id="cb3-51"><a href="#cb3-51"></a>  res <span class="ot">=</span> <span class="fu">map2_dfr</span>(pollutant_vec7, df_date, fit_ts_sep, <span class="at">dat =</span> dat, <span class="at">y =</span> y)</span>
+<span id="cb3-52"><a href="#cb3-52"></a>  </span>
+<span id="cb3-53"><a href="#cb3-53"></a>  <span class="fu">return</span>(res)</span>
+<span id="cb3-54"><a href="#cb3-54"></a>}</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+</section>
+<section id="第一阶段gam建模" class="level2">
+<h2 class="anchored" data-anchor-id="第一阶段gam建模">第一阶段GAM建模</h2>
+<section id="计算各污染物的四分位间距" class="level3">
+<h3 class="anchored" data-anchor-id="计算各污染物的四分位间距">计算各污染物的四分位间距</h3>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb4"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb4-1"><a href="#cb4-1"></a>pollutant_vec7 <span class="ot">=</span> <span class="fu">c</span>(</span>
+<span id="cb4-2"><a href="#cb4-2"></a>  <span class="st">"PM2.5_MA_07"</span>, <span class="st">"BC_MA_07"</span>, <span class="st">"OM_MA_07"</span>, <span class="st">"SO4_MA_07"</span>, <span class="st">"NO3_MA_07"</span>, <span class="st">"NH4_MA_07"</span>)</span>
+<span id="cb4-3"><a href="#cb4-3"></a></span>
+<span id="cb4-4"><a href="#cb4-4"></a>IQR_pollutant <span class="ot">=</span> <span class="fu">map_dfr</span>(</span>
+<span id="cb4-5"><a href="#cb4-5"></a>  pollutant_vec7,</span>
+<span id="cb4-6"><a href="#cb4-6"></a>  <span class="sc">~</span><span class="fu">data.table</span>(<span class="at">pollutant =</span> .x, </span>
+<span id="cb4-7"><a href="#cb4-7"></a>              <span class="at">IQR =</span> <span class="fu">IQR</span>(ts_city[[.x]], <span class="at">na.rm =</span> <span class="cn">TRUE</span>)))</span>
+<span id="cb4-8"><a href="#cb4-8"></a></span>
+<span id="cb4-9"><a href="#cb4-9"></a>IQR_pollutant</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>     pollutant        IQR
+1: PM2.5_MA_07 22.6991687
+2:    BC_MA_07  0.9554241
+3:    OM_MA_07  5.6129462
+4:   SO4_MA_07  4.1445419
+5:   NO3_MA_07  6.7363995
+6:   NH4_MA_07  4.3471178</code></pre>
+</div>
+</div>
+</section>
+<section id="设置各个城市的观测时长的自由度" class="level3">
+<h3 class="anchored" data-anchor-id="设置各个城市的观测时长的自由度">设置各个城市的观测时长的自由度</h3>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb6"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb6-1"><a href="#cb6-1"></a>city_obs_length <span class="ot">=</span> ts_city <span class="sc">%&gt;%</span> </span>
+<span id="cb6-2"><a href="#cb6-2"></a>  <span class="fu">group_by</span>(City) <span class="sc">%&gt;%</span> </span>
+<span id="cb6-3"><a href="#cb6-3"></a>  <span class="fu">summarise</span>(<span class="at">admit_date_min =</span> <span class="fu">min</span>(admit_date),</span>
+<span id="cb6-4"><a href="#cb6-4"></a>            <span class="at">admit_date_max =</span> <span class="fu">max</span>(admit_date),</span>
+<span id="cb6-5"><a href="#cb6-5"></a>            <span class="at">obs_length =</span> <span class="fu">as.integer</span>(<span class="fu">max</span>(admit_date) <span class="sc">-</span> <span class="fu">min</span>(admit_date))<span class="sc">/</span><span class="dv">365</span>,</span>
+<span id="cb6-6"><a href="#cb6-6"></a>            <span class="at">df =</span> <span class="fu">round</span>(obs_length)<span class="sc">*</span><span class="dv">4</span>) <span class="sc">%&gt;%</span> </span>
+<span id="cb6-7"><a href="#cb6-7"></a>  <span class="fu">ungroup</span>()</span>
+<span id="cb6-8"><a href="#cb6-8"></a></span>
+<span id="cb6-9"><a href="#cb6-9"></a>city_obs_length</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code># A tibble: 21 × 5
+   City    admit_date_min admit_date_max obs_length    df
+   &lt;chr&gt;   &lt;date&gt;         &lt;date&gt;              &lt;dbl&gt; &lt;dbl&gt;
+ 1 city_01 2014-01-01     2016-12-30           3.00    12
+ 2 city_02 2014-01-01     2016-12-30           3.00    12
+ 3 city_03 2014-01-01     2016-12-30           3.00    12
+ 4 city_04 2014-01-01     2016-12-30           3.00    12
+ 5 city_05 2014-01-01     2016-12-30           3.00    12
+ 6 city_06 2014-01-01     2016-12-30           3.00    12
+ 7 city_07 2014-01-01     2016-12-30           3.00    12
+ 8 city_08 2014-01-01     2016-12-30           3.00    12
+ 9 city_09 2014-01-01     2016-12-29           2.99    12
+10 city_10 2014-01-01     2016-12-30           3.00    12
+# ℹ 11 more rows</code></pre>
+</div>
+</div>
+</section>
+<section id="分城市进行建模" class="level3">
+<h3 class="anchored" data-anchor-id="分城市进行建模">分城市进行建模</h3>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb8"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb8-1"><a href="#cb8-1"></a>models_city <span class="ot">=</span> ts_city <span class="sc">%&gt;%</span> </span>
+<span id="cb8-2"><a href="#cb8-2"></a>  <span class="fu">mutate</span>(<span class="fu">across</span>(PM2<span class="fl">.5</span>_MA_07<span class="sc">:</span>BC_MA_07, <span class="sc">~</span>.x<span class="sc">/</span><span class="fu">IQR</span>(.x))) <span class="sc">%&gt;%</span> </span>
+<span id="cb8-3"><a href="#cb8-3"></a>  <span class="fu">group_by</span>(City) <span class="sc">%&gt;%</span> </span>
+<span id="cb8-4"><a href="#cb8-4"></a>  <span class="fu">nest</span>() <span class="sc">%&gt;%</span></span>
+<span id="cb8-5"><a href="#cb8-5"></a>  <span class="fu">left_join</span>(city_obs_length <span class="sc">%&gt;%</span> </span>
+<span id="cb8-6"><a href="#cb8-6"></a>              dplyr<span class="sc">::</span><span class="fu">select</span>(City, df),</span>
+<span id="cb8-7"><a href="#cb8-7"></a>            <span class="at">by =</span> <span class="st">'City'</span>) <span class="sc">%&gt;%</span> </span>
+<span id="cb8-8"><a href="#cb8-8"></a>  <span class="fu">mutate</span>(<span class="at">models =</span> <span class="fu">map2</span>(data, df, map_city, <span class="at">y =</span> <span class="st">'N'</span>))</span>
+<span id="cb8-9"><a href="#cb8-9"></a></span>
+<span id="cb8-10"><a href="#cb8-10"></a>models_city</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code># A tibble: 21 × 4
+# Groups:   City [21]
+   City    data                     df models      
+   &lt;chr&gt;   &lt;list&gt;                &lt;dbl&gt; &lt;list&gt;      
+ 1 city_01 &lt;tibble [1,095 × 12]&gt;    12 &lt;dt [6 × 8]&gt;
+ 2 city_02 &lt;tibble [1,095 × 12]&gt;    12 &lt;dt [6 × 8]&gt;
+ 3 city_03 &lt;tibble [1,095 × 12]&gt;    12 &lt;dt [6 × 8]&gt;
+ 4 city_04 &lt;tibble [1,095 × 12]&gt;    12 &lt;dt [6 × 8]&gt;
+ 5 city_05 &lt;tibble [1,095 × 12]&gt;    12 &lt;dt [6 × 8]&gt;
+ 6 city_06 &lt;tibble [1,095 × 12]&gt;    12 &lt;dt [6 × 8]&gt;
+ 7 city_07 &lt;tibble [1,095 × 12]&gt;    12 &lt;dt [6 × 8]&gt;
+ 8 city_08 &lt;tibble [1,095 × 12]&gt;    12 &lt;dt [6 × 8]&gt;
+ 9 city_09 &lt;tibble [1,094 × 12]&gt;    12 &lt;dt [6 × 8]&gt;
+10 city_10 &lt;tibble [1,095 × 12]&gt;    12 &lt;dt [6 × 8]&gt;
+# ℹ 11 more rows</code></pre>
+</div>
+</div>
+</section>
+<section id="计算各城市的模型估计值" class="level3">
+<h3 class="anchored" data-anchor-id="计算各城市的模型估计值">计算各城市的模型估计值</h3>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb10"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb10-1"><a href="#cb10-1"></a>estimate_city <span class="ot">=</span> models_city <span class="sc">%&gt;%</span> </span>
+<span id="cb10-2"><a href="#cb10-2"></a>  <span class="fu">select</span>(<span class="sc">-</span>data) <span class="sc">%&gt;%</span> </span>
+<span id="cb10-3"><a href="#cb10-3"></a>  <span class="fu">unnest</span>(<span class="at">cols =</span> <span class="fu">c</span>(models)) <span class="sc">%&gt;%</span> </span>
+<span id="cb10-4"><a href="#cb10-4"></a>  <span class="fu">setDT</span>()</span>
+<span id="cb10-5"><a href="#cb10-5"></a>estimate_city</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>        City df pm_components               ER_95CI         ER   CI_lower
+  1: city_01 12   PM2.5_MA_07  0.79 (-2.83 to 4.55)  0.7930900 -2.8296791
+  2: city_01 12      BC_MA_07 -0.85 (-3.47 to 1.83) -0.8534384 -3.4659267
+  3: city_01 12      OM_MA_07 -0.51 (-3.34 to 2.40) -0.5118881 -3.3424207
+  4: city_01 12     SO4_MA_07  2.59 (-1.14 to 6.46)  2.5889907 -1.1405705
+  5: city_01 12     NO3_MA_07  1.55 (-2.76 to 6.05)  1.5528460 -2.7551925
+ ---                                                                     
+122: city_21 12      BC_MA_07  0.38 (-5.67 to 6.82)  0.3789915 -5.6708142
+123: city_21 12      OM_MA_07 5.76 (-1.36 to 13.39)  5.7578337 -1.3584923
+124: city_21 12     SO4_MA_07  9.94 (0.33 to 20.46)  9.9379058  0.3315034
+125: city_21 12     NO3_MA_07 20.06 (8.06 to 33.40) 20.0614717  8.0555993
+126: city_21 12     NH4_MA_07 12.56 (2.03 to 24.17) 12.5562146  2.0258434
+      CI_upper      p_value       log_OR  log_OR_se
+  1:  4.550926 0.6723891302  0.007899615 0.01867575
+  2:  1.829751 0.5294120184 -0.008571010 0.01362405
+  3:  2.401534 0.7275376000 -0.005132028 0.01472629
+  4:  6.459253 0.1763879549  0.025560438 0.01889372
+  5:  6.051735 0.4861197066  0.015409127 0.02211619
+ ---                                               
+122:  6.816802 0.9050826372  0.003782751 0.03171546
+123: 13.387555 0.1155189939  0.055981707 0.03554069
+124: 20.464089 0.0425078336  0.094745528 0.04665101
+125: 33.401296 0.0006954683  0.182833690 0.05375407
+126: 24.173455 0.0184442512  0.118282596 0.05011563</code></pre>
+</div>
+</div>
+</section>
+</section>
+<section id="第二阶段meta分析" class="level2">
+<h2 class="anchored" data-anchor-id="第二阶段meta分析">第二阶段meta分析</h2>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb12"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb12-1"><a href="#cb12-1"></a>tidy_rma <span class="ot">=</span> <span class="cf">function</span>(x, dat){</span>
+<span id="cb12-2"><a href="#cb12-2"></a>  dat <span class="sc">%&gt;%</span> </span>
+<span id="cb12-3"><a href="#cb12-3"></a>    .[pm_components <span class="sc">==</span> x] <span class="sc">%&gt;%</span> </span>
+<span id="cb12-4"><a href="#cb12-4"></a>    .[,metafor<span class="sc">::</span><span class="fu">rma</span>(<span class="at">yi =</span> log_OR, <span class="at">sei =</span> log_OR_se)] <span class="sc">%&gt;%</span> </span>
+<span id="cb12-5"><a href="#cb12-5"></a>    <span class="fu">tidy</span>(<span class="at">conf.int =</span> T, <span class="at">exponentiate =</span> T) <span class="sc">%&gt;%</span> </span>
+<span id="cb12-6"><a href="#cb12-6"></a>    <span class="fu">mutate</span>(<span class="at">pollut =</span> x, </span>
+<span id="cb12-7"><a href="#cb12-7"></a>           <span class="st">`</span><span class="at">ER (95% CI)</span><span class="st">`</span> <span class="ot">=</span> <span class="fu">glue</span>(</span>
+<span id="cb12-8"><a href="#cb12-8"></a>           <span class="st">"{formatC((estimate - 1)*100, </span></span>
+<span id="cb12-9"><a href="#cb12-9"></a><span class="st">           format = 'f', digits = 2)}% ({formatC((conf.low - 1)*100, </span></span>
+<span id="cb12-10"><a href="#cb12-10"></a><span class="st">           format = 'f', digits = 2)} to {formatC((conf.high - 1)*100, </span></span>
+<span id="cb12-11"><a href="#cb12-11"></a><span class="st">           format = 'f', digits = 2)}%)"</span>)) <span class="sc">%&gt;%</span> </span>
+<span id="cb12-12"><a href="#cb12-12"></a>    dplyr<span class="sc">::</span><span class="fu">select</span>(pollut, </span>
+<span id="cb12-13"><a href="#cb12-13"></a>                  <span class="st">`</span><span class="at">ER (95% CI)</span><span class="st">`</span>,</span>
+<span id="cb12-14"><a href="#cb12-14"></a>                  <span class="at">OR =</span> estimate, </span>
+<span id="cb12-15"><a href="#cb12-15"></a>                  <span class="at">OR_CI_low =</span> conf.low, </span>
+<span id="cb12-16"><a href="#cb12-16"></a>                  <span class="at">OR_CI_up =</span> conf.high, </span>
+<span id="cb12-17"><a href="#cb12-17"></a>                  <span class="at">p_val =</span> p.value, </span>
+<span id="cb12-18"><a href="#cb12-18"></a>                  <span class="at">se =</span> std.error)</span>
+<span id="cb12-19"><a href="#cb12-19"></a>}</span>
+<span id="cb12-20"><a href="#cb12-20"></a>estimate_meta <span class="ot">=</span> <span class="fu">map_dfr</span>(pollutant_vec7, tidy_rma, <span class="at">dat =</span> estimate_city)</span>
+<span id="cb12-21"><a href="#cb12-21"></a>estimate_meta</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code># A tibble: 6 × 7
+  pollut      `ER (95% CI)`             OR OR_CI_low OR_CI_up      p_val      se
+  &lt;chr&gt;       &lt;glue&gt;                 &lt;dbl&gt;     &lt;dbl&gt;    &lt;dbl&gt;      &lt;dbl&gt;   &lt;dbl&gt;
+1 PM2.5_MA_07 0.94% (0.40 to 1.49%)   1.01     1.00      1.01 0.000710   0.00277
+2 BC_MA_07    0.04% (-0.33 to 0.41%)  1.00     0.997     1.00 0.824      0.00188
+3 OM_MA_07    0.36% (-0.07 to 0.79%)  1.00     0.999     1.01 0.0970     0.00219
+4 SO4_MA_07   1.39% (0.82 to 1.98%)   1.01     1.01      1.02 0.00000216 0.00292
+5 NO3_MA_07   1.41% (0.67 to 2.15%)   1.01     1.01      1.02 0.000177   0.00373
+6 NH4_MA_07   0.97% (0.34 to 1.60%)   1.01     1.00      1.02 0.00239    0.00317</code></pre>
+</div>
+</div>
+<p>结果可视化</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb14"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb14-1"><a href="#cb14-1"></a>estimate_meta <span class="sc">%&gt;%</span></span>
+<span id="cb14-2"><a href="#cb14-2"></a>  <span class="fu">mutate</span>(<span class="at">pollutant =</span> <span class="fu">gsub</span>(<span class="st">'_MA_07'</span>, <span class="st">''</span>, pollut)) <span class="sc">%&gt;%</span></span>
+<span id="cb14-3"><a href="#cb14-3"></a>  <span class="fu">ggplot</span>(<span class="fu">aes</span>(pollutant, OR)) <span class="sc">+</span></span>
+<span id="cb14-4"><a href="#cb14-4"></a>  <span class="fu">geom_hline</span>(<span class="at">yintercept =</span> <span class="dv">1</span>, <span class="at">color =</span> <span class="st">'red'</span>, <span class="at">linewidth =</span> <span class="dv">1</span>) <span class="sc">+</span></span>
+<span id="cb14-5"><a href="#cb14-5"></a>  <span class="fu">geom_errorbar</span>(<span class="fu">aes</span>(<span class="at">ymin =</span> OR_CI_low, <span class="at">ymax =</span> OR_CI_up), <span class="at">width =</span> <span class="fl">0.25</span>) <span class="sc">+</span></span>
+<span id="cb14-6"><a href="#cb14-6"></a>  <span class="fu">geom_point</span>(<span class="at">size =</span> <span class="dv">4</span>) <span class="sc">+</span></span>
+<span id="cb14-7"><a href="#cb14-7"></a>  <span class="fu">labs</span>(<span class="at">x =</span> <span class="st">'Pollutants'</span>, <span class="at">y =</span> <span class="st">'OR (95%)'</span>) <span class="sc">+</span></span>
+<span id="cb14-8"><a href="#cb14-8"></a>  <span class="fu">theme_classic</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output-display">
+<p><img src="2.ts_files/figure-html/unnamed-chunk-8-1.png" class="img-fluid" width="672"></p>
+</div>
 </div>
 
 
+</section>
 </section>
 
 </main> <!-- /main -->
@@ -468,9 +622,23 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
     icon: icon
   };
   anchorJS.add('.anchored');
+  const isCodeAnnotation = (el) => {
+    for (const clz of el.classList) {
+      if (clz.startsWith('code-annotation-')) {                     
+        return true;
+      }
+    }
+    return false;
+  }
   const clipboard = new window.ClipboardJS('.code-copy-button', {
-    target: function(trigger) {
-      return trigger.previousElementSibling;
+    text: function(trigger) {
+      const codeEl = trigger.previousElementSibling.cloneNode(true);
+      for (const childEl of codeEl.children) {
+        if (isCodeAnnotation(childEl)) {
+          childEl.remove();
+        }
+      }
+      return codeEl.innerText;
     }
   });
   clipboard.on('success', function(e) {
@@ -535,6 +703,92 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
       return note.innerHTML;
     });
   }
+      let selectedAnnoteEl;
+      const selectorForAnnotation = ( cell, annotation) => {
+        let cellAttr = 'data-code-cell="' + cell + '"';
+        let lineAttr = 'data-code-annotation="' +  annotation + '"';
+        const selector = 'span[' + cellAttr + '][' + lineAttr + ']';
+        return selector;
+      }
+      const selectCodeLines = (annoteEl) => {
+        const doc = window.document;
+        const targetCell = annoteEl.getAttribute("data-target-cell");
+        const targetAnnotation = annoteEl.getAttribute("data-target-annotation");
+        const annoteSpan = window.document.querySelector(selectorForAnnotation(targetCell, targetAnnotation));
+        const lines = annoteSpan.getAttribute("data-code-lines").split(",");
+        const lineIds = lines.map((line) => {
+          return targetCell + "-" + line;
+        })
+        let top = null;
+        let height = null;
+        let parent = null;
+        if (lineIds.length > 0) {
+            //compute the position of the single el (top and bottom and make a div)
+            const el = window.document.getElementById(lineIds[0]);
+            top = el.offsetTop;
+            height = el.offsetHeight;
+            parent = el.parentElement.parentElement;
+          if (lineIds.length > 1) {
+            const lastEl = window.document.getElementById(lineIds[lineIds.length - 1]);
+            const bottom = lastEl.offsetTop + lastEl.offsetHeight;
+            height = bottom - top;
+          }
+          if (top !== null && height !== null && parent !== null) {
+            // cook up a div (if necessary) and position it 
+            let div = window.document.getElementById("code-annotation-line-highlight");
+            if (div === null) {
+              div = window.document.createElement("div");
+              div.setAttribute("id", "code-annotation-line-highlight");
+              div.style.position = 'absolute';
+              parent.appendChild(div);
+            }
+            div.style.top = top - 2 + "px";
+            div.style.height = height + 4 + "px";
+            let gutterDiv = window.document.getElementById("code-annotation-line-highlight-gutter");
+            if (gutterDiv === null) {
+              gutterDiv = window.document.createElement("div");
+              gutterDiv.setAttribute("id", "code-annotation-line-highlight-gutter");
+              gutterDiv.style.position = 'absolute';
+              const codeCell = window.document.getElementById(targetCell);
+              const gutter = codeCell.querySelector('.code-annotation-gutter');
+              gutter.appendChild(gutterDiv);
+            }
+            gutterDiv.style.top = top - 2 + "px";
+            gutterDiv.style.height = height + 4 + "px";
+          }
+          selectedAnnoteEl = annoteEl;
+        }
+      };
+      const unselectCodeLines = () => {
+        const elementsIds = ["code-annotation-line-highlight", "code-annotation-line-highlight-gutter"];
+        elementsIds.forEach((elId) => {
+          const div = window.document.getElementById(elId);
+          if (div) {
+            div.remove();
+          }
+        });
+        selectedAnnoteEl = undefined;
+      };
+      // Attach click handler to the DT
+      const annoteDls = window.document.querySelectorAll('dt[data-target-cell]');
+      for (const annoteDlNode of annoteDls) {
+        annoteDlNode.addEventListener('click', (event) => {
+          const clickedEl = event.target;
+          if (clickedEl !== selectedAnnoteEl) {
+            unselectCodeLines();
+            const activeEl = window.document.querySelector('dt[data-target-cell].code-annotation-active');
+            if (activeEl) {
+              activeEl.classList.remove('code-annotation-active');
+            }
+            selectCodeLines(clickedEl);
+            clickedEl.classList.add('code-annotation-active');
+          } else {
+            // Unselect the line
+            unselectCodeLines();
+            clickedEl.classList.remove('code-annotation-active');
+          }
+        });
+      }
   const findCites = (el) => {
     const parentEl = el.parentElement;
     if (parentEl) {
@@ -578,6 +832,12 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
 <footer class="footer">
   <div class="nav-footer">
     <div class="nav-footer-left">Copyright 2023, 蔡苗</div>   
+    <div class="nav-footer-center">
+      &nbsp;
+    </div>
+    <div class="nav-footer-right">
+      &nbsp;
+    </div>
   </div>
 </footer>
 

@@ -32,7 +32,7 @@ website:
         contents:
           - 6.writing.qmd
           - 7.journal.qmd
-          - 8.DL.qmd
+#          - 8.DL.qmd
 
 format:
   html:
