@@ -353,7 +353,7 @@ $ PM2.5_MA_07       &lt;dbl&gt; 57.36381, 64.22242, 65.32272, 60.85549, 81.05209
 </section>
 <section id="描述性统计" class="level2">
 <h2 class="anchored" data-anchor-id="描述性统计">描述性统计</h2>
-<div class="cell">
+<div class="cell" data-hash="3.cco_cache/html/unnamed-chunk-2_4a27cb1e4678cbdd72647ab52440e12c">
 <div class="sourceCode cell-code" id="cb5"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb5-1"><a href="#cb5-1"></a>var_vec <span class="ot">=</span> <span class="fu">c</span>(<span class="st">"Temperature_MA_07"</span>, </span>
 <span id="cb5-2"><a href="#cb5-2"></a><span class="st">"RH_MA_07"</span>, <span class="st">"PM2.5_MA_01"</span>, <span class="st">"PM2.5_MA_02"</span>, <span class="st">"PM2.5_MA_03"</span>, <span class="st">"PM2.5_MA_04"</span>, </span>
 <span id="cb5-3"><a href="#cb5-3"></a><span class="st">"PM2.5_MA_05"</span>, <span class="st">"PM2.5_MA_06"</span>, <span class="st">"PM2.5_MA_07"</span>)</span>
@@ -452,7 +452,7 @@ $ PM2.5_MA_07       &lt;dbl&gt; 57.36381, 64.22242, 65.32272, 60.85549, 81.05209
 [6] "PM2.5_MA_06" "PM2.5_MA_07"</code></pre>
 </div>
 </div>
-<div class="cell">
+<div class="cell" data-hash="3.cco_cache/html/unnamed-chunk-4_34ac5b65dca7b8b93aa7e8fb2f1d5c80">
 <div class="sourceCode cell-code" id="cb9"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb9-1"><a href="#cb9-1"></a>fit_cco <span class="ot">=</span> <span class="fu">map_dfr</span>(</span>
 <span id="cb9-2"><a href="#cb9-2"></a>  pm_cols,</span>
 <span id="cb9-3"><a href="#cb9-3"></a>  fit_clogit,</span>
@@ -483,7 +483,7 @@ $ PM2.5_MA_07       &lt;dbl&gt; 57.36381, 64.22242, 65.32272, 60.85549, 81.05209
 </section>
 <section id="暴露反应关系曲线" class="level2">
 <h2 class="anchored" data-anchor-id="暴露反应关系曲线">暴露反应关系曲线</h2>
-<div class="cell">
+<div class="cell" data-hash="3.cco_cache/html/unnamed-chunk-5_61243b48a30e388646b76ec785ddafa5">
 <div class="sourceCode cell-code" id="cb13"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb13-1"><a href="#cb13-1"></a>cco_pm[,<span class="fu">quantile</span>(PM2<span class="fl">.5</span>_MA_01, <span class="fu">c</span>(<span class="fl">0.25</span>, <span class="fl">0.5</span>, <span class="fl">0.75</span>))]</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>     25%      50%      75% 
@@ -532,7 +532,7 @@ $ PM2.5_MA_07       &lt;dbl&gt; 57.36381, 64.22242, 65.32272, 60.85549, 81.05209
 36346:     PM2.5</code></pre>
 </div>
 </div>
-<div class="cell">
+<div class="cell" data-hash="3.cco_cache/html/unnamed-chunk-6_d7d2462d2a1d11943492dbbf762e0386">
 <div class="sourceCode cell-code" id="cb17"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb17-1"><a href="#cb17-1"></a>arr <span class="ot">=</span> <span class="fu">list</span>(<span class="st">'PM1'</span> <span class="ot">=</span> <span class="fu">TeX</span>(<span class="st">"PM$_{1}$"</span>),  </span>
 <span id="cb17-2"><a href="#cb17-2"></a>           <span class="st">"PM2.5"</span> <span class="ot">=</span> <span class="fu">TeX</span>(<span class="st">"PM$_{2.5}$"</span>), </span>
 <span id="cb17-3"><a href="#cb17-3"></a>           <span class="st">"PM10"</span> <span class="ot">=</span> <span class="fu">TeX</span>(<span class="st">"PM$_{10}$"</span>))</span>
@@ -548,9 +548,9 @@ $ PM2.5_MA_07       &lt;dbl&gt; 57.36381, 64.22242, 65.32272, 60.85549, 81.05209
 <span id="cb19-4"><a href="#cb19-4"></a>  .[x <span class="sc">&gt;=</span> <span class="dv">7</span> <span class="sc">&amp;</span> x <span class="sc">&lt;=</span> <span class="dv">154</span>] <span class="sc">%&gt;%</span> </span>
 <span id="cb19-5"><a href="#cb19-5"></a>  .[<span class="fu">sample</span>(.N, <span class="dv">1000</span>)] <span class="sc">%&gt;%</span> </span>
 <span id="cb19-6"><a href="#cb19-6"></a>  <span class="fu">ggplot</span>(<span class="fu">aes</span>(<span class="at">x =</span> x, <span class="at">y =</span> HR)) <span class="sc">+</span></span>
-<span id="cb19-7"><a href="#cb19-7"></a>  <span class="fu">geom_hline</span>(<span class="at">yintercept =</span> <span class="dv">1</span>, <span class="at">size =</span> <span class="fl">0.8</span>, <span class="at">alpha =</span> <span class="fl">0.6</span>, <span class="at">linetype =</span> <span class="st">'dashed'</span>) <span class="sc">+</span></span>
+<span id="cb19-7"><a href="#cb19-7"></a>  <span class="fu">geom_hline</span>(<span class="at">yintercept =</span> <span class="dv">1</span>, <span class="at">linewidth =</span> <span class="fl">0.8</span>, <span class="at">alpha =</span> <span class="fl">0.6</span>, <span class="at">linetype =</span> <span class="st">'dashed'</span>) <span class="sc">+</span></span>
 <span id="cb19-8"><a href="#cb19-8"></a>  <span class="fu">geom_ribbon</span>(<span class="fu">aes</span>(<span class="at">ymin =</span> HRmin, <span class="at">ymax =</span> HRmax), <span class="at">alpha =</span> <span class="fl">0.3</span>, <span class="at">color =</span> <span class="cn">NA</span>, <span class="at">fill =</span> color7[<span class="dv">1</span>]) <span class="sc">+</span></span>
-<span id="cb19-9"><a href="#cb19-9"></a>  <span class="fu">geom_line</span>(<span class="at">size =</span> <span class="fl">1.5</span>, <span class="at">color =</span> color7[<span class="dv">1</span>]) <span class="sc">+</span></span>
+<span id="cb19-9"><a href="#cb19-9"></a>  <span class="fu">geom_line</span>(<span class="at">linewidth =</span> <span class="fl">1.5</span>, <span class="at">color =</span> color7[<span class="dv">1</span>]) <span class="sc">+</span></span>
 <span id="cb19-10"><a href="#cb19-10"></a>  <span class="fu">facet_wrap</span>(<span class="sc">~</span> pollutant, <span class="at">scales =</span> <span class="st">'free'</span>, <span class="at">labeller =</span> mylabel) <span class="sc">+</span></span>
 <span id="cb19-11"><a href="#cb19-11"></a>  <span class="fu">scale_x_continuous</span>(<span class="at">expand =</span> <span class="fu">c</span>(<span class="dv">0</span>, <span class="dv">0</span>)) <span class="sc">+</span></span>
 <span id="cb19-12"><a href="#cb19-12"></a>  <span class="fu">scale_y_continuous</span>(<span class="at">expand =</span> <span class="fu">c</span>(<span class="dv">0</span>, <span class="fl">0.05</span>)) <span class="sc">+</span></span>
@@ -559,18 +559,15 @@ $ PM2.5_MA_07       &lt;dbl&gt; 57.36381, 64.22242, 65.32272, 60.85549, 81.05209
 <span id="cb19-15"><a href="#cb19-15"></a>  <span class="fu">theme</span>(<span class="at">plot.margin =</span> <span class="fu">unit</span>(<span class="fu">c</span>(<span class="dv">0</span>, <span class="fl">0.5</span>, <span class="dv">0</span>, <span class="fl">0.2</span>), <span class="st">'cm'</span>),</span>
 <span id="cb19-16"><a href="#cb19-16"></a>        <span class="at">plot.title =</span> <span class="fu">element_text</span>(<span class="at">size =</span> <span class="dv">20</span>, <span class="at">face =</span> <span class="st">'bold'</span>),</span>
 <span id="cb19-17"><a href="#cb19-17"></a>        <span class="at">strip.background =</span> <span class="fu">element_rect</span>(<span class="at">fill =</span> ggplot2<span class="sc">::</span><span class="fu">alpha</span>(color7[<span class="dv">1</span>], <span class="fl">0.3</span>), <span class="at">color =</span> <span class="cn">NA</span>),</span>
-<span id="cb19-18"><a href="#cb19-18"></a>        <span class="at">strip.text =</span> <span class="fu">element_text</span>(<span class="at">size =</span> <span class="dv">18</span>, <span class="at">face =</span> <span class="st">'bold'</span>))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<div class="cell-output cell-output-stderr">
-<pre><code>Warning: Using `size` aesthetic for lines was deprecated in ggplot2 3.4.0.
-ℹ Please use `linewidth` instead.</code></pre>
-</div>
-<div class="sourceCode cell-code" id="cb21"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb21-1"><a href="#cb21-1"></a>p_pm1</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<span id="cb19-18"><a href="#cb19-18"></a>        <span class="at">strip.text =</span> <span class="fu">element_text</span>(<span class="at">size =</span> <span class="dv">18</span>, <span class="at">face =</span> <span class="st">'bold'</span>))</span>
+<span id="cb19-19"><a href="#cb19-19"></a></span>
+<span id="cb19-20"><a href="#cb19-20"></a>p_pm1</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output-display">
 <p><img src="3.cco_files/figure-html/unnamed-chunk-6-1.png" class="img-fluid" width="672"></p>
 </div>
 </div>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb22"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb22-1"><a href="#cb22-1"></a><span class="fu">ggsave</span>(<span class="st">'cco_splines.pdf'</span>, p_pm1, <span class="at">width =</span> <span class="dv">8</span>, <span class="at">height =</span> <span class="dv">6</span>, <span class="at">device =</span> cairo_pdf)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb20"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb20-1"><a href="#cb20-1"></a><span class="fu">ggsave</span>(<span class="st">'cco_splines.pdf'</span>, p_pm1, <span class="at">width =</span> <span class="dv">8</span>, <span class="at">height =</span> <span class="dv">6</span>, <span class="at">device =</span> cairo_pdf)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 
 
