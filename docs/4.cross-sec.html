@@ -245,10 +245,10 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
   <li><a href="#文献实例" id="toc-文献实例" class="nav-link active" data-scroll-target="#文献实例">文献实例</a></li>
   <li><a href="#r语言代码实战" id="toc-r语言代码实战" class="nav-link" data-scroll-target="#r语言代码实战">R语言代码实战</a>
   <ul class="collapse">
+  <li><a href="#数据读取" id="toc-数据读取" class="nav-link" data-scroll-target="#数据读取">数据读取</a></li>
+  <li><a href="#表1制作" id="toc-表1制作" class="nav-link" data-scroll-target="#表1制作">表1制作</a></li>
   <li><a href="#逻辑回归" id="toc-逻辑回归" class="nav-link" data-scroll-target="#逻辑回归">逻辑回归</a></li>
-  <li><a href="#亚组分析" id="toc-亚组分析" class="nav-link" data-scroll-target="#亚组分析">亚组分析</a></li>
   <li><a href="#暴露反应关系" id="toc-暴露反应关系" class="nav-link" data-scroll-target="#暴露反应关系">暴露反应关系</a></li>
-  <li><a href="#paf计算" id="toc-paf计算" class="nav-link" data-scroll-target="#paf计算">PAF计算</a></li>
   </ul></li>
   </ul>
 </nav>
@@ -282,79 +282,367 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 </section>
 <section id="r语言代码实战" class="level1">
 <h1>R语言代码实战</h1>
-<section id="逻辑回归" class="level2">
-<h2 class="anchored" data-anchor-id="逻辑回归">逻辑回归</h2>
-<div class="cell" data-hash="4.cross-sec_cache/html/unnamed-chunk-1_795089bb605f0905ce4377aed258871a">
+<section id="数据读取" class="level2">
+<h2 class="anchored" data-anchor-id="数据读取">数据读取</h2>
+<div class="cell" data-hash="4.cross-sec_cache/html/unnamed-chunk-1_b9622a66b26353c8857d588972aba622">
 <div class="sourceCode cell-code" id="cb1"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb1-1"><a href="#cb1-1"></a>pacman<span class="sc">::</span><span class="fu">p_load</span>(</span>
-<span id="cb1-2"><a href="#cb1-2"></a>  arrow, dplyr, ggplot2, data.table, broom, splines, purrr)</span>
+<span id="cb1-2"><a href="#cb1-2"></a>  arrow, dplyr, ggplot2, data.table, broom, splines, purrr, tableone, patchwork, latex2exp)</span>
 <span id="cb1-3"><a href="#cb1-3"></a></span>
 <span id="cb1-4"><a href="#cb1-4"></a>cs_pm <span class="ot">=</span> arrow<span class="sc">::</span><span class="fu">read_parquet</span>(</span>
 <span id="cb1-5"><a href="#cb1-5"></a>  <span class="st">'Data/cs_synthetic_pm_components.parquet'</span>)</span>
 <span id="cb1-6"><a href="#cb1-6"></a></span>
 <span id="cb1-7"><a href="#cb1-7"></a><span class="fu">glimpse</span>(cs_pm)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
-<pre><code>Rows: 40,000
+<pre><code>Rows: 30,393
 Columns: 17
-$ inhosp_death      &lt;dbl&gt; 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 0, 0, 0, 0…
-$ age               &lt;dbl&gt; 84.66256, 61.99863, 68.47912, 81.00000, 69.56331, 80…
-$ sex               &lt;fct&gt; Female, Female, Female, Male, Male, Female, Male, Ma…
+$ inhosp_death      &lt;dbl&gt; 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0…
+$ age               &lt;int&gt; 61, 68, 69, 74, 71, 52, 74, 72, 77, 66, 60, 73, 60, …
+$ sex               &lt;fct&gt; Female, Female, Male, Male, Female, Male, Male, Male…
 $ ethnicity         &lt;fct&gt; Han, Han, Han, Han, Han, Han, Han, Han, Han, Han, Ha…
-$ occupation        &lt;fct&gt; Public institution, Farmer, Other, Farmer, Other, Fa…
-$ marriage          &lt;fct&gt; Married, Married, Married, Married, Married, Married…
-$ stroke_subtype    &lt;chr&gt; "Ischemic", "Ischemic", "Hemorrhagic", "Ischemic", "…
-$ hypertension      &lt;dbl&gt; 0, 0, 0, 1, 0, 0, 0, 1, 0, 1, 1, 1, 1, 0, 1, 0, 0, 0…
-$ diabetes          &lt;dbl&gt; 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 0, 0…
-$ Temperature_MA_07 &lt;dbl&gt; 15.831496, 15.405740, 23.771006, 17.085323, -2.42317…
-$ RH_MA_07          &lt;dbl&gt; 34.96154, 84.76136, 69.86074, 84.48593, 58.37018, 82…
-$ PM2.5_MA_365      &lt;dbl&gt; 70.77801, 25.56762, 53.06090, 40.77056, 40.63659, 43…
-$ SO4_MA_365        &lt;dbl&gt; 10.823626, 5.579043, 8.839439, 7.744119, 6.897126, 8…
-$ NO3_MA_365        &lt;dbl&gt; 11.528731, 4.769624, 12.414940, 9.982736, 8.555672, …
-$ NH4_MA_365        &lt;dbl&gt; 7.335312, 4.067301, 7.929543, 6.910553, 5.920617, 7.…
-$ OM_MA_365         &lt;dbl&gt; 16.317992, 7.401939, 11.583662, 10.286706, 9.617350,…
-$ BC_MA_365         &lt;dbl&gt; 3.279193, 1.634150, 2.142325, 1.939696, 2.070287, 2.…</code></pre>
+$ occupation        &lt;fct&gt; Farmer, Other, Other, Farmer, Farmer, Other, Farmer,…
+$ marriage          &lt;fct&gt; Married, Married, Married, Married, Married, Other, …
+$ stroke_subtype    &lt;chr&gt; "Ischemic", "Hemorrhagic", "Hemorrhagic", "Ischemic"…
+$ hypertension      &lt;dbl&gt; 0, 0, 0, 1, 1, 1, 1, 1, 0, 1, 1, 1, 0, 0, 1, 1, 0, 1…
+$ diabetes          &lt;dbl&gt; 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 0, 1, 0, 0…
+$ Temperature_MA_07 &lt;dbl&gt; 15.405740, 23.771006, -2.423174, 15.489920, 19.48610…
+$ RH_MA_07          &lt;dbl&gt; 84.76136, 69.86074, 58.37018, 77.01996, 75.38288, 67…
+$ PM2.5_MA_365      &lt;dbl&gt; 25.56762, 53.06090, 40.63659, 49.56892, 29.22137, 52…
+$ SO4_MA_365        &lt;dbl&gt; 5.579043, 8.839439, 6.897126, 10.198819, 6.676281, 9…
+$ NO3_MA_365        &lt;dbl&gt; 4.769624, 12.414940, 8.555672, 11.542473, 4.700461, …
+$ NH4_MA_365        &lt;dbl&gt; 4.067301, 7.929543, 5.920617, 8.340625, 4.216512, 8.…
+$ OM_MA_365         &lt;dbl&gt; 7.401939, 11.583662, 9.617350, 12.414788, 8.576074, …
+$ BC_MA_365         &lt;dbl&gt; 1.634150, 2.142325, 2.070287, 2.311701, 2.003598, 2.…</code></pre>
 </div>
 </div>
-<div class="cell" data-hash="4.cross-sec_cache/html/unnamed-chunk-2_b981722947a132b0793f319b74c3bfd3">
-<div class="sourceCode cell-code" id="cb3"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb3-1"><a href="#cb3-1"></a>fit_logistic <span class="ot">=</span> <span class="cf">function</span>(x, <span class="at">data =</span> cs_pm, <span class="at">outcome_var =</span> <span class="st">'inhosp_death'</span>){</span>
-<span id="cb3-2"><a href="#cb3-2"></a>  <span class="fu">cat</span>(<span class="fu">paste0</span>(x, <span class="st">'</span><span class="sc">\n</span><span class="st">'</span>))</span>
-<span id="cb3-3"><a href="#cb3-3"></a>  x_iqr <span class="ot">=</span> <span class="fu">IQR</span>(data[[x]], <span class="at">na.rm =</span> <span class="cn">TRUE</span>)</span>
-<span id="cb3-4"><a href="#cb3-4"></a>  </span>
-<span id="cb3-5"><a href="#cb3-5"></a>  clean_fit <span class="ot">=</span> <span class="fu">glm</span>(</span>
-<span id="cb3-6"><a href="#cb3-6"></a>    <span class="at">formula =</span> <span class="fu">as.formula</span>(<span class="fu">paste0</span>(outcome_var, <span class="st">" ~ "</span>, </span>
-<span id="cb3-7"><a href="#cb3-7"></a>                    x, </span>
-<span id="cb3-8"><a href="#cb3-8"></a>                    <span class="st">' + age + sex + ethnicity + occupation + marriage + stroke_subtype + </span></span>
-<span id="cb3-9"><a href="#cb3-9"></a><span class="st">                    hypertension + diabetes + </span></span>
-<span id="cb3-10"><a href="#cb3-10"></a><span class="st">                    ns(Temperature_MA_07 , df = 5) + ns(RH_MA_07, df = 5)'</span>)),</span>
-<span id="cb3-11"><a href="#cb3-11"></a>    <span class="at">family =</span> binomial,</span>
-<span id="cb3-12"><a href="#cb3-12"></a>    <span class="at">data =</span> data) <span class="sc">%&gt;%</span> </span>
-<span id="cb3-13"><a href="#cb3-13"></a>    <span class="fu">tidy</span>() <span class="sc">%&gt;%</span> </span>
-<span id="cb3-14"><a href="#cb3-14"></a>    <span class="co">#filter(grepl('PM|O3|CO|NO2|SO2', term)) %&gt;% </span></span>
-<span id="cb3-15"><a href="#cb3-15"></a>    <span class="fu">mutate</span>(<span class="at">OR =</span> <span class="fu">exp</span>(estimate<span class="sc">*</span>x_iqr), <span class="dv">3</span>,</span>
-<span id="cb3-16"><a href="#cb3-16"></a>           <span class="at">OR_round =</span> <span class="fu">round</span>(<span class="fu">exp</span>(estimate<span class="sc">*</span>x_iqr), <span class="dv">3</span>),</span>
-<span id="cb3-17"><a href="#cb3-17"></a>           <span class="at">CI_low =</span> <span class="fu">exp</span>(estimate<span class="sc">*</span>x_iqr <span class="sc">-</span> <span class="fl">1.96</span><span class="sc">*</span>std.error<span class="sc">*</span>x_iqr),</span>
-<span id="cb3-18"><a href="#cb3-18"></a>           <span class="at">CI_high =</span> <span class="fu">exp</span>(estimate<span class="sc">*</span>x_iqr <span class="sc">+</span> <span class="fl">1.96</span><span class="sc">*</span>std.error<span class="sc">*</span>x_iqr),</span>
-<span id="cb3-19"><a href="#cb3-19"></a>           <span class="at">CI_low_round =</span> <span class="fu">round</span>(<span class="fu">exp</span>(estimate<span class="sc">*</span>x_iqr <span class="sc">-</span> <span class="fl">1.96</span><span class="sc">*</span>std.error<span class="sc">*</span>x_iqr), <span class="dv">3</span>),</span>
-<span id="cb3-20"><a href="#cb3-20"></a>           <span class="at">CI_high_round =</span> <span class="fu">round</span>(<span class="fu">exp</span>(estimate<span class="sc">*</span>x_iqr <span class="sc">+</span> <span class="fl">1.96</span><span class="sc">*</span>std.error<span class="sc">*</span>x_iqr), <span class="dv">3</span>),</span>
-<span id="cb3-21"><a href="#cb3-21"></a>           <span class="at">predictor =</span> x) <span class="sc">%&gt;%</span> </span>
-<span id="cb3-22"><a href="#cb3-22"></a>    <span class="fu">mutate</span>(<span class="at">result =</span> <span class="fu">paste0</span>(<span class="fu">format</span>(OR_round, <span class="at">nsmall =</span> <span class="dv">3</span>), </span>
-<span id="cb3-23"><a href="#cb3-23"></a>                           <span class="st">' ('</span>, </span>
-<span id="cb3-24"><a href="#cb3-24"></a>                           <span class="fu">format</span>(CI_low_round, <span class="at">nsmall =</span> <span class="dv">3</span>), </span>
-<span id="cb3-25"><a href="#cb3-25"></a>                           <span class="st">'-'</span>, </span>
-<span id="cb3-26"><a href="#cb3-26"></a>                           <span class="fu">format</span>(CI_high_round, <span class="at">nsmall =</span> <span class="dv">3</span>),</span>
-<span id="cb3-27"><a href="#cb3-27"></a>                           <span class="st">')'</span>) <span class="sc">%&gt;%</span> </span>
-<span id="cb3-28"><a href="#cb3-28"></a>             <span class="fu">gsub</span>(<span class="st">' '</span>, <span class="st">''</span>, .) <span class="sc">%&gt;%</span> </span>
-<span id="cb3-29"><a href="#cb3-29"></a>             <span class="fu">gsub</span>(<span class="st">'</span><span class="sc">\\</span><span class="st">('</span>, <span class="st">' ('</span>, .),</span>
-<span id="cb3-30"><a href="#cb3-30"></a>           <span class="at">pollutant_IQR =</span> x_iqr) <span class="sc">%&gt;%</span> </span>
-<span id="cb3-31"><a href="#cb3-31"></a>    <span class="fu">mutate</span>(<span class="at">result =</span> <span class="fu">gsub</span>(<span class="st">'000e</span><span class="sc">\\</span><span class="st">+00'</span>, <span class="st">''</span>, result)) <span class="sc">%&gt;%</span> </span>
-<span id="cb3-32"><a href="#cb3-32"></a>    <span class="fu">select</span>(predictor, term, pollutant_IQR, result, OR, CI_low, CI_high, p.value) </span>
-<span id="cb3-33"><a href="#cb3-33"></a>  </span>
-<span id="cb3-34"><a href="#cb3-34"></a>  <span class="fu">return</span>(clean_fit)</span>
-<span id="cb3-35"><a href="#cb3-35"></a>}</span>
-<span id="cb3-36"><a href="#cb3-36"></a></span>
-<span id="cb3-37"><a href="#cb3-37"></a>fit_longterm_365 <span class="ot">=</span> purrr<span class="sc">::</span><span class="fu">map_df</span>(</span>
-<span id="cb3-38"><a href="#cb3-38"></a>  <span class="fu">c</span>(<span class="st">"PM2.5_MA_365"</span>, <span class="st">"SO4_MA_365"</span>, <span class="st">"NO3_MA_365"</span>, </span>
-<span id="cb3-39"><a href="#cb3-39"></a>    <span class="st">"NH4_MA_365"</span>, <span class="st">"OM_MA_365"</span>, <span class="st">"BC_MA_365"</span>), </span>
-<span id="cb3-40"><a href="#cb3-40"></a>  fit_logistic)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</section>
+<section id="表1制作" class="level2">
+<h2 class="anchored" data-anchor-id="表1制作">表1制作</h2>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb3"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb3-1"><a href="#cb3-1"></a>var_vec <span class="ot">=</span> <span class="fu">c</span>(<span class="st">"age"</span>, <span class="st">"sex"</span>, <span class="st">"ethnicity"</span>, <span class="st">"occupation"</span>, <span class="st">"marriage"</span>, </span>
+<span id="cb3-2"><a href="#cb3-2"></a><span class="st">"stroke_subtype"</span>, <span class="st">"hypertension"</span>, <span class="st">"diabetes"</span>, <span class="st">"Temperature_MA_07"</span>, </span>
+<span id="cb3-3"><a href="#cb3-3"></a><span class="st">"RH_MA_07"</span>, <span class="st">"PM2.5_MA_365"</span>, <span class="st">"SO4_MA_365"</span>, <span class="st">"NO3_MA_365"</span>, <span class="st">"NH4_MA_365"</span>, </span>
+<span id="cb3-4"><a href="#cb3-4"></a><span class="st">"OM_MA_365"</span>, <span class="st">"BC_MA_365"</span>)</span>
+<span id="cb3-5"><a href="#cb3-5"></a></span>
+<span id="cb3-6"><a href="#cb3-6"></a>var_fct <span class="ot">=</span> <span class="fu">c</span>(<span class="st">"sex"</span>, <span class="st">"ethnicity"</span>, <span class="st">"occupation"</span>, <span class="st">"marriage"</span>, </span>
+<span id="cb3-7"><a href="#cb3-7"></a><span class="st">"stroke_subtype"</span>, <span class="st">"hypertension"</span>, <span class="st">"diabetes"</span>)</span>
+<span id="cb3-8"><a href="#cb3-8"></a></span>
+<span id="cb3-9"><a href="#cb3-9"></a>tab1 <span class="ot">=</span> cs_pm <span class="sc">%&gt;%</span> </span>
+<span id="cb3-10"><a href="#cb3-10"></a>  <span class="fu">CreateTableOne</span>(</span>
+<span id="cb3-11"><a href="#cb3-11"></a>    <span class="at">vars =</span> var_vec, </span>
+<span id="cb3-12"><a href="#cb3-12"></a>    <span class="at">factorVars =</span> var_fct,</span>
+<span id="cb3-13"><a href="#cb3-13"></a>    <span class="at">strata =</span> <span class="st">'inhosp_death'</span>, </span>
+<span id="cb3-14"><a href="#cb3-14"></a>    <span class="at">addOverall =</span> <span class="cn">TRUE</span>) <span class="sc">%&gt;%</span> </span>
+<span id="cb3-15"><a href="#cb3-15"></a>  <span class="fu">print</span>(<span class="at">formatOptions =</span> <span class="fu">list</span>(<span class="at">big.mark =</span> <span class="st">","</span>),</span>
+<span id="cb3-16"><a href="#cb3-16"></a>        <span class="at">missing =</span> <span class="cn">TRUE</span>,</span>
+<span id="cb3-17"><a href="#cb3-17"></a>        <span class="at">catDigits =</span> <span class="dv">2</span>,</span>
+<span id="cb3-18"><a href="#cb3-18"></a>        <span class="at">contDigits =</span> <span class="dv">2</span>,</span>
+<span id="cb3-19"><a href="#cb3-19"></a>        <span class="at">showAllLevels =</span> <span class="cn">TRUE</span>,</span>
+<span id="cb3-20"><a href="#cb3-20"></a>        <span class="at">printToggle =</span> <span class="cn">FALSE</span>) <span class="sc">%&gt;%</span> </span>
+<span id="cb3-21"><a href="#cb3-21"></a>    <span class="fu">as.data.frame</span>() <span class="sc">%&gt;%</span> </span>
+<span id="cb3-22"><a href="#cb3-22"></a>    <span class="fu">setDT</span>(<span class="at">x =</span> ., <span class="at">keep.rownames =</span> <span class="st">'variables'</span>) <span class="sc">%&gt;%</span> </span>
+<span id="cb3-23"><a href="#cb3-23"></a>    dplyr<span class="sc">::</span><span class="fu">select</span>(<span class="sc">-</span>test)</span>
+<span id="cb3-24"><a href="#cb3-24"></a></span>
+<span id="cb3-25"><a href="#cb3-25"></a>tab1</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>                        variables               level         Overall
+ 1:                             n                              30,393
+ 2:               age..mean..SD..                        66.39 (7.88)
+ 3:                       sex....              Female  13316 (43.81) 
+ 4:                             X                Male  17077 (56.19) 
+ 5:                 ethnicity....                 Han  30067 (98.93) 
+ 6:                           X.1             non-Han    326 ( 1.07) 
+ 7:                occupation....  Public institution    649 ( 2.14) 
+ 8:                           X.2 Private institution   1604 ( 5.28) 
+ 9:                           X.3              Farmer  16603 (54.63) 
+10:                           X.4             Jobless    727 ( 2.39) 
+11:                           X.5             Retired   3749 (12.34) 
+12:                           X.6               Other   7061 (23.23) 
+13:                  marriage....             Married  25730 (84.66) 
+14:                           X.7           Unmarried    848 ( 2.79) 
+15:                           X.8             Widowed   1104 ( 3.63) 
+16:                           X.9            Divorced    282 ( 0.93) 
+17:                          X.10               Other   2429 ( 7.99) 
+18:            stroke_subtype....         Hemorrhagic   7250 (23.85) 
+19:                          X.11            Ischemic  21834 (71.84) 
+20:                          X.12         Unspecified   1309 ( 4.31) 
+21:              hypertension....                   0  14343 (47.19) 
+22:                          X.13                   1  16050 (52.81) 
+23:                  diabetes....                   0  26129 (85.97) 
+24:                          X.14                   1   4264 (14.03) 
+25: Temperature_MA_07..mean..SD..                        14.86 (8.99)
+26:          RH_MA_07..mean..SD..                       65.70 (16.23)
+27:      PM2.5_MA_365..mean..SD..                       49.03 (13.13)
+28:        SO4_MA_365..mean..SD..                         8.78 (2.22)
+29:        NO3_MA_365..mean..SD..                        10.68 (2.84)
+30:        NH4_MA_365..mean..SD..                         7.27 (1.74)
+31:         OM_MA_365..mean..SD..                        12.06 (3.12)
+32:         BC_MA_365..mean..SD..                         2.31 (0.63)
+                        variables               level         Overall
+                  0              1      p Missing
+ 1:          30,121            272               
+ 2:    66.38 (7.87)   67.40 (8.53)  0.034     0.0
+ 3:  13213 (43.87)    103 (37.87)   0.054     0.0
+ 4:  16908 (56.13)    169 (62.13)                
+ 5:  29800 (98.93)    267 (98.16)   0.349     0.0
+ 6:    321 ( 1.07)      5 ( 1.84)                
+ 7:    647 ( 2.15)      2 ( 0.74)  &lt;0.001     0.0
+ 8:   1586 ( 5.27)     18 ( 6.62)                
+ 9:  16497 (54.77)    106 (38.97)                
+10:    721 ( 2.39)      6 ( 2.21)                
+11:   3696 (12.27)     53 (19.49)                
+12:   6974 (23.15)     87 (31.99)                
+13:  25514 (84.71)    216 (79.41)  &lt;0.001     0.0
+14:    824 ( 2.74)     24 ( 8.82)                
+15:   1090 ( 3.62)     14 ( 5.15)                
+16:    277 ( 0.92)      5 ( 1.84)                
+17:   2416 ( 8.02)     13 ( 4.78)                
+18:   7086 (23.53)    164 (60.29)  &lt;0.001     0.0
+19:  21746 (72.20)     88 (32.35)                
+20:   1289 ( 4.28)     20 ( 7.35)                
+21:  14206 (47.16)    137 (50.37)   0.321     0.0
+22:  15915 (52.84)    135 (49.63)                
+23:  25910 (86.02)    219 (80.51)   0.012     0.0
+24:   4211 (13.98)     53 (19.49)                
+25:    14.84 (8.99)   16.65 (8.47)  0.001     0.0
+26:   65.66 (16.25)  70.19 (13.59) &lt;0.001     0.0
+27:   49.02 (13.14)  50.28 (12.28)  0.114     0.0
+28:     8.78 (2.22)    9.11 (2.09)  0.014     0.0
+29:    10.68 (2.84)   10.95 (3.00)  0.121     0.0
+30:     7.27 (1.74)    7.45 (1.75)  0.091     0.0
+31:    12.06 (3.13)   12.70 (2.82)  0.001     0.0
+32:     2.31 (0.63)    2.43 (0.55)  0.002     0.0
+                  0              1      p Missing</code></pre>
+</div>
+</div>
+<p>清理结果</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb5"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb5-1"><a href="#cb5-1"></a>tab1_v2 <span class="ot">=</span> tab1 <span class="sc">%&gt;%</span> </span>
+<span id="cb5-2"><a href="#cb5-2"></a>  <span class="fu">mutate</span>(<span class="at">variables =</span> <span class="fu">gsub</span>(<span class="st">'</span><span class="sc">\\</span><span class="st">.</span><span class="sc">\\</span><span class="st">.</span><span class="sc">\\</span><span class="st">.</span><span class="sc">\\</span><span class="st">.'</span>, <span class="st">''</span>, variables, <span class="at">perl =</span> <span class="cn">TRUE</span>),</span>
+<span id="cb5-3"><a href="#cb5-3"></a>         <span class="at">variables =</span> <span class="fu">fifelse</span>(<span class="fu">grepl</span>(<span class="st">'X</span><span class="sc">\\</span><span class="st">.'</span>, variables, <span class="at">perl =</span> <span class="cn">TRUE</span>)<span class="sc">|</span></span>
+<span id="cb5-4"><a href="#cb5-4"></a>                                  variables <span class="sc">==</span> <span class="st">'X'</span>, <span class="st">''</span>, variables),</span>
+<span id="cb5-5"><a href="#cb5-5"></a>         <span class="at">variables =</span> <span class="fu">gsub</span>(<span class="st">'</span><span class="sc">\\</span><span class="st">.</span><span class="sc">\\</span><span class="st">.mean</span><span class="sc">\\</span><span class="st">.</span><span class="sc">\\</span><span class="st">.SD</span><span class="sc">\\</span><span class="st">.</span><span class="sc">\\</span><span class="st">.'</span>, <span class="st">', mean (SD)'</span>, </span>
+<span id="cb5-6"><a href="#cb5-6"></a>                             variables, <span class="at">perl =</span> <span class="cn">TRUE</span>)) </span>
+<span id="cb5-7"><a href="#cb5-7"></a>tab1_v2</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>                       variables               level         Overall
+ 1:                            n                              30,393
+ 2:               age, mean (SD)                        66.39 (7.88)
+ 3:                          sex              Female  13316 (43.81) 
+ 4:                                             Male  17077 (56.19) 
+ 5:                    ethnicity                 Han  30067 (98.93) 
+ 6:                                          non-Han    326 ( 1.07) 
+ 7:                   occupation  Public institution    649 ( 2.14) 
+ 8:                              Private institution   1604 ( 5.28) 
+ 9:                                           Farmer  16603 (54.63) 
+10:                                          Jobless    727 ( 2.39) 
+11:                                          Retired   3749 (12.34) 
+12:                                            Other   7061 (23.23) 
+13:                     marriage             Married  25730 (84.66) 
+14:                                        Unmarried    848 ( 2.79) 
+15:                                          Widowed   1104 ( 3.63) 
+16:                                         Divorced    282 ( 0.93) 
+17:                                            Other   2429 ( 7.99) 
+18:               stroke_subtype         Hemorrhagic   7250 (23.85) 
+19:                                         Ischemic  21834 (71.84) 
+20:                                      Unspecified   1309 ( 4.31) 
+21:                 hypertension                   0  14343 (47.19) 
+22:                                                1  16050 (52.81) 
+23:                     diabetes                   0  26129 (85.97) 
+24:                                                1   4264 (14.03) 
+25: Temperature_MA_07, mean (SD)                        14.86 (8.99)
+26:          RH_MA_07, mean (SD)                       65.70 (16.23)
+27:      PM2.5_MA_365, mean (SD)                       49.03 (13.13)
+28:        SO4_MA_365, mean (SD)                         8.78 (2.22)
+29:        NO3_MA_365, mean (SD)                        10.68 (2.84)
+30:        NH4_MA_365, mean (SD)                         7.27 (1.74)
+31:         OM_MA_365, mean (SD)                        12.06 (3.12)
+32:         BC_MA_365, mean (SD)                         2.31 (0.63)
+                       variables               level         Overall
+                  0              1      p Missing
+ 1:          30,121            272               
+ 2:    66.38 (7.87)   67.40 (8.53)  0.034     0.0
+ 3:  13213 (43.87)    103 (37.87)   0.054     0.0
+ 4:  16908 (56.13)    169 (62.13)                
+ 5:  29800 (98.93)    267 (98.16)   0.349     0.0
+ 6:    321 ( 1.07)      5 ( 1.84)                
+ 7:    647 ( 2.15)      2 ( 0.74)  &lt;0.001     0.0
+ 8:   1586 ( 5.27)     18 ( 6.62)                
+ 9:  16497 (54.77)    106 (38.97)                
+10:    721 ( 2.39)      6 ( 2.21)                
+11:   3696 (12.27)     53 (19.49)                
+12:   6974 (23.15)     87 (31.99)                
+13:  25514 (84.71)    216 (79.41)  &lt;0.001     0.0
+14:    824 ( 2.74)     24 ( 8.82)                
+15:   1090 ( 3.62)     14 ( 5.15)                
+16:    277 ( 0.92)      5 ( 1.84)                
+17:   2416 ( 8.02)     13 ( 4.78)                
+18:   7086 (23.53)    164 (60.29)  &lt;0.001     0.0
+19:  21746 (72.20)     88 (32.35)                
+20:   1289 ( 4.28)     20 ( 7.35)                
+21:  14206 (47.16)    137 (50.37)   0.321     0.0
+22:  15915 (52.84)    135 (49.63)                
+23:  25910 (86.02)    219 (80.51)   0.012     0.0
+24:   4211 (13.98)     53 (19.49)                
+25:    14.84 (8.99)   16.65 (8.47)  0.001     0.0
+26:   65.66 (16.25)  70.19 (13.59) &lt;0.001     0.0
+27:   49.02 (13.14)  50.28 (12.28)  0.114     0.0
+28:     8.78 (2.22)    9.11 (2.09)  0.014     0.0
+29:    10.68 (2.84)   10.95 (3.00)  0.121     0.0
+30:     7.27 (1.74)    7.45 (1.75)  0.091     0.0
+31:    12.06 (3.13)   12.70 (2.82)  0.001     0.0
+32:     2.31 (0.63)    2.43 (0.55)  0.002     0.0
+                  0              1      p Missing</code></pre>
+</div>
+</div>
+<p>每3位数字加上逗号</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb7"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb7-1"><a href="#cb7-1"></a>add_comma <span class="ot">=</span> <span class="cf">function</span>(x, <span class="at">separator =</span> <span class="st">','</span>){</span>
+<span id="cb7-2"><a href="#cb7-2"></a>  str_pattern <span class="ot">=</span> <span class="st">'(</span><span class="sc">\\</span><span class="st">d+|</span><span class="sc">\\</span><span class="st">d+</span><span class="sc">\\</span><span class="st">.</span><span class="sc">\\</span><span class="st">d+)(</span><span class="sc">\\</span><span class="st">s+</span><span class="sc">\\</span><span class="st">((</span><span class="sc">\\</span><span class="st">s+|)(</span><span class="sc">\\</span><span class="st">d+| </span><span class="sc">\\</span><span class="st">d+)</span><span class="sc">\\</span><span class="st">.</span><span class="sc">\\</span><span class="st">d+</span><span class="sc">\\</span><span class="st">))'</span></span>
+<span id="cb7-3"><a href="#cb7-3"></a>  d_numb <span class="ot">=</span> <span class="fu">gsub</span>(<span class="st">'^</span><span class="sc">\\</span><span class="st">s+|^</span><span class="sc">\\</span><span class="st">s+$'</span>, <span class="st">''</span>, x) <span class="sc">%&gt;%</span> </span>
+<span id="cb7-4"><a href="#cb7-4"></a>    <span class="fu">gsub</span>(str_pattern, <span class="st">'</span><span class="sc">\\</span><span class="st">1'</span>, .) <span class="sc">%&gt;%</span> </span>
+<span id="cb7-5"><a href="#cb7-5"></a>    <span class="fu">as.numeric</span>() <span class="sc">%&gt;%</span> </span>
+<span id="cb7-6"><a href="#cb7-6"></a>    <span class="fu">suppressWarnings</span>() <span class="sc">%&gt;%</span> </span>
+<span id="cb7-7"><a href="#cb7-7"></a>    scales<span class="sc">::</span><span class="fu">label_comma</span>(</span>
+<span id="cb7-8"><a href="#cb7-8"></a>      <span class="at">accuracy =</span> <span class="fl">0.01</span>, </span>
+<span id="cb7-9"><a href="#cb7-9"></a>      <span class="at">decimal.mark =</span> <span class="st">"."</span>, </span>
+<span id="cb7-10"><a href="#cb7-10"></a>      <span class="at">big.mark =</span> separator)(.)</span>
+<span id="cb7-11"><a href="#cb7-11"></a>  d_perc <span class="ot">=</span> <span class="fu">gsub</span>(str_pattern, <span class="st">'</span><span class="sc">\\</span><span class="st">2'</span>, x)</span>
+<span id="cb7-12"><a href="#cb7-12"></a>  </span>
+<span id="cb7-13"><a href="#cb7-13"></a>  return_vec <span class="ot">=</span> <span class="fu">ifelse</span>(</span>
+<span id="cb7-14"><a href="#cb7-14"></a>    <span class="fu">grepl</span>(<span class="st">'(</span><span class="sc">\\</span><span class="st">d+)( </span><span class="sc">\\</span><span class="st">()((</span><span class="sc">\\</span><span class="st">d+| </span><span class="sc">\\</span><span class="st">d+)</span><span class="sc">\\</span><span class="st">.</span><span class="sc">\\</span><span class="st">d+)(</span><span class="sc">\\</span><span class="st">))'</span>, x),</span>
+<span id="cb7-15"><a href="#cb7-15"></a>    <span class="fu">paste0</span>(d_numb, d_perc) <span class="sc">%&gt;%</span> </span>
+<span id="cb7-16"><a href="#cb7-16"></a>      <span class="fu">gsub</span>(<span class="st">'</span><span class="sc">\\</span><span class="st">.00'</span>, <span class="st">''</span>, .) <span class="sc">%&gt;%</span> </span>
+<span id="cb7-17"><a href="#cb7-17"></a>      <span class="fu">gsub</span>(<span class="st">'</span><span class="sc">\\</span><span class="st">s+</span><span class="sc">\\</span><span class="st">('</span>, <span class="st">' </span><span class="sc">\\</span><span class="st">('</span>, .),</span>
+<span id="cb7-18"><a href="#cb7-18"></a>    x)</span>
+<span id="cb7-19"><a href="#cb7-19"></a>  </span>
+<span id="cb7-20"><a href="#cb7-20"></a>  <span class="fu">return</span>(return_vec)</span>
+<span id="cb7-21"><a href="#cb7-21"></a>}</span>
+<span id="cb7-22"><a href="#cb7-22"></a></span>
+<span id="cb7-23"><a href="#cb7-23"></a>tab1_v3 <span class="ot">=</span> tab1_v2 <span class="sc">%&gt;%</span> </span>
+<span id="cb7-24"><a href="#cb7-24"></a>  <span class="fu">mutate</span>(<span class="fu">across</span>(Overall<span class="sc">:</span><span class="st">`</span><span class="at">1</span><span class="st">`</span>, add_comma))</span>
+<span id="cb7-25"><a href="#cb7-25"></a></span>
+<span id="cb7-26"><a href="#cb7-26"></a>tab1_v3</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>                       variables               level         Overall
+ 1:                            n                              30,393
+ 2:               age, mean (SD)                        66.39 (7.88)
+ 3:                          sex              Female 13,316 (43.81) 
+ 4:                                             Male 17,077 (56.19) 
+ 5:                    ethnicity                 Han 30,067 (98.93) 
+ 6:                                          non-Han    326 ( 1.07) 
+ 7:                   occupation  Public institution    649 ( 2.14) 
+ 8:                              Private institution  1,604 ( 5.28) 
+ 9:                                           Farmer 16,603 (54.63) 
+10:                                          Jobless    727 ( 2.39) 
+11:                                          Retired  3,749 (12.34) 
+12:                                            Other  7,061 (23.23) 
+13:                     marriage             Married 25,730 (84.66) 
+14:                                        Unmarried    848 ( 2.79) 
+15:                                          Widowed  1,104 ( 3.63) 
+16:                                         Divorced    282 ( 0.93) 
+17:                                            Other  2,429 ( 7.99) 
+18:               stroke_subtype         Hemorrhagic  7,250 (23.85) 
+19:                                         Ischemic 21,834 (71.84) 
+20:                                      Unspecified  1,309 ( 4.31) 
+21:                 hypertension                   0 14,343 (47.19) 
+22:                                                1 16,050 (52.81) 
+23:                     diabetes                   0 26,129 (85.97) 
+24:                                                1  4,264 (14.03) 
+25: Temperature_MA_07, mean (SD)                        14.86 (8.99)
+26:          RH_MA_07, mean (SD)                       65.70 (16.23)
+27:      PM2.5_MA_365, mean (SD)                       49.03 (13.13)
+28:        SO4_MA_365, mean (SD)                         8.78 (2.22)
+29:        NO3_MA_365, mean (SD)                        10.68 (2.84)
+30:        NH4_MA_365, mean (SD)                         7.27 (1.74)
+31:         OM_MA_365, mean (SD)                        12.06 (3.12)
+32:         BC_MA_365, mean (SD)                         2.31 (0.63)
+                       variables               level         Overall
+                  0             1      p Missing
+ 1:          30,121           272               
+ 2:    66.38 (7.87)  67.40 (8.53)  0.034     0.0
+ 3: 13,213 (43.87)   103 (37.87)   0.054     0.0
+ 4: 16,908 (56.13)   169 (62.13)                
+ 5: 29,800 (98.93)   267 (98.16)   0.349     0.0
+ 6:    321 ( 1.07)     5 ( 1.84)                
+ 7:    647 ( 2.15)     2 ( 0.74)  &lt;0.001     0.0
+ 8:  1,586 ( 5.27)    18 ( 6.62)                
+ 9: 16,497 (54.77)   106 (38.97)                
+10:    721 ( 2.39)     6 ( 2.21)                
+11:  3,696 (12.27)    53 (19.49)                
+12:  6,974 (23.15)    87 (31.99)                
+13: 25,514 (84.71)   216 (79.41)  &lt;0.001     0.0
+14:    824 ( 2.74)    24 ( 8.82)                
+15:  1,090 ( 3.62)    14 ( 5.15)                
+16:    277 ( 0.92)     5 ( 1.84)                
+17:  2,416 ( 8.02)    13 ( 4.78)                
+18:  7,086 (23.53)   164 (60.29)  &lt;0.001     0.0
+19: 21,746 (72.20)    88 (32.35)                
+20:  1,289 ( 4.28)    20 ( 7.35)                
+21: 14,206 (47.16)   137 (50.37)   0.321     0.0
+22: 15,915 (52.84)   135 (49.63)                
+23: 25,910 (86.02)   219 (80.51)   0.012     0.0
+24:  4,211 (13.98)    53 (19.49)                
+25:    14.84 (8.99)  16.65 (8.47)  0.001     0.0
+26:   65.66 (16.25) 70.19 (13.59) &lt;0.001     0.0
+27:   49.02 (13.14) 50.28 (12.28)  0.114     0.0
+28:     8.78 (2.22)   9.11 (2.09)  0.014     0.0
+29:    10.68 (2.84)     10.95 (3)  0.121     0.0
+30:     7.27 (1.74)   7.45 (1.75)  0.091     0.0
+31:    12.06 (3.13)  12.70 (2.82)  0.001     0.0
+32:     2.31 (0.63)   2.43 (0.55)  0.002     0.0
+                  0             1      p Missing</code></pre>
+</div>
+</div>
+<p>写出成excel进行整理</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb9"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb9-1"><a href="#cb9-1"></a><span class="fu">fwrite</span>(tab1_v3, <span class="st">'tab1.csv'</span>)</span>
+<span id="cb9-2"><a href="#cb9-2"></a><span class="fu">getwd</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+</section>
+<section id="逻辑回归" class="level2">
+<h2 class="anchored" data-anchor-id="逻辑回归">逻辑回归</h2>
+<div class="cell" data-hash="4.cross-sec_cache/html/unnamed-chunk-6_1da151ea30148f17e9c1916a82690599">
+<div class="sourceCode cell-code" id="cb10"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb10-1"><a href="#cb10-1"></a>fit_logistic <span class="ot">=</span> <span class="cf">function</span>(x, <span class="at">data =</span> cs_pm, <span class="at">outcome_var =</span> <span class="st">'inhosp_death'</span>){</span>
+<span id="cb10-2"><a href="#cb10-2"></a>  <span class="fu">cat</span>(<span class="fu">paste0</span>(x, <span class="st">'</span><span class="sc">\n</span><span class="st">'</span>))</span>
+<span id="cb10-3"><a href="#cb10-3"></a>  x_iqr <span class="ot">=</span> <span class="fu">IQR</span>(data[[x]], <span class="at">na.rm =</span> <span class="cn">TRUE</span>)</span>
+<span id="cb10-4"><a href="#cb10-4"></a>  </span>
+<span id="cb10-5"><a href="#cb10-5"></a>  clean_fit <span class="ot">=</span> <span class="fu">glm</span>(</span>
+<span id="cb10-6"><a href="#cb10-6"></a>    <span class="at">formula =</span> <span class="fu">as.formula</span>(<span class="fu">paste0</span>(outcome_var, <span class="st">" ~ "</span>, </span>
+<span id="cb10-7"><a href="#cb10-7"></a>                    x, </span>
+<span id="cb10-8"><a href="#cb10-8"></a>                    <span class="st">' + age + sex + ethnicity + occupation + marriage + stroke_subtype + </span></span>
+<span id="cb10-9"><a href="#cb10-9"></a><span class="st">                    hypertension + diabetes + </span></span>
+<span id="cb10-10"><a href="#cb10-10"></a><span class="st">                    ns(Temperature_MA_07 , df = 5) + ns(RH_MA_07, df = 5)'</span>)),</span>
+<span id="cb10-11"><a href="#cb10-11"></a>    <span class="at">family =</span> binomial, <span class="co">#Logistic regression设置连接函数</span></span>
+<span id="cb10-12"><a href="#cb10-12"></a>    <span class="at">data =</span> data) <span class="sc">%&gt;%</span> </span>
+<span id="cb10-13"><a href="#cb10-13"></a>    <span class="fu">tidy</span>() <span class="sc">%&gt;%</span> </span>
+<span id="cb10-14"><a href="#cb10-14"></a>    <span class="co">#filter(grepl('PM|O3|CO|NO2|SO2', term)) %&gt;% </span></span>
+<span id="cb10-15"><a href="#cb10-15"></a>    <span class="fu">mutate</span>(<span class="at">OR =</span> <span class="fu">exp</span>(estimate<span class="sc">*</span>x_iqr), <span class="dv">3</span>,</span>
+<span id="cb10-16"><a href="#cb10-16"></a>           <span class="at">OR_round =</span> <span class="fu">round</span>(<span class="fu">exp</span>(estimate<span class="sc">*</span>x_iqr), <span class="dv">3</span>),</span>
+<span id="cb10-17"><a href="#cb10-17"></a>           <span class="at">CI_low =</span> <span class="fu">exp</span>(estimate<span class="sc">*</span>x_iqr <span class="sc">-</span> <span class="fl">1.96</span><span class="sc">*</span>std.error<span class="sc">*</span>x_iqr),</span>
+<span id="cb10-18"><a href="#cb10-18"></a>           <span class="at">CI_high =</span> <span class="fu">exp</span>(estimate<span class="sc">*</span>x_iqr <span class="sc">+</span> <span class="fl">1.96</span><span class="sc">*</span>std.error<span class="sc">*</span>x_iqr),</span>
+<span id="cb10-19"><a href="#cb10-19"></a>           <span class="at">CI_low_round =</span> <span class="fu">round</span>(<span class="fu">exp</span>(estimate<span class="sc">*</span>x_iqr <span class="sc">-</span> <span class="fl">1.96</span><span class="sc">*</span>std.error<span class="sc">*</span>x_iqr), <span class="dv">3</span>),</span>
+<span id="cb10-20"><a href="#cb10-20"></a>           <span class="at">CI_high_round =</span> <span class="fu">round</span>(<span class="fu">exp</span>(estimate<span class="sc">*</span>x_iqr <span class="sc">+</span> <span class="fl">1.96</span><span class="sc">*</span>std.error<span class="sc">*</span>x_iqr), <span class="dv">3</span>),</span>
+<span id="cb10-21"><a href="#cb10-21"></a>           <span class="at">predictor =</span> x) <span class="sc">%&gt;%</span> </span>
+<span id="cb10-22"><a href="#cb10-22"></a>    <span class="fu">mutate</span>(<span class="at">result =</span> <span class="fu">paste0</span>(<span class="fu">format</span>(OR_round, <span class="at">nsmall =</span> <span class="dv">3</span>), </span>
+<span id="cb10-23"><a href="#cb10-23"></a>                           <span class="st">' ('</span>, </span>
+<span id="cb10-24"><a href="#cb10-24"></a>                           <span class="fu">format</span>(CI_low_round, <span class="at">nsmall =</span> <span class="dv">3</span>), </span>
+<span id="cb10-25"><a href="#cb10-25"></a>                           <span class="st">'-'</span>, </span>
+<span id="cb10-26"><a href="#cb10-26"></a>                           <span class="fu">format</span>(CI_high_round, <span class="at">nsmall =</span> <span class="dv">3</span>),</span>
+<span id="cb10-27"><a href="#cb10-27"></a>                           <span class="st">')'</span>) <span class="sc">%&gt;%</span> </span>
+<span id="cb10-28"><a href="#cb10-28"></a>             <span class="fu">gsub</span>(<span class="st">' '</span>, <span class="st">''</span>, .) <span class="sc">%&gt;%</span> </span>
+<span id="cb10-29"><a href="#cb10-29"></a>             <span class="fu">gsub</span>(<span class="st">'</span><span class="sc">\\</span><span class="st">('</span>, <span class="st">' ('</span>, .),</span>
+<span id="cb10-30"><a href="#cb10-30"></a>           <span class="at">pollutant_IQR =</span> x_iqr) <span class="sc">%&gt;%</span> </span>
+<span id="cb10-31"><a href="#cb10-31"></a>    <span class="fu">mutate</span>(<span class="at">result =</span> <span class="fu">gsub</span>(<span class="st">'000e</span><span class="sc">\\</span><span class="st">+00'</span>, <span class="st">''</span>, result)) <span class="sc">%&gt;%</span> </span>
+<span id="cb10-32"><a href="#cb10-32"></a>    <span class="fu">select</span>(predictor, term, pollutant_IQR, result, OR, CI_low, CI_high, p.value)</span>
+<span id="cb10-33"><a href="#cb10-33"></a>  </span>
+<span id="cb10-34"><a href="#cb10-34"></a>  <span class="fu">return</span>(clean_fit)</span>
+<span id="cb10-35"><a href="#cb10-35"></a>}</span>
+<span id="cb10-36"><a href="#cb10-36"></a></span>
+<span id="cb10-37"><a href="#cb10-37"></a>fit_longterm_365 <span class="ot">=</span> purrr<span class="sc">::</span><span class="fu">map_df</span>(</span>
+<span id="cb10-38"><a href="#cb10-38"></a>  <span class="fu">c</span>(<span class="st">"PM2.5_MA_365"</span>, <span class="st">"SO4_MA_365"</span>, <span class="st">"NO3_MA_365"</span>, </span>
+<span id="cb10-39"><a href="#cb10-39"></a>    <span class="st">"NH4_MA_365"</span>, <span class="st">"OM_MA_365"</span>, <span class="st">"BC_MA_365"</span>), </span>
+<span id="cb10-40"><a href="#cb10-40"></a>  fit_logistic,</span>
+<span id="cb10-41"><a href="#cb10-41"></a>  <span class="at">data =</span> cs_pm)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>PM2.5_MA_365
 SO4_MA_365
@@ -363,29 +651,95 @@ NH4_MA_365
 OM_MA_365
 BC_MA_365</code></pre>
 </div>
-<div class="sourceCode cell-code" id="cb5"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb5-1"><a href="#cb5-1"></a>fit_longterm_365 <span class="sc">%&gt;%</span> </span>
-<span id="cb5-2"><a href="#cb5-2"></a>  <span class="fu">filter</span>(<span class="fu">grepl</span>(<span class="st">'_MA_365'</span>, term))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb12"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb12-1"><a href="#cb12-1"></a>fit_longterm_365 <span class="sc">%&gt;%</span> </span>
+<span id="cb12-2"><a href="#cb12-2"></a>  <span class="fu">filter</span>(predictor <span class="sc">==</span> term)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code># A tibble: 6 × 8
   predictor    term         pollutant_IQR result       OR CI_low CI_high p.value
   &lt;chr&gt;        &lt;chr&gt;                &lt;dbl&gt; &lt;chr&gt;     &lt;dbl&gt;  &lt;dbl&gt;   &lt;dbl&gt;   &lt;dbl&gt;
-1 PM2.5_MA_365 PM2.5_MA_365        15.1   1.178 (1…  1.18   1.04    1.33 8.49e-3
-2 SO4_MA_365   SO4_MA_365           2.82  1.240 (1…  1.24   1.09    1.41 8.28e-4
-3 NO3_MA_365   NO3_MA_365           3.28  1.175 (1…  1.17   1.04    1.33 9.46e-3
-4 NH4_MA_365   NH4_MA_365           1.99  1.194 (1…  1.19   1.06    1.34 2.98e-3
-5 OM_MA_365    OM_MA_365            3.49  1.245 (1…  1.24   1.11    1.39 1.57e-4
-6 BC_MA_365    BC_MA_365            0.716 1.219 (1…  1.22   1.09    1.36 6.14e-4</code></pre>
+1 PM2.5_MA_365 PM2.5_MA_365        15.1   1.142 (0…  1.14  0.978    1.33 0.0939 
+2 SO4_MA_365   SO4_MA_365           2.83  1.172 (0…  1.17  0.997    1.38 0.0551 
+3 NO3_MA_365   NO3_MA_365           3.28  1.133 (0…  1.13  0.972    1.32 0.111  
+4 NH4_MA_365   NH4_MA_365           2.00  1.116 (0…  1.12  0.961    1.30 0.150  
+5 OM_MA_365    OM_MA_365            3.47  1.218 (1…  1.22  1.05     1.41 0.00732
+6 BC_MA_365    BC_MA_365            0.712 1.197 (1…  1.20  1.04     1.38 0.0143 </code></pre>
 </div>
 </div>
-</section>
-<section id="亚组分析" class="level2">
-<h2 class="anchored" data-anchor-id="亚组分析">亚组分析</h2>
 </section>
 <section id="暴露反应关系" class="level2">
 <h2 class="anchored" data-anchor-id="暴露反应关系">暴露反应关系</h2>
-</section>
-<section id="paf计算" class="level2">
-<h2 class="anchored" data-anchor-id="paf计算">PAF计算</h2>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb14"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb14-1"><a href="#cb14-1"></a><span class="fu">quantile</span>(cs_pm<span class="sc">$</span>PM2<span class="fl">.5</span>_MA_365, <span class="fu">c</span>(<span class="fl">0.25</span>, <span class="fl">0.5</span>, <span class="fl">0.75</span>))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>     25%      50%      75% 
+40.48217 47.54928 55.58546 </code></pre>
+</div>
+<div class="sourceCode cell-code" id="cb16"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb16-1"><a href="#cb16-1"></a><span class="fu">quantile</span>(cs_pm<span class="sc">$</span>PM2<span class="fl">.5</span>_MA_365, <span class="fu">c</span>(<span class="fl">0.01</span>, <span class="fl">0.99</span>))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>      1%      99% 
+21.38067 85.20396 </code></pre>
+</div>
+<div class="sourceCode cell-code" id="cb18"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb18-1"><a href="#cb18-1"></a>fit_pm2<span class="fl">.5</span> <span class="ot">=</span> <span class="fu">glm</span>(</span>
+<span id="cb18-2"><a href="#cb18-2"></a>  inhosp_death <span class="sc">~</span> <span class="fu">ns</span>(PM2<span class="fl">.5</span>_MA_365, <span class="at">knots =</span> <span class="fu">c</span>(<span class="fl">40.48</span>, <span class="fl">65.54</span>, <span class="fl">75.58</span>)) <span class="sc">+</span> </span>
+<span id="cb18-3"><a href="#cb18-3"></a>    age <span class="sc">+</span> sex <span class="sc">+</span> ethnicity <span class="sc">+</span> occupation <span class="sc">+</span> marriage <span class="sc">+</span> stroke_subtype,</span>
+<span id="cb18-4"><a href="#cb18-4"></a>  <span class="at">family =</span> binomial,</span>
+<span id="cb18-5"><a href="#cb18-5"></a>  <span class="at">data =</span> cs_pm <span class="sc">%&gt;%</span> </span>
+<span id="cb18-6"><a href="#cb18-6"></a>    <span class="fu">filter</span>(PM2<span class="fl">.5</span>_MA_365 <span class="sc">&gt;</span> <span class="fl">21.38</span> <span class="sc">&amp;</span> PM2<span class="fl">.5</span>_MA_365 <span class="sc">&lt;</span> <span class="dv">80</span>)) </span>
+<span id="cb18-7"><a href="#cb18-7"></a></span>
+<span id="cb18-8"><a href="#cb18-8"></a>sp_pm2<span class="fl">.5</span> <span class="ot">=</span> fit_pm2<span class="fl">.5</span> <span class="sc">%&gt;%</span></span>
+<span id="cb18-9"><a href="#cb18-9"></a>  <span class="fu">termplot</span>(<span class="at">se =</span> T, <span class="at">plot =</span> F) <span class="sc">%&gt;%</span></span>
+<span id="cb18-10"><a href="#cb18-10"></a>  .[[<span class="st">'PM2.5_MA_365'</span>]] <span class="sc">%&gt;%</span></span>
+<span id="cb18-11"><a href="#cb18-11"></a>  <span class="fu">as.data.table</span>() <span class="sc">%&gt;%</span> </span>
+<span id="cb18-12"><a href="#cb18-12"></a>  .[,<span class="st">`</span><span class="at">:=</span><span class="st">`</span>(<span class="at">HR =</span> <span class="fu">exp</span>(y),</span>
+<span id="cb18-13"><a href="#cb18-13"></a>          <span class="at">HRmin =</span> <span class="fu">exp</span>(y <span class="sc">-</span> <span class="fl">1.96</span><span class="sc">*</span>se),</span>
+<span id="cb18-14"><a href="#cb18-14"></a>          <span class="at">HRmax =</span> <span class="fu">exp</span>(y <span class="sc">+</span> <span class="fl">1.96</span><span class="sc">*</span>se))] <span class="sc">%&gt;%</span> </span>
+<span id="cb18-15"><a href="#cb18-15"></a>  .[, <span class="st">`</span><span class="at">:=</span><span class="st">`</span>(<span class="at">pollutant =</span> <span class="st">'PM2.5'</span>)] <span class="sc">%&gt;%</span> </span>
+<span id="cb18-16"><a href="#cb18-16"></a>  .[]</span>
+<span id="cb18-17"><a href="#cb18-17"></a></span>
+<span id="cb18-18"><a href="#cb18-18"></a>sp_pm2<span class="fl">.5</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>              x          y        se        HR     HRmin    HRmax pollutant
+    1: 21.38206 -0.1801450 0.4066939 0.8351491 0.3763390 1.853313     PM2.5
+    2: 21.38321 -0.1801495 0.4066593 0.8351453 0.3763627 1.853179     PM2.5
+    3: 21.38823 -0.1801692 0.4065088 0.8351289 0.3764664 1.852596     PM2.5
+    4: 21.39237 -0.1801854 0.4063849 0.8351154 0.3765517 1.852116     PM2.5
+    5: 21.39479 -0.1801949 0.4063122 0.8351074 0.3766018 1.851835     PM2.5
+   ---                                                                     
+29033: 79.90769 -0.4279915 0.7258555 0.6518169 0.1571321 2.703873     PM2.5
+29034: 79.91672 -0.4278512 0.7271430 0.6519084 0.1567581 2.711085     PM2.5
+29035: 79.94468 -0.4274167 0.7311304 0.6521917 0.1556054 2.733544     PM2.5
+29036: 79.97850 -0.4268909 0.7359584 0.6525347 0.1542209 2.760985     PM2.5
+29037: 79.99940 -0.4265660 0.7389445 0.6527468 0.1533707 2.778095     PM2.5</code></pre>
+</div>
+</div>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb20"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb20-1"><a href="#cb20-1"></a>arr <span class="ot">=</span> <span class="fu">list</span>(<span class="st">'PM1'</span> <span class="ot">=</span> <span class="fu">TeX</span>(<span class="st">"PM$_{1}$"</span>),  </span>
+<span id="cb20-2"><a href="#cb20-2"></a>           <span class="st">"PM2.5"</span> <span class="ot">=</span> <span class="fu">TeX</span>(<span class="st">"PM$_{2.5}$"</span>), </span>
+<span id="cb20-3"><a href="#cb20-3"></a>           <span class="st">"PM10"</span> <span class="ot">=</span> <span class="fu">TeX</span>(<span class="st">"PM$_{10}$"</span>))</span>
+<span id="cb20-4"><a href="#cb20-4"></a>mylabel <span class="ot">=</span> <span class="cf">function</span>(val) { <span class="fu">return</span>(<span class="fu">lapply</span>(val, <span class="cf">function</span>(x) arr[x])) }</span>
+<span id="cb20-5"><a href="#cb20-5"></a></span>
+<span id="cb20-6"><a href="#cb20-6"></a>color7 <span class="ot">=</span> <span class="fu">c</span>(<span class="st">'#7570b3'</span>, <span class="st">'#d95f02'</span>, <span class="st">'#1b9e77'</span>)</span>
+<span id="cb20-7"><a href="#cb20-7"></a></span>
+<span id="cb20-8"><a href="#cb20-8"></a>p_pm2<span class="fl">.5</span> <span class="ot">=</span> sp_pm2<span class="fl">.5</span> <span class="sc">%&gt;%</span> </span>
+<span id="cb20-9"><a href="#cb20-9"></a>  <span class="fu">ggplot</span>(<span class="fu">aes</span>(<span class="at">x =</span> x, <span class="at">y =</span> HR)) <span class="sc">+</span></span>
+<span id="cb20-10"><a href="#cb20-10"></a>  <span class="fu">geom_hline</span>(<span class="at">yintercept =</span> <span class="dv">1</span>, <span class="at">linewidth =</span> <span class="fl">0.8</span>, <span class="at">alpha =</span> <span class="fl">0.6</span>, <span class="at">linetype =</span> <span class="st">'dashed'</span>) <span class="sc">+</span></span>
+<span id="cb20-11"><a href="#cb20-11"></a>  <span class="fu">geom_ribbon</span>(<span class="fu">aes</span>(<span class="at">ymin =</span> HRmin, <span class="at">ymax =</span> HRmax), <span class="at">alpha =</span> <span class="fl">0.3</span>, <span class="at">color =</span> <span class="cn">NA</span>, <span class="at">fill =</span> color7[<span class="dv">1</span>]) <span class="sc">+</span></span>
+<span id="cb20-12"><a href="#cb20-12"></a>  <span class="fu">geom_line</span>(<span class="at">linewidth =</span> <span class="fl">1.5</span>, <span class="at">color =</span> color7[<span class="dv">1</span>]) <span class="sc">+</span></span>
+<span id="cb20-13"><a href="#cb20-13"></a>  <span class="fu">facet_wrap</span>(<span class="sc">~</span> pollutant, <span class="at">scales =</span> <span class="st">'free'</span>, <span class="at">labeller =</span> mylabel) <span class="sc">+</span></span>
+<span id="cb20-14"><a href="#cb20-14"></a>  <span class="fu">scale_x_continuous</span>(<span class="at">expand =</span> <span class="fu">c</span>(<span class="dv">0</span>, <span class="dv">0</span>)) <span class="sc">+</span></span>
+<span id="cb20-15"><a href="#cb20-15"></a>  <span class="fu">scale_y_continuous</span>(<span class="at">expand =</span> <span class="fu">c</span>(<span class="dv">0</span>, <span class="fl">0.05</span>)) <span class="sc">+</span></span>
+<span id="cb20-16"><a href="#cb20-16"></a>  <span class="fu">labs</span>(<span class="at">x =</span> <span class="cn">NULL</span>, <span class="at">y =</span> <span class="st">'Odds of death'</span>) <span class="sc">+</span></span>
+<span id="cb20-17"><a href="#cb20-17"></a>  <span class="fu">theme_test</span>(<span class="at">base_size =</span> <span class="dv">20</span>, <span class="at">base_family =</span> <span class="st">'serif'</span>) <span class="sc">+</span> <span class="co"># , base_family = 'serif'</span></span>
+<span id="cb20-18"><a href="#cb20-18"></a>  <span class="fu">theme</span>(<span class="at">plot.margin =</span> <span class="fu">unit</span>(<span class="fu">c</span>(<span class="dv">0</span>, <span class="fl">0.5</span>, <span class="dv">0</span>, <span class="fl">0.2</span>), <span class="st">'cm'</span>),</span>
+<span id="cb20-19"><a href="#cb20-19"></a>        <span class="at">plot.title =</span> <span class="fu">element_text</span>(<span class="at">size =</span> <span class="dv">20</span>, <span class="at">face =</span> <span class="st">'bold'</span>),</span>
+<span id="cb20-20"><a href="#cb20-20"></a>        <span class="at">strip.background =</span> <span class="fu">element_rect</span>(<span class="at">fill =</span> ggplot2<span class="sc">::</span><span class="fu">alpha</span>(color7[<span class="dv">1</span>], <span class="fl">0.3</span>), <span class="at">color =</span> <span class="cn">NA</span>),</span>
+<span id="cb20-21"><a href="#cb20-21"></a>        <span class="at">strip.text =</span> <span class="fu">element_text</span>(<span class="at">size =</span> <span class="dv">18</span>, <span class="at">face =</span> <span class="st">'bold'</span>))</span>
+<span id="cb20-22"><a href="#cb20-22"></a></span>
+<span id="cb20-23"><a href="#cb20-23"></a>p_pm2<span class="fl">.5</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output-display">
+<p><img src="4.cross-sec_files/figure-html/unnamed-chunk-8-1.png" class="img-fluid" width="672"></p>
+</div>
+</div>
 
 
 </section>

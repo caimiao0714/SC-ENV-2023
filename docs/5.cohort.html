@@ -243,7 +243,14 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
    
   <ul>
   <li><a href="#文献实例" id="toc-文献实例" class="nav-link active" data-scroll-target="#文献实例">文献实例</a></li>
-  <li><a href="#r语言代码实战" id="toc-r语言代码实战" class="nav-link" data-scroll-target="#r语言代码实战">R语言代码实战</a></li>
+  <li><a href="#r语言代码实战" id="toc-r语言代码实战" class="nav-link" data-scroll-target="#r语言代码实战">R语言代码实战</a>
+  <ul class="collapse">
+  <li><a href="#cox回归" id="toc-cox回归" class="nav-link" data-scroll-target="#cox回归">Cox回归</a>
+  <ul class="collapse">
+  <li><a href="#读取数据" id="toc-读取数据" class="nav-link" data-scroll-target="#读取数据">读取数据</a></li>
+  </ul></li>
+  <li><a href="#混合线性模型" id="toc-混合线性模型" class="nav-link" data-scroll-target="#混合线性模型">混合线性模型</a></li>
+  </ul></li>
   </ul>
 </nav>
     </div>
@@ -278,48 +285,104 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 </section>
 <section id="r语言代码实战" class="level1">
 <h1>R语言代码实战</h1>
-<div class="cell">
-<div class="sourceCode cell-code" id="cb1"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb1-1"><a href="#cb1-1"></a>rehcox <span class="ot">=</span> <span class="cf">function</span>(x, <span class="at">dat =</span> drehosp, <span class="at">commorbidity =</span> comorbidity_vec, <span class="at">scale_num =</span> <span class="dv">10</span>){</span>
-<span id="cb1-2"><a href="#cb1-2"></a>  clean_fit <span class="ot">=</span> <span class="fu">coxph</span>(</span>
-<span id="cb1-3"><a href="#cb1-3"></a>    <span class="at">formula =</span> <span class="fu">as.formula</span>(<span class="fu">paste0</span>(<span class="st">"Surv(t2rehosp2, rehosp_staus) ~ "</span>, </span>
-<span id="cb1-4"><a href="#cb1-4"></a>                    x, </span>
-<span id="cb1-5"><a href="#cb1-5"></a>                    <span class="st">' + age + sex + ethnicity + marriage + occupation +</span></span>
-<span id="cb1-6"><a href="#cb1-6"></a><span class="st">                    payment_method + admission_status + stroke_subtype + </span></span>
-<span id="cb1-7"><a href="#cb1-7"></a><span class="st">                    ns(Temperature_MA_07, df = 5) + ns(RH_MA_07, df = 5) + '</span>,</span>
-<span id="cb1-8"><a href="#cb1-8"></a>                    commorbidity)), </span>
-<span id="cb1-9"><a href="#cb1-9"></a>    <span class="at">data =</span> dat) <span class="sc">%&gt;%</span> </span>
-<span id="cb1-10"><a href="#cb1-10"></a>    <span class="fu">tidy</span>() <span class="sc">%&gt;%</span> </span>
-<span id="cb1-11"><a href="#cb1-11"></a>    <span class="fu">filter</span>(<span class="fu">grepl</span>(<span class="st">'PM|O3|CO|NO2|SO2'</span>, term)) <span class="sc">%&gt;%</span> </span>
-<span id="cb1-12"><a href="#cb1-12"></a>    <span class="fu">mutate</span>(<span class="at">OR =</span> <span class="fu">exp</span>(estimate<span class="sc">*</span>scale_num), <span class="dv">3</span>,</span>
-<span id="cb1-13"><a href="#cb1-13"></a>           <span class="at">OR_round =</span> <span class="fu">round</span>(<span class="fu">exp</span>(estimate<span class="sc">*</span>scale_num), <span class="dv">3</span>),</span>
-<span id="cb1-14"><a href="#cb1-14"></a>           <span class="at">CI_low =</span> <span class="fu">exp</span>(estimate<span class="sc">*</span>scale_num <span class="sc">-</span> <span class="fl">1.96</span><span class="sc">*</span>std.error<span class="sc">*</span>scale_num),</span>
-<span id="cb1-15"><a href="#cb1-15"></a>           <span class="at">CI_high =</span> <span class="fu">exp</span>(estimate<span class="sc">*</span>scale_num <span class="sc">+</span> <span class="fl">1.96</span><span class="sc">*</span>std.error<span class="sc">*</span>scale_num),</span>
-<span id="cb1-16"><a href="#cb1-16"></a>           <span class="at">CI_low_round =</span> <span class="fu">round</span>(<span class="fu">exp</span>(estimate<span class="sc">*</span>scale_num <span class="sc">-</span> <span class="fl">1.96</span><span class="sc">*</span>std.error<span class="sc">*</span>scale_num), <span class="dv">3</span>),</span>
-<span id="cb1-17"><a href="#cb1-17"></a>           <span class="at">CI_high_round =</span> <span class="fu">round</span>(<span class="fu">exp</span>(estimate<span class="sc">*</span>scale_num <span class="sc">+</span> <span class="fl">1.96</span><span class="sc">*</span>std.error<span class="sc">*</span>scale_num), <span class="dv">3</span>),</span>
-<span id="cb1-18"><a href="#cb1-18"></a>           <span class="at">predictor =</span> x) <span class="sc">%&gt;%</span> </span>
-<span id="cb1-19"><a href="#cb1-19"></a>    <span class="fu">mutate</span>(<span class="at">result =</span> <span class="fu">paste0</span>(<span class="fu">format</span>(OR_round, <span class="at">nsmall =</span> <span class="dv">3</span>), </span>
-<span id="cb1-20"><a href="#cb1-20"></a>                           <span class="st">' ('</span>, </span>
-<span id="cb1-21"><a href="#cb1-21"></a>                           <span class="fu">format</span>(CI_low_round, <span class="at">nsmall =</span> <span class="dv">3</span>), </span>
-<span id="cb1-22"><a href="#cb1-22"></a>                           <span class="st">'-'</span>, </span>
-<span id="cb1-23"><a href="#cb1-23"></a>                           <span class="fu">format</span>(CI_high_round, <span class="at">nsmall =</span> <span class="dv">3</span>),</span>
-<span id="cb1-24"><a href="#cb1-24"></a>                           <span class="st">')'</span>)) <span class="sc">%&gt;%</span> </span>
-<span id="cb1-25"><a href="#cb1-25"></a>    <span class="fu">select</span>(predictor, term, result, OR, CI_low, CI_high, p.value) </span>
-<span id="cb1-26"><a href="#cb1-26"></a>  </span>
-<span id="cb1-27"><a href="#cb1-27"></a>  <span class="fu">print</span>(x)</span>
-<span id="cb1-28"><a href="#cb1-28"></a>  </span>
-<span id="cb1-29"><a href="#cb1-29"></a>  <span class="fu">return</span>(clean_fit)</span>
-<span id="cb1-30"><a href="#cb1-30"></a>}</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<section id="cox回归" class="level2">
+<h2 class="anchored" data-anchor-id="cox回归">Cox回归</h2>
+<section id="读取数据" class="level3">
+<h3 class="anchored" data-anchor-id="读取数据">读取数据</h3>
+<div class="cell" data-hash="5.cohort_cache/html/unnamed-chunk-1_3abfe41565848590c90496f6600e3513">
+<div class="sourceCode cell-code" id="cb1"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb1-1"><a href="#cb1-1"></a>pacman<span class="sc">::</span><span class="fu">p_load</span>(</span>
+<span id="cb1-2"><a href="#cb1-2"></a>  arrow, dplyr, ggplot2, data.table, broom, splines, survival, purrr)</span>
+<span id="cb1-3"><a href="#cb1-3"></a></span>
+<span id="cb1-4"><a href="#cb1-4"></a>cohort_cox <span class="ot">=</span> arrow<span class="sc">::</span><span class="fu">read_parquet</span>(</span>
+<span id="cb1-5"><a href="#cb1-5"></a>  <span class="st">'Data/cohort_Cox_synthetic.parquet'</span>)</span>
+<span id="cb1-6"><a href="#cb1-6"></a></span>
+<span id="cb1-7"><a href="#cb1-7"></a><span class="fu">glimpse</span>(cohort_cox)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>Rows: 8,411
+Columns: 12
+$ rehosp_staus      &lt;dbl&gt; 0, 0, 0, 1, 0, 0, 0, 0, 0, 0, 0, 1, 0, 1, 0, 0, 0, 0…
+$ t2rehosp          &lt;int&gt; 741, 1267, 510, 126, 1076, 402, 980, 589, 502, 524, …
+$ age               &lt;dbl&gt; 74, 79, 72, 79, 52, 75, 68, 62, 75, 73, 77, 70, 76, …
+$ sex               &lt;fct&gt; Female, Female, Female, Female, Female, Female, Fema…
+$ ethnicity         &lt;fct&gt; Han, Han, Han, Han, Han, Han, Han, Han, Han, Han, Ha…
+$ marriage          &lt;fct&gt; Married, Married, Married, Married, Married, Married…
+$ occupation        &lt;fct&gt; Farmer, Farmer, Other, Other, Other, Farmer, Other, …
+$ PM1_MA_365        &lt;dbl&gt; 26.94837, 21.58845, 26.15891, 25.80991, 34.91308, 36…
+$ PM2.5_MA_365      &lt;dbl&gt; 41.79592, 31.49986, 36.12802, 42.01941, 48.28277, 44…
+$ PM10_MA_365       &lt;dbl&gt; 68.51770, 63.77828, 57.15183, 67.48609, 76.22407, 72…
+$ Temperature_MA_07 &lt;dbl&gt; 5.847840, 24.166486, 26.243227, 9.688386, 6.529096, …
+$ RH_MA_07          &lt;dbl&gt; 73.08185, 67.75124, 87.87124, 72.36949, 68.59028, 71…</code></pre>
+</div>
 </div>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb2"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb2-1"><a href="#cb2-1"></a><span class="fu">map_dfr</span>(</span>
-<span id="cb2-2"><a href="#cb2-2"></a>     <span class="fu">c</span>(<span class="st">"PM1_MA_07"</span>, <span class="st">"PM2.5_MA_07"</span>, <span class="st">"PM10_MA_07"</span>,</span>
-<span id="cb2-3"><a href="#cb2-3"></a>       <span class="st">"PM1_MA_365"</span>, <span class="st">"PM2.5_MA_365"</span>, <span class="st">"PM10_MA_365"</span>), </span>
-<span id="cb2-4"><a href="#cb2-4"></a>     rehcox, </span>
-<span id="cb2-5"><a href="#cb2-5"></a>     <span class="at">dat =</span> drehosp,</span>
-<span id="cb2-6"><a href="#cb2-6"></a>     <span class="at">scale_num =</span> <span class="dv">10</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb3"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb3-1"><a href="#cb3-1"></a>rehcox <span class="ot">=</span> <span class="cf">function</span>(x, <span class="at">dat =</span> drehosp, <span class="at">commorbidity =</span> comorbidity_vec, <span class="at">scale_num =</span> <span class="dv">10</span>){</span>
+<span id="cb3-2"><a href="#cb3-2"></a>  clean_fit <span class="ot">=</span> <span class="fu">coxph</span>(</span>
+<span id="cb3-3"><a href="#cb3-3"></a>    <span class="at">formula =</span> <span class="fu">as.formula</span>(<span class="fu">paste0</span>(<span class="st">"Surv(t2rehosp2, rehosp_staus) ~ "</span>, </span>
+<span id="cb3-4"><a href="#cb3-4"></a>                    x, </span>
+<span id="cb3-5"><a href="#cb3-5"></a>                    <span class="st">' + age + sex + ethnicity + marriage + occupation +</span></span>
+<span id="cb3-6"><a href="#cb3-6"></a><span class="st">                    payment_method + admission_status + stroke_subtype + </span></span>
+<span id="cb3-7"><a href="#cb3-7"></a><span class="st">                    ns(Temperature_MA_07, df = 5) + ns(RH_MA_07, df = 5) + '</span>,</span>
+<span id="cb3-8"><a href="#cb3-8"></a>                    commorbidity)), </span>
+<span id="cb3-9"><a href="#cb3-9"></a>    <span class="at">data =</span> dat) <span class="sc">%&gt;%</span> </span>
+<span id="cb3-10"><a href="#cb3-10"></a>    <span class="fu">tidy</span>() <span class="sc">%&gt;%</span> </span>
+<span id="cb3-11"><a href="#cb3-11"></a>    <span class="fu">filter</span>(<span class="fu">grepl</span>(<span class="st">'PM|O3|CO|NO2|SO2'</span>, term)) <span class="sc">%&gt;%</span> </span>
+<span id="cb3-12"><a href="#cb3-12"></a>    <span class="fu">mutate</span>(<span class="at">OR =</span> <span class="fu">exp</span>(estimate<span class="sc">*</span>scale_num), <span class="dv">3</span>,</span>
+<span id="cb3-13"><a href="#cb3-13"></a>           <span class="at">OR_round =</span> <span class="fu">round</span>(<span class="fu">exp</span>(estimate<span class="sc">*</span>scale_num), <span class="dv">3</span>),</span>
+<span id="cb3-14"><a href="#cb3-14"></a>           <span class="at">CI_low =</span> <span class="fu">exp</span>(estimate<span class="sc">*</span>scale_num <span class="sc">-</span> <span class="fl">1.96</span><span class="sc">*</span>std.error<span class="sc">*</span>scale_num),</span>
+<span id="cb3-15"><a href="#cb3-15"></a>           <span class="at">CI_high =</span> <span class="fu">exp</span>(estimate<span class="sc">*</span>scale_num <span class="sc">+</span> <span class="fl">1.96</span><span class="sc">*</span>std.error<span class="sc">*</span>scale_num),</span>
+<span id="cb3-16"><a href="#cb3-16"></a>           <span class="at">CI_low_round =</span> <span class="fu">round</span>(<span class="fu">exp</span>(estimate<span class="sc">*</span>scale_num <span class="sc">-</span> <span class="fl">1.96</span><span class="sc">*</span>std.error<span class="sc">*</span>scale_num), <span class="dv">3</span>),</span>
+<span id="cb3-17"><a href="#cb3-17"></a>           <span class="at">CI_high_round =</span> <span class="fu">round</span>(<span class="fu">exp</span>(estimate<span class="sc">*</span>scale_num <span class="sc">+</span> <span class="fl">1.96</span><span class="sc">*</span>std.error<span class="sc">*</span>scale_num), <span class="dv">3</span>),</span>
+<span id="cb3-18"><a href="#cb3-18"></a>           <span class="at">predictor =</span> x) <span class="sc">%&gt;%</span> </span>
+<span id="cb3-19"><a href="#cb3-19"></a>    <span class="fu">mutate</span>(<span class="at">result =</span> <span class="fu">paste0</span>(<span class="fu">format</span>(OR_round, <span class="at">nsmall =</span> <span class="dv">3</span>), </span>
+<span id="cb3-20"><a href="#cb3-20"></a>                           <span class="st">' ('</span>, </span>
+<span id="cb3-21"><a href="#cb3-21"></a>                           <span class="fu">format</span>(CI_low_round, <span class="at">nsmall =</span> <span class="dv">3</span>), </span>
+<span id="cb3-22"><a href="#cb3-22"></a>                           <span class="st">'-'</span>, </span>
+<span id="cb3-23"><a href="#cb3-23"></a>                           <span class="fu">format</span>(CI_high_round, <span class="at">nsmall =</span> <span class="dv">3</span>),</span>
+<span id="cb3-24"><a href="#cb3-24"></a>                           <span class="st">')'</span>)) <span class="sc">%&gt;%</span> </span>
+<span id="cb3-25"><a href="#cb3-25"></a>    <span class="fu">select</span>(predictor, term, result, OR, CI_low, CI_high, p.value) </span>
+<span id="cb3-26"><a href="#cb3-26"></a>  </span>
+<span id="cb3-27"><a href="#cb3-27"></a>  <span class="fu">print</span>(x)</span>
+<span id="cb3-28"><a href="#cb3-28"></a>  </span>
+<span id="cb3-29"><a href="#cb3-29"></a>  <span class="fu">return</span>(clean_fit)</span>
+<span id="cb3-30"><a href="#cb3-30"></a>}</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb4"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb4-1"><a href="#cb4-1"></a><span class="fu">map_dfr</span>(</span>
+<span id="cb4-2"><a href="#cb4-2"></a>     <span class="fu">c</span>(<span class="st">"PM1_MA_07"</span>, <span class="st">"PM2.5_MA_07"</span>, <span class="st">"PM10_MA_07"</span>,</span>
+<span id="cb4-3"><a href="#cb4-3"></a>       <span class="st">"PM1_MA_365"</span>, <span class="st">"PM2.5_MA_365"</span>, <span class="st">"PM10_MA_365"</span>), </span>
+<span id="cb4-4"><a href="#cb4-4"></a>     rehcox, </span>
+<span id="cb4-5"><a href="#cb4-5"></a>     <span class="at">dat =</span> drehosp,</span>
+<span id="cb4-6"><a href="#cb4-6"></a>     <span class="at">scale_num =</span> <span class="dv">10</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+</section>
+</section>
+<section id="混合线性模型" class="level2">
+<h2 class="anchored" data-anchor-id="混合线性模型">混合线性模型</h2>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb5"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb5-1"><a href="#cb5-1"></a>fit_lme <span class="ot">=</span> <span class="cf">function</span>(y){</span>
+<span id="cb5-2"><a href="#cb5-2"></a>  f0 <span class="ot">=</span> <span class="fu">lmer</span>(<span class="fu">get</span>(y) <span class="sc">~</span> PM2<span class="fl">.5</span>_2010<span class="sc">:</span>delta_t <span class="sc">+</span> age <span class="sc">+</span> sex <span class="sc">+</span> smoking_status <span class="sc">+</span></span>
+<span id="cb5-3"><a href="#cb5-3"></a>              (<span class="dv">1</span><span class="sc">|</span>id), <span class="at">data =</span> cohort_lmer)</span>
+<span id="cb5-4"><a href="#cb5-4"></a>  </span>
+<span id="cb5-5"><a href="#cb5-5"></a>  f0 <span class="sc">%&gt;%</span> </span>
+<span id="cb5-6"><a href="#cb5-6"></a>    <span class="fu">tidy</span>(<span class="at">conf.int =</span> <span class="cn">TRUE</span>) <span class="sc">%&gt;%</span> </span>
+<span id="cb5-7"><a href="#cb5-7"></a>    <span class="fu">filter</span>(<span class="fu">grepl</span>(<span class="st">'PM2.5_2010'</span>, term)) <span class="sc">%&gt;%</span> </span>
+<span id="cb5-8"><a href="#cb5-8"></a>    <span class="fu">mutate</span>(<span class="at">estimate =</span> estimate<span class="sc">*</span><span class="fl">8.36</span>,</span>
+<span id="cb5-9"><a href="#cb5-9"></a>           <span class="at">conf.low =</span> conf.low<span class="sc">*</span><span class="fl">8.36</span>,</span>
+<span id="cb5-10"><a href="#cb5-10"></a>           <span class="at">conf.high =</span> conf.high<span class="sc">*</span><span class="fl">8.36</span>) <span class="sc">%&gt;%</span> </span>
+<span id="cb5-11"><a href="#cb5-11"></a>    <span class="fu">mutate</span>(<span class="at">CI =</span> <span class="fu">paste0</span>(<span class="fu">str_pad</span>(<span class="fu">round</span>(estimate, <span class="dv">3</span>), <span class="at">width =</span> <span class="dv">5</span>, <span class="at">side =</span> <span class="st">'right'</span>, <span class="at">pad =</span> <span class="st">'0'</span>), </span>
+<span id="cb5-12"><a href="#cb5-12"></a>                       <span class="st">' ('</span>, </span>
+<span id="cb5-13"><a href="#cb5-13"></a>                       <span class="fu">str_pad</span>(<span class="fu">round</span>(conf.low, <span class="dv">3</span>), <span class="at">width =</span> <span class="dv">5</span>, <span class="at">side =</span> <span class="st">'right'</span>, <span class="at">pad =</span> <span class="st">'0'</span>), </span>
+<span id="cb5-14"><a href="#cb5-14"></a>                       <span class="st">', '</span>, </span>
+<span id="cb5-15"><a href="#cb5-15"></a>                       <span class="fu">str_pad</span>(<span class="fu">round</span>(conf.high, <span class="dv">3</span>), <span class="at">width =</span> <span class="dv">5</span>, <span class="at">side =</span> <span class="st">'right'</span>, <span class="at">pad =</span> <span class="st">'0'</span>), </span>
+<span id="cb5-16"><a href="#cb5-16"></a>                       <span class="st">')'</span>)) <span class="sc">%&gt;%</span> </span>
+<span id="cb5-17"><a href="#cb5-17"></a>    <span class="fu">select</span>(term, estimate, CI, conf.low, conf.high, std.error) <span class="sc">%&gt;%</span> </span>
+<span id="cb5-18"><a href="#cb5-18"></a>    <span class="fu">mutate</span>(<span class="at">term =</span> y,</span>
+<span id="cb5-19"><a href="#cb5-19"></a>           <span class="at">N =</span> <span class="fu">nobs</span>(f0))</span>
+<span id="cb5-20"><a href="#cb5-20"></a>}</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 
 
+</section>
 </section>
 
 </main> <!-- /main -->
