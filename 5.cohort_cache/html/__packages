@@ -1,15 +1,9 @@
-base
-methods
-datasets
-utils
-grDevices
-graphics
-stats
 arrow
 dplyr
 ggplot2
 data.table
 broom
-splines
 survival
 purrr
+latex2exp
+patchwork
