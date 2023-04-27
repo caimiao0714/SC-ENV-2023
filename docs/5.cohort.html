@@ -253,6 +253,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
   <li><a href="#拟合模型" id="toc-拟合模型" class="nav-link" data-scroll-target="#拟合模型">拟合模型</a></li>
   <li><a href="#暴露反应关系" id="toc-暴露反应关系" class="nav-link" data-scroll-target="#暴露反应关系">暴露反应关系</a></li>
   <li><a href="#多个图形进行拼图" id="toc-多个图形进行拼图" class="nav-link" data-scroll-target="#多个图形进行拼图">多个图形进行拼图</a></li>
+  <li><a href="#限制性立方样条" id="toc-限制性立方样条" class="nav-link" data-scroll-target="#限制性立方样条">限制性立方样条</a></li>
   </ul></li>
   <li><a href="#混合线性模型" id="toc-混合线性模型" class="nav-link" data-scroll-target="#混合线性模型">混合线性模型</a></li>
   </ul></li>
@@ -294,9 +295,9 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <h2 class="anchored" data-anchor-id="cox回归">Cox回归</h2>
 <section id="读取数据" class="level3">
 <h3 class="anchored" data-anchor-id="读取数据">读取数据</h3>
-<div class="cell" data-hash="5.cohort_cache/html/unnamed-chunk-2_6925fd5c7262f33602470ad383546a19">
+<div class="cell" data-hash="5.cohort_cache/html/unnamed-chunk-2_c177b94e7e8bdde14c649987184708d6">
 <div class="sourceCode cell-code" id="cb1"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb1-1"><a href="#cb1-1"></a>pacman<span class="sc">::</span><span class="fu">p_load</span>(</span>
-<span id="cb1-2"><a href="#cb1-2"></a>  arrow, dplyr, ggplot2, data.table, broom, survival, splines, survival, purrr, latex2exp, patchwork)</span>
+<span id="cb1-2"><a href="#cb1-2"></a>  arrow, dplyr, ggplot2, data.table, broom, survival, splines, survival, purrr, latex2exp, patchwork, rms)</span>
 <span id="cb1-3"><a href="#cb1-3"></a></span>
 <span id="cb1-4"><a href="#cb1-4"></a>cohort_cox <span class="ot">=</span> arrow<span class="sc">::</span><span class="fu">read_parquet</span>(</span>
 <span id="cb1-5"><a href="#cb1-5"></a>  <span class="st">'Data/cohort_Cox_synthetic.parquet'</span>)</span>
@@ -617,6 +618,45 @@ n= 8262, number of events= 2474 </code></pre>
 <div class="sourceCode cell-code" id="cb30"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb30-1"><a href="#cb30-1"></a>p_cox_pm2<span class="fl">.5</span><span class="sc">/</span>p_cox_pm10</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output-display">
 <p><img src="5.cohort_files/figure-html/unnamed-chunk-12-1.png" class="img-fluid" width="672"></p>
+</div>
+</div>
+</section>
+<section id="限制性立方样条" class="level3">
+<h3 class="anchored" data-anchor-id="限制性立方样条">限制性立方样条</h3>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb31"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb31-1"><a href="#cb31-1"></a>rcs_cox_pm2<span class="fl">.5</span> <span class="ot">&lt;-</span> <span class="fu">cph</span>(<span class="fu">Surv</span>(t2rehosp, rehosp_staus) <span class="sc">~</span> <span class="fu">rcs</span>(PM2<span class="fl">.5</span>_MA_365, <span class="fu">c</span>(<span class="fl">40.48</span>, <span class="dv">60</span>, <span class="dv">63</span>)) <span class="sc">+</span> age <span class="sc">+</span> ethnicity <span class="sc">+</span> marriage <span class="sc">+</span> occupation <span class="sc">+</span> <span class="fu">rcs</span>(Temperature_MA_07, <span class="at">df =</span> <span class="dv">5</span>), </span>
+<span id="cb31-2"><a href="#cb31-2"></a>                     <span class="at">data =</span> cohort_cox <span class="sc">%&gt;%</span> </span>
+<span id="cb31-3"><a href="#cb31-3"></a>    <span class="fu">filter</span>(PM2<span class="fl">.5</span>_MA_365 <span class="sc">&gt;</span> <span class="fl">21.55</span> <span class="sc">&amp;</span> PM2<span class="fl">.5</span>_MA_365 <span class="sc">&lt;</span> <span class="dv">67</span>))</span>
+<span id="cb31-4"><a href="#cb31-4"></a></span>
+<span id="cb31-5"><a href="#cb31-5"></a><span class="fu">anova</span>(rcs_cox_pm2<span class="fl">.5</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>                Wald Statistics          Response: Surv(t2rehosp, rehosp_staus) 
+
+ Factor            Chi-Square d.f. P     
+ PM2.5_MA_365      26.36       2   &lt;.0001
+  Nonlinear         3.44       1   0.0637
+ age                0.62       1   0.4327
+ ethnicity          0.00       1   0.9448
+ marriage           5.03       4   0.2839
+ occupation        12.64       5   0.0270
+ Temperature_MA_07  4.29       4   0.3682
+  Nonlinear         1.92       3   0.5894
+ TOTAL NONLINEAR    5.21       4   0.2661
+ TOTAL             44.41      17   0.0003</code></pre>
+</div>
+<div class="sourceCode cell-code" id="cb33"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb33-1"><a href="#cb33-1"></a>dd <span class="ot">&lt;-</span> <span class="fu">datadist</span>(cohort_cox <span class="sc">%&gt;%</span> </span>
+<span id="cb33-2"><a href="#cb33-2"></a>    <span class="fu">filter</span>(PM2<span class="fl">.5</span>_MA_365 <span class="sc">&gt;</span> <span class="fl">21.55</span> <span class="sc">&amp;</span> PM2<span class="fl">.5</span>_MA_365 <span class="sc">&lt;</span> <span class="dv">67</span>))</span>
+<span id="cb33-3"><a href="#cb33-3"></a><span class="fu">options</span>(<span class="at">datadist =</span> <span class="st">'dd'</span>)</span>
+<span id="cb33-4"><a href="#cb33-4"></a>HR <span class="ot">&lt;-</span> <span class="fu">Predict</span>(rcs_cox_pm2<span class="fl">.5</span>, PM2<span class="fl">.5</span>_MA_365, <span class="at">fun =</span> exp, <span class="at">ref.zero =</span> <span class="cn">TRUE</span>) <span class="sc">%&gt;%</span> </span>
+<span id="cb33-5"><a href="#cb33-5"></a>  <span class="fu">setDT</span>()</span>
+<span id="cb33-6"><a href="#cb33-6"></a>p2 <span class="ot">&lt;-</span> HR <span class="sc">%&gt;%</span> </span>
+<span id="cb33-7"><a href="#cb33-7"></a>  <span class="fu">ggplot</span>(<span class="fu">aes</span>(<span class="at">x =</span> PM2<span class="fl">.5</span>_MA_365, <span class="at">y =</span> yhat)) <span class="sc">+</span></span>
+<span id="cb33-8"><a href="#cb33-8"></a>  <span class="fu">geom_ribbon</span>(<span class="fu">aes</span>(<span class="at">ymin =</span> lower, <span class="at">ymax =</span> upper), <span class="at">alpha =</span> <span class="fl">0.3</span>) <span class="sc">+</span></span>
+<span id="cb33-9"><a href="#cb33-9"></a>  <span class="fu">geom_line</span>(<span class="at">linewidth =</span> <span class="dv">1</span>) <span class="sc">+</span></span>
+<span id="cb33-10"><a href="#cb33-10"></a>  <span class="fu">theme_classic</span>()</span>
+<span id="cb33-11"><a href="#cb33-11"></a>p2</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output-display">
+<p><img src="5.cohort_files/figure-html/unnamed-chunk-13-1.png" class="img-fluid" width="672"></p>
 </div>
 </div>
 </section>
