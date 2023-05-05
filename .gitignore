@@ -2,6 +2,7 @@
 /_site/
 /3.cco_cache/
 /4.cross-sec_cache/
+/5.cohort_cache/
 /Papers/
 .Rproj.user
 *.qmd

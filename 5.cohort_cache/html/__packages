@@ -9,3 +9,5 @@ latex2exp
 patchwork
 Hmisc
 rms
+Matrix
+lme4

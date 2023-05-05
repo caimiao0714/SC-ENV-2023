@@ -2,7 +2,7 @@
 <html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en"><head>
 
 <meta charset="utf-8">
-<meta name="generator" content="quarto-1.3.302">
+<meta name="generator" content="quarto-1.2.335">
 
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 
@@ -17,10 +17,9 @@ div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
 ul.task-list{list-style: none;}
 ul.task-list li input[type="checkbox"] {
   width: 0.8em;
-  margin: 0 0.8em 0.2em -1em; /* quarto-specific, see https://github.com/quarto-dev/quarto-cli/issues/4556 */ 
+  margin: 0 0.8em 0.2em -1.6em;
   vertical-align: middle;
 }
-/* CSS for syntax highlighting */
 pre > code.sourceCode { white-space: pre; position: relative; }
 pre > code.sourceCode > span { display: inline-block; line-height: 1.25; }
 pre > code.sourceCode > span:empty { height: 1.2em; }
@@ -47,13 +46,43 @@ pre.numberSource code > span > a:first-child::before
     -khtml-user-select: none; -moz-user-select: none;
     -ms-user-select: none; user-select: none;
     padding: 0 4px; width: 4em;
+    color: #aaaaaa;
   }
-pre.numberSource { margin-left: 3em;  padding-left: 4px; }
+pre.numberSource { margin-left: 3em; border-left: 1px solid #aaaaaa;  padding-left: 4px; }
 div.sourceCode
   {   }
 @media screen {
 pre > code.sourceCode > span > a:first-child::before { text-decoration: underline; }
 }
+code span.al { color: #ff0000; font-weight: bold; } /* Alert */
+code span.an { color: #60a0b0; font-weight: bold; font-style: italic; } /* Annotation */
+code span.at { color: #7d9029; } /* Attribute */
+code span.bn { color: #40a070; } /* BaseN */
+code span.bu { color: #008000; } /* BuiltIn */
+code span.cf { color: #007020; font-weight: bold; } /* ControlFlow */
+code span.ch { color: #4070a0; } /* Char */
+code span.cn { color: #880000; } /* Constant */
+code span.co { color: #60a0b0; font-style: italic; } /* Comment */
+code span.cv { color: #60a0b0; font-weight: bold; font-style: italic; } /* CommentVar */
+code span.do { color: #ba2121; font-style: italic; } /* Documentation */
+code span.dt { color: #902000; } /* DataType */
+code span.dv { color: #40a070; } /* DecVal */
+code span.er { color: #ff0000; font-weight: bold; } /* Error */
+code span.ex { } /* Extension */
+code span.fl { color: #40a070; } /* Float */
+code span.fu { color: #06287e; } /* Function */
+code span.im { color: #008000; font-weight: bold; } /* Import */
+code span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Information */
+code span.kw { color: #007020; font-weight: bold; } /* Keyword */
+code span.op { color: #666666; } /* Operator */
+code span.ot { color: #007020; } /* Other */
+code span.pp { color: #bc7a00; } /* Preprocessor */
+code span.sc { color: #4070a0; } /* SpecialChar */
+code span.ss { color: #bb6688; } /* SpecialString */
+code span.st { color: #4070a0; } /* String */
+code span.va { color: #19177c; } /* Variable */
+code span.vs { color: #4070a0; } /* VerbatimString */
+code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warning */
 </style>
 
 
@@ -94,7 +123,6 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 }</script>
 <style>html{ scroll-behavior: smooth; }</style>
 
-  <script src="https://polyfill.io/v3/polyfill.min.js?features=es6"></script>
   <script src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml-full.js" type="text/javascript"></script>
 
 <link rel="stylesheet" href="styles.css">
@@ -104,16 +132,11 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 
 <div id="quarto-search-results"></div>
   <header id="quarto-header" class="headroom fixed-top">
-  <nav class="quarto-secondary-nav">
-    <div class="container-fluid d-flex">
-      <button type="button" class="quarto-btn-toggle btn" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar,#quarto-sidebar-glass" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
-        <i class="bi bi-layout-text-sidebar-reverse"></i>
-      </button>
-      <nav class="quarto-page-breadcrumbs" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="./0.intro.html">第一天</a></li><li class="breadcrumb-item"><a href="./1.exposure.html">环境暴露评估</a></li></ol></nav>
-      <a class="flex-grow-1" role="button" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar,#quarto-sidebar-glass" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">      
-      </a>
-      <button type="button" class="btn quarto-search-button" aria-label="Search" onclick="window.quartoOpenSearch();">
-        <i class="bi bi-search"></i>
+  <nav class="quarto-secondary-nav" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
+    <div class="container-fluid d-flex justify-content-between">
+      <h1 class="quarto-secondary-nav-title">环境暴露评估</h1>
+      <button type="button" class="quarto-btn-toggle btn" aria-label="Show secondary navigation">
+        <i class="bi bi-chevron-right"></i>
       </button>
     </div>
   </nav>
@@ -121,113 +144,100 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <!-- content -->
 <div id="quarto-content" class="quarto-container page-columns page-rows-contents page-layout-article">
 <!-- sidebar -->
-  <nav id="quarto-sidebar" class="sidebar collapse collapse-horizontal sidebar-navigation docked overflow-auto">
+  <nav id="quarto-sidebar" class="sidebar collapse sidebar-navigation docked overflow-auto">
     <div class="pt-lg-2 mt-2 text-left sidebar-header">
     <div class="sidebar-title mb-0 py-0">
       <a href="./">环境暴露的人群健康效应的研究、写作与发表</a> 
     </div>
       </div>
-        <div class="mt-2 flex-shrink-0 align-items-center">
+      <div class="mt-2 flex-shrink-0 align-items-center">
         <div class="sidebar-search">
         <div id="quarto-search" class="" title="Search"></div>
         </div>
-        </div>
+      </div>
     <div class="sidebar-menu-container"> 
     <ul class="list-unstyled mt-1">
         <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="./index.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text">引言</span></a>
+  <a href="./index.html" class="sidebar-item-text sidebar-link">引言</a>
   </div>
 </li>
         <li class="sidebar-item sidebar-item-section">
       <div class="sidebar-item-container"> 
-            <a class="sidebar-item-text sidebar-link text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-1" aria-expanded="true">
- <span class="menu-text">第一天</span></a>
-          <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-1" aria-expanded="true" aria-label="Toggle section">
+            <a class="sidebar-item-text sidebar-link text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-1" aria-expanded="true">第一天</a>
+          <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-1" aria-expanded="true">
             <i class="bi bi-chevron-right ms-2"></i>
           </a> 
       </div>
       <ul id="quarto-sidebar-section-1" class="collapse list-unstyled sidebar-section depth1 show">  
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="./0.intro.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text">环境健康领域简介</span></a>
+  <a href="./0.intro.html" class="sidebar-item-text sidebar-link">环境健康领域简介</a>
   </div>
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="./1.exposure.html" class="sidebar-item-text sidebar-link active">
- <span class="menu-text">环境暴露评估</span></a>
+  <a href="./1.exposure.html" class="sidebar-item-text sidebar-link active">环境暴露评估</a>
   </div>
 </li>
       </ul>
   </li>
         <li class="sidebar-item sidebar-item-section">
       <div class="sidebar-item-container"> 
-            <a class="sidebar-item-text sidebar-link text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-2" aria-expanded="true">
- <span class="menu-text">第二天</span></a>
-          <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-2" aria-expanded="true" aria-label="Toggle section">
+            <a class="sidebar-item-text sidebar-link text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-2" aria-expanded="true">第二天</a>
+          <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-2" aria-expanded="true">
             <i class="bi bi-chevron-right ms-2"></i>
           </a> 
       </div>
       <ul id="quarto-sidebar-section-2" class="collapse list-unstyled sidebar-section depth1 show">  
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="./2.ts.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text">时间序列研究</span></a>
+  <a href="./2.ts.html" class="sidebar-item-text sidebar-link">时间序列研究</a>
   </div>
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="./3.cco.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text">时间分层的病例交叉研究</span></a>
+  <a href="./3.cco.html" class="sidebar-item-text sidebar-link">时间分层的病例交叉研究</a>
   </div>
 </li>
       </ul>
   </li>
         <li class="sidebar-item sidebar-item-section">
       <div class="sidebar-item-container"> 
-            <a class="sidebar-item-text sidebar-link text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-3" aria-expanded="true">
- <span class="menu-text">第三天</span></a>
-          <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-3" aria-expanded="true" aria-label="Toggle section">
+            <a class="sidebar-item-text sidebar-link text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-3" aria-expanded="true">第三天</a>
+          <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-3" aria-expanded="true">
             <i class="bi bi-chevron-right ms-2"></i>
           </a> 
       </div>
       <ul id="quarto-sidebar-section-3" class="collapse list-unstyled sidebar-section depth1 show">  
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="./4.cross-sec.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text">横截面研究</span></a>
+  <a href="./4.cross-sec.html" class="sidebar-item-text sidebar-link">横截面研究</a>
   </div>
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="./5.cohort.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text">队列研究</span></a>
+  <a href="./5.cohort.html" class="sidebar-item-text sidebar-link">队列研究</a>
   </div>
 </li>
       </ul>
   </li>
         <li class="sidebar-item sidebar-item-section">
       <div class="sidebar-item-container"> 
-            <a class="sidebar-item-text sidebar-link text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-4" aria-expanded="true">
- <span class="menu-text">第四天</span></a>
-          <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-4" aria-expanded="true" aria-label="Toggle section">
+            <a class="sidebar-item-text sidebar-link text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-4" aria-expanded="true">第四天</a>
+          <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-4" aria-expanded="true">
             <i class="bi bi-chevron-right ms-2"></i>
           </a> 
       </div>
       <ul id="quarto-sidebar-section-4" class="collapse list-unstyled sidebar-section depth1 show">  
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="./6.writing.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text">10+文章的写作套路</span></a>
+  <a href="./6.writing.html" class="sidebar-item-text sidebar-link">10+文章的写作套路</a>
   </div>
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="./7.journal.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text">选刊与投稿</span></a>
+  <a href="./7.journal.html" class="sidebar-item-text sidebar-link">选刊与投稿</a>
   </div>
 </li>
       </ul>
@@ -235,7 +245,6 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
     </ul>
     </div>
 </nav>
-<div id="quarto-sidebar-glass" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar,#quarto-sidebar-glass"></div>
 <!-- margin-sidebar -->
     <div id="quarto-margin-sidebar" class="sidebar margin-sidebar">
         <nav id="TOC" role="doc-toc" class="toc-active">
@@ -270,6 +279,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
   <li><a href="#r代码及展示" id="toc-r代码及展示" class="nav-link" data-scroll-target="#r代码及展示">R代码及展示</a>
   <ul class="collapse">
   <li><a href="#文本地址转经纬度r代码" id="toc-文本地址转经纬度r代码" class="nav-link" data-scroll-target="#文本地址转经纬度r代码">文本地址转经纬度R代码</a></li>
+  <li><a href="#双线性插值" id="toc-双线性插值" class="nav-link" data-scroll-target="#双线性插值">双线性插值</a></li>
   </ul></li>
   </ul>
 </nav>
@@ -279,7 +289,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 
 <header id="title-block-header" class="quarto-title-block default">
 <div class="quarto-title">
-<h1 class="title">环境暴露评估</h1>
+<h1 class="title d-none d-lg-block">环境暴露评估</h1>
 </div>
 
 
@@ -402,6 +412,159 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <span id="cb1-4"><a href="#cb1-4"></a>test <span class="ot">&lt;-</span> <span class="fu">data.frame</span>(<span class="at">n =</span> <span class="dv">1</span><span class="sc">:</span><span class="dv">100</span>, <span class="at">address =</span> <span class="fu">c</span>(<span class="st">"华中科技大学"</span>, <span class="st">"四川大学"</span>))</span>
 <span id="cb1-5"><a href="#cb1-5"></a>result <span class="ot">&lt;-</span> <span class="fu">geocoord</span>(<span class="at">data =</span> test, <span class="at">address =</span> <span class="st">"address"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
+</section>
+<section id="双线性插值" class="level3">
+<h3 class="anchored" data-anchor-id="双线性插值">双线性插值</h3>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb2"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb2-1"><a href="#cb2-1"></a>pacman<span class="sc">::</span><span class="fu">p_load</span>(dplyr, raster, data.table, arrow, ggplot2, lubridate)</span>
+<span id="cb2-2"><a href="#cb2-2"></a></span>
+<span id="cb2-3"><a href="#cb2-3"></a>exposure <span class="ot">=</span> <span class="fu">read_parquet</span>(<span class="st">'Data/exposure_grids.parquet'</span>, <span class="at">as_data_frame =</span> T) <span class="sc">%&gt;%</span> </span>
+<span id="cb2-4"><a href="#cb2-4"></a>  <span class="fu">mutate</span>(<span class="at">longitude =</span> <span class="fu">round</span>(longitude, <span class="dv">2</span>),</span>
+<span id="cb2-5"><a href="#cb2-5"></a>         <span class="at">latitude =</span> <span class="fu">round</span>(latitude, <span class="dv">2</span>))</span>
+<span id="cb2-6"><a href="#cb2-6"></a></span>
+<span id="cb2-7"><a href="#cb2-7"></a>exposure</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code># A tibble: 252 × 9
+   longitude latitude date       PM2.5   SO4   NO3   NH4    OM    BC
+       &lt;dbl&gt;    &lt;dbl&gt; &lt;date&gt;     &lt;dbl&gt; &lt;dbl&gt; &lt;dbl&gt; &lt;dbl&gt; &lt;dbl&gt; &lt;dbl&gt;
+ 1      110.     22.0 2014-01-01   120  21.1  31.1  20.3  31.9  5.95
+ 2      110.     22.0 2014-01-02   123  26.2  29.5  24.0  29.0  5.01
+ 3      110.     22.0 2014-01-03   128  30.3  28.5  23.7  30.2  5.70
+ 4      110.     22.0 2014-01-04   138  23.5  29.9  22.7  43.1  8.82
+ 5      110.     22.0 2014-01-05   142  24.6  32.0  23.0  43.0  8.15
+ 6      110.     22.0 2014-01-06   108  25.8  17.4  15.8  32.7  6.57
+ 7      110.     22.0 2014-01-07    79  18.9  11.0  10.6  25.0  5.75
+ 8      110.     22.0 2014-01-01   119  21.2  30.8  20.0  31.5  5.92
+ 9      110.     22.0 2014-01-02   122  25.6  29.4  24.2  28.7  5.02
+10      110.     22.0 2014-01-03   117  27.7  25.9  22.0  27.4  5.13
+# ℹ 242 more rows</code></pre>
+</div>
+</div>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb4"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb4-1"><a href="#cb4-1"></a>individual <span class="ot">=</span> <span class="fu">data.frame</span>(</span>
+<span id="cb4-2"><a href="#cb4-2"></a>  <span class="at">longitude =</span> <span class="fu">c</span>(<span class="fl">110.08</span>, <span class="fl">110.01</span>, <span class="fl">110.15</span>, <span class="fl">110.02</span>, <span class="fl">110.18</span>, </span>
+<span id="cb4-3"><a href="#cb4-3"></a>                <span class="fl">110.14</span>, <span class="fl">110.058</span>, <span class="fl">110.01</span>, <span class="fl">110.15</span>, <span class="fl">110.15</span>), </span>
+<span id="cb4-4"><a href="#cb4-4"></a>  <span class="at">latitude  =</span> <span class="fu">c</span>(<span class="fl">22.12</span>, <span class="fl">22.20</span>, <span class="fl">22.21</span>, <span class="fl">22.27</span>, <span class="fl">22.15</span>, </span>
+<span id="cb4-5"><a href="#cb4-5"></a>                <span class="fl">22.23</span>, <span class="fl">22.29</span>, <span class="fl">22.25</span>, <span class="fl">22.17</span>, <span class="fl">22.29</span>))</span>
+<span id="cb4-6"><a href="#cb4-6"></a></span>
+<span id="cb4-7"><a href="#cb4-7"></a>individual</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>   longitude latitude
+1    110.080    22.12
+2    110.010    22.20
+3    110.150    22.21
+4    110.020    22.27
+5    110.180    22.15
+6    110.140    22.23
+7    110.058    22.29
+8    110.010    22.25
+9    110.150    22.17
+10   110.150    22.29</code></pre>
+</div>
+</div>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb6"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb6-1"><a href="#cb6-1"></a><span class="fu">ggplot</span>() <span class="sc">+</span></span>
+<span id="cb6-2"><a href="#cb6-2"></a>  </span>
+<span id="cb6-3"><a href="#cb6-3"></a>  <span class="fu">geom_tile</span>(<span class="at">data =</span> exposure <span class="sc">%&gt;%</span> </span>
+<span id="cb6-4"><a href="#cb6-4"></a>              <span class="fu">filter</span>(date <span class="sc">==</span> <span class="fu">ymd</span>(<span class="st">'2014-01-03'</span>)), </span>
+<span id="cb6-5"><a href="#cb6-5"></a>            <span class="fu">aes</span>(<span class="at">x =</span> longitude, <span class="at">y =</span> latitude, <span class="at">fill =</span> PM2<span class="fl">.5</span>), <span class="at">alpha =</span> <span class="fl">0.9</span>) <span class="sc">+</span></span>
+<span id="cb6-6"><a href="#cb6-6"></a>  <span class="fu">geom_point</span>(<span class="at">data =</span> individual, <span class="fu">aes</span>(<span class="at">x =</span> longitude, <span class="at">y =</span> latitude), </span>
+<span id="cb6-7"><a href="#cb6-7"></a>             <span class="at">color =</span> <span class="st">'black'</span>, <span class="at">size =</span> <span class="dv">3</span>) <span class="sc">+</span></span>
+<span id="cb6-8"><a href="#cb6-8"></a>  <span class="fu">scale_fill_gradient</span>(<span class="at">low =</span> <span class="st">'#fdd49e'</span>, <span class="at">high =</span> <span class="st">'#7f0000'</span>) <span class="sc">+</span></span>
+<span id="cb6-9"><a href="#cb6-9"></a>  <span class="fu">theme_test</span>() <span class="sc">+</span></span>
+<span id="cb6-10"><a href="#cb6-10"></a>  <span class="fu">coord_equal</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output-display">
+<p><img src="1.exposure_files/figure-html/unnamed-chunk-4-1.png" class="img-fluid" width="672"></p>
+</div>
+</div>
+<p>创造逐日的各污染物数据</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb7"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb7-1"><a href="#cb7-1"></a>exposure_PM2<span class="fl">.5</span> <span class="ot">=</span> exposure <span class="sc">%&gt;%</span> </span>
+<span id="cb7-2"><a href="#cb7-2"></a>  <span class="fu">filter</span>(date <span class="sc">==</span> <span class="fu">ymd</span>(<span class="st">'2014-01-03'</span>)) <span class="sc">%&gt;%</span> </span>
+<span id="cb7-3"><a href="#cb7-3"></a>  dplyr<span class="sc">::</span><span class="fu">select</span>(longitude, latitude, PM2<span class="fl">.5</span>) <span class="sc">%&gt;%</span> </span>
+<span id="cb7-4"><a href="#cb7-4"></a>  <span class="fu">rasterFromXYZ</span>()</span>
+<span id="cb7-5"><a href="#cb7-5"></a></span>
+<span id="cb7-6"><a href="#cb7-6"></a>exposure_SO4 <span class="ot">=</span> exposure <span class="sc">%&gt;%</span> </span>
+<span id="cb7-7"><a href="#cb7-7"></a>  <span class="fu">filter</span>(date <span class="sc">==</span> <span class="fu">ymd</span>(<span class="st">'2014-01-03'</span>)) <span class="sc">%&gt;%</span> </span>
+<span id="cb7-8"><a href="#cb7-8"></a>  dplyr<span class="sc">::</span><span class="fu">select</span>(longitude, latitude, SO4) <span class="sc">%&gt;%</span> </span>
+<span id="cb7-9"><a href="#cb7-9"></a>  <span class="fu">rasterFromXYZ</span>()</span>
+<span id="cb7-10"><a href="#cb7-10"></a></span>
+<span id="cb7-11"><a href="#cb7-11"></a>exposure_NO3 <span class="ot">=</span> exposure <span class="sc">%&gt;%</span> </span>
+<span id="cb7-12"><a href="#cb7-12"></a>  <span class="fu">filter</span>(date <span class="sc">==</span> <span class="fu">ymd</span>(<span class="st">'2014-01-03'</span>)) <span class="sc">%&gt;%</span> </span>
+<span id="cb7-13"><a href="#cb7-13"></a>  dplyr<span class="sc">::</span><span class="fu">select</span>(longitude, latitude, NO3) <span class="sc">%&gt;%</span> </span>
+<span id="cb7-14"><a href="#cb7-14"></a>  <span class="fu">rasterFromXYZ</span>()</span>
+<span id="cb7-15"><a href="#cb7-15"></a></span>
+<span id="cb7-16"><a href="#cb7-16"></a>exposure_NH4 <span class="ot">=</span> exposure <span class="sc">%&gt;%</span> </span>
+<span id="cb7-17"><a href="#cb7-17"></a>  <span class="fu">filter</span>(date <span class="sc">==</span> <span class="fu">ymd</span>(<span class="st">'2014-01-03'</span>)) <span class="sc">%&gt;%</span> </span>
+<span id="cb7-18"><a href="#cb7-18"></a>  dplyr<span class="sc">::</span><span class="fu">select</span>(longitude, latitude, NH4) <span class="sc">%&gt;%</span> </span>
+<span id="cb7-19"><a href="#cb7-19"></a>  <span class="fu">rasterFromXYZ</span>()</span>
+<span id="cb7-20"><a href="#cb7-20"></a></span>
+<span id="cb7-21"><a href="#cb7-21"></a>exposure_OM <span class="ot">=</span> exposure <span class="sc">%&gt;%</span> </span>
+<span id="cb7-22"><a href="#cb7-22"></a>  <span class="fu">filter</span>(date <span class="sc">==</span> <span class="fu">ymd</span>(<span class="st">'2014-01-03'</span>)) <span class="sc">%&gt;%</span> </span>
+<span id="cb7-23"><a href="#cb7-23"></a>  dplyr<span class="sc">::</span><span class="fu">select</span>(longitude, latitude, OM) <span class="sc">%&gt;%</span> </span>
+<span id="cb7-24"><a href="#cb7-24"></a>  <span class="fu">rasterFromXYZ</span>()</span>
+<span id="cb7-25"><a href="#cb7-25"></a></span>
+<span id="cb7-26"><a href="#cb7-26"></a>exposure_BC <span class="ot">=</span> exposure <span class="sc">%&gt;%</span> </span>
+<span id="cb7-27"><a href="#cb7-27"></a>  <span class="fu">filter</span>(date <span class="sc">==</span> <span class="fu">ymd</span>(<span class="st">'2014-01-03'</span>)) <span class="sc">%&gt;%</span> </span>
+<span id="cb7-28"><a href="#cb7-28"></a>  dplyr<span class="sc">::</span><span class="fu">select</span>(longitude, latitude, BC) <span class="sc">%&gt;%</span> </span>
+<span id="cb7-29"><a href="#cb7-29"></a>  <span class="fu">rasterFromXYZ</span>()</span>
+<span id="cb7-30"><a href="#cb7-30"></a></span>
+<span id="cb7-31"><a href="#cb7-31"></a>exposure_BC</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>class      : RasterLayer 
+dimensions : 6, 6, 36  (nrow, ncol, ncell)
+resolution : 0.1, 0.1  (x, y)
+extent     : 109.8, 110.4, 21.9, 22.5  (xmin, xmax, ymin, ymax)
+crs        : NA 
+source     : memory
+names      : BC 
+values     : 4.45, 7.15  (min, max)</code></pre>
+</div>
+</div>
+<p>用<code>raster::extract()</code>函数进行双线性插值污染物评估</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb9"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb9-1"><a href="#cb9-1"></a>eval_pollutant <span class="ot">=</span> individual <span class="sc">%&gt;%</span> </span>
+<span id="cb9-2"><a href="#cb9-2"></a>  <span class="fu">mutate</span>(</span>
+<span id="cb9-3"><a href="#cb9-3"></a>    <span class="at">PM2.5 =</span> raster<span class="sc">::</span><span class="fu">extract</span>(</span>
+<span id="cb9-4"><a href="#cb9-4"></a>      exposure_PM2<span class="fl">.5</span>,</span>
+<span id="cb9-5"><a href="#cb9-5"></a>      individual[,<span class="fu">c</span>(<span class="st">'longitude'</span>, <span class="st">'latitude'</span>)],</span>
+<span id="cb9-6"><a href="#cb9-6"></a>      <span class="at">method =</span> <span class="st">"bilinear"</span>),</span>
+<span id="cb9-7"><a href="#cb9-7"></a>    <span class="at">SO4 =</span> raster<span class="sc">::</span><span class="fu">extract</span>(</span>
+<span id="cb9-8"><a href="#cb9-8"></a>      exposure_SO4,</span>
+<span id="cb9-9"><a href="#cb9-9"></a>      individual[,<span class="fu">c</span>(<span class="st">'longitude'</span>, <span class="st">'latitude'</span>)],</span>
+<span id="cb9-10"><a href="#cb9-10"></a>      <span class="at">method =</span> <span class="st">"bilinear"</span>),</span>
+<span id="cb9-11"><a href="#cb9-11"></a>    <span class="at">NO3 =</span> raster<span class="sc">::</span><span class="fu">extract</span>(</span>
+<span id="cb9-12"><a href="#cb9-12"></a>      exposure_NO3,</span>
+<span id="cb9-13"><a href="#cb9-13"></a>      individual[,<span class="fu">c</span>(<span class="st">'longitude'</span>, <span class="st">'latitude'</span>)],</span>
+<span id="cb9-14"><a href="#cb9-14"></a>      <span class="at">method =</span> <span class="st">"bilinear"</span>),</span>
+<span id="cb9-15"><a href="#cb9-15"></a>    <span class="at">NH4 =</span> raster<span class="sc">::</span><span class="fu">extract</span>(</span>
+<span id="cb9-16"><a href="#cb9-16"></a>      exposure_NH4,</span>
+<span id="cb9-17"><a href="#cb9-17"></a>      individual[,<span class="fu">c</span>(<span class="st">'longitude'</span>, <span class="st">'latitude'</span>)],</span>
+<span id="cb9-18"><a href="#cb9-18"></a>      <span class="at">method =</span> <span class="st">"bilinear"</span>),</span>
+<span id="cb9-19"><a href="#cb9-19"></a>    <span class="at">OM =</span> raster<span class="sc">::</span><span class="fu">extract</span>(</span>
+<span id="cb9-20"><a href="#cb9-20"></a>      exposure_OM,</span>
+<span id="cb9-21"><a href="#cb9-21"></a>      individual[,<span class="fu">c</span>(<span class="st">'longitude'</span>, <span class="st">'latitude'</span>)],</span>
+<span id="cb9-22"><a href="#cb9-22"></a>      <span class="at">method =</span> <span class="st">"bilinear"</span>),</span>
+<span id="cb9-23"><a href="#cb9-23"></a>    <span class="at">BC =</span> raster<span class="sc">::</span><span class="fu">extract</span>(</span>
+<span id="cb9-24"><a href="#cb9-24"></a>      exposure_BC,</span>
+<span id="cb9-25"><a href="#cb9-25"></a>      individual[,<span class="fu">c</span>(<span class="st">'longitude'</span>, <span class="st">'latitude'</span>)],</span>
+<span id="cb9-26"><a href="#cb9-26"></a>      <span class="at">method =</span> <span class="st">"bilinear"</span>))</span>
+<span id="cb9-27"><a href="#cb9-27"></a></span>
+<span id="cb9-28"><a href="#cb9-28"></a>eval_pollutant</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>   longitude latitude   PM2.5     SO4      NO3      NH4       OM      BC
+1    110.080    22.12 120.150 26.8370 27.00720 22.61350 28.59970 5.29940
+2    110.010    22.20 124.000 27.2450 28.14700 23.35500 29.50200 5.36700
+3    110.150    22.21 122.400 26.5660 28.80400 22.79400 28.75000 4.82200
+4    110.020    22.27 122.700 26.7076 28.37780 22.86780 29.10480 5.06060
+5    110.180    22.15 122.100 27.2320 27.42400 22.90800 29.04700 5.35900
+6    110.140    22.23 121.820 26.2888 29.01320 22.64500 28.48460 4.66500
+7    110.058    22.29 121.056 26.1756 28.49144 22.49096 28.49296 4.73488
+8    110.010    22.25 123.600 27.0420 28.35000 23.07400 29.37600 5.24400
+9    110.150    22.17 122.800 27.0420 28.06800 22.93800 29.15000 5.19400
+10   110.150    22.29 124.000 26.4700 29.98000 23.05400 28.82600 4.53800</code></pre>
+</div>
+</div>
 
 
 </section>
@@ -435,23 +598,9 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
     icon: icon
   };
   anchorJS.add('.anchored');
-  const isCodeAnnotation = (el) => {
-    for (const clz of el.classList) {
-      if (clz.startsWith('code-annotation-')) {                     
-        return true;
-      }
-    }
-    return false;
-  }
   const clipboard = new window.ClipboardJS('.code-copy-button', {
-    text: function(trigger) {
-      const codeEl = trigger.previousElementSibling.cloneNode(true);
-      for (const childEl of codeEl.children) {
-        if (isCodeAnnotation(childEl)) {
-          childEl.remove();
-        }
-      }
-      return codeEl.innerText;
+    target: function(trigger) {
+      return trigger.previousElementSibling;
     }
   });
   clipboard.on('success', function(e) {
@@ -516,92 +665,6 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
       return note.innerHTML;
     });
   }
-      let selectedAnnoteEl;
-      const selectorForAnnotation = ( cell, annotation) => {
-        let cellAttr = 'data-code-cell="' + cell + '"';
-        let lineAttr = 'data-code-annotation="' +  annotation + '"';
-        const selector = 'span[' + cellAttr + '][' + lineAttr + ']';
-        return selector;
-      }
-      const selectCodeLines = (annoteEl) => {
-        const doc = window.document;
-        const targetCell = annoteEl.getAttribute("data-target-cell");
-        const targetAnnotation = annoteEl.getAttribute("data-target-annotation");
-        const annoteSpan = window.document.querySelector(selectorForAnnotation(targetCell, targetAnnotation));
-        const lines = annoteSpan.getAttribute("data-code-lines").split(",");
-        const lineIds = lines.map((line) => {
-          return targetCell + "-" + line;
-        })
-        let top = null;
-        let height = null;
-        let parent = null;
-        if (lineIds.length > 0) {
-            //compute the position of the single el (top and bottom and make a div)
-            const el = window.document.getElementById(lineIds[0]);
-            top = el.offsetTop;
-            height = el.offsetHeight;
-            parent = el.parentElement.parentElement;
-          if (lineIds.length > 1) {
-            const lastEl = window.document.getElementById(lineIds[lineIds.length - 1]);
-            const bottom = lastEl.offsetTop + lastEl.offsetHeight;
-            height = bottom - top;
-          }
-          if (top !== null && height !== null && parent !== null) {
-            // cook up a div (if necessary) and position it 
-            let div = window.document.getElementById("code-annotation-line-highlight");
-            if (div === null) {
-              div = window.document.createElement("div");
-              div.setAttribute("id", "code-annotation-line-highlight");
-              div.style.position = 'absolute';
-              parent.appendChild(div);
-            }
-            div.style.top = top - 2 + "px";
-            div.style.height = height + 4 + "px";
-            let gutterDiv = window.document.getElementById("code-annotation-line-highlight-gutter");
-            if (gutterDiv === null) {
-              gutterDiv = window.document.createElement("div");
-              gutterDiv.setAttribute("id", "code-annotation-line-highlight-gutter");
-              gutterDiv.style.position = 'absolute';
-              const codeCell = window.document.getElementById(targetCell);
-              const gutter = codeCell.querySelector('.code-annotation-gutter');
-              gutter.appendChild(gutterDiv);
-            }
-            gutterDiv.style.top = top - 2 + "px";
-            gutterDiv.style.height = height + 4 + "px";
-          }
-          selectedAnnoteEl = annoteEl;
-        }
-      };
-      const unselectCodeLines = () => {
-        const elementsIds = ["code-annotation-line-highlight", "code-annotation-line-highlight-gutter"];
-        elementsIds.forEach((elId) => {
-          const div = window.document.getElementById(elId);
-          if (div) {
-            div.remove();
-          }
-        });
-        selectedAnnoteEl = undefined;
-      };
-      // Attach click handler to the DT
-      const annoteDls = window.document.querySelectorAll('dt[data-target-cell]');
-      for (const annoteDlNode of annoteDls) {
-        annoteDlNode.addEventListener('click', (event) => {
-          const clickedEl = event.target;
-          if (clickedEl !== selectedAnnoteEl) {
-            unselectCodeLines();
-            const activeEl = window.document.querySelector('dt[data-target-cell].code-annotation-active');
-            if (activeEl) {
-              activeEl.classList.remove('code-annotation-active');
-            }
-            selectCodeLines(clickedEl);
-            clickedEl.classList.add('code-annotation-active');
-          } else {
-            // Unselect the line
-            unselectCodeLines();
-            clickedEl.classList.remove('code-annotation-active');
-          }
-        });
-      }
   const findCites = (el) => {
     const parentEl = el.parentElement;
     if (parentEl) {
@@ -645,12 +708,6 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
 <footer class="footer">
   <div class="nav-footer">
     <div class="nav-footer-left">Copyright 2023, 蔡苗</div>   
-    <div class="nav-footer-center">
-      &nbsp;
-    </div>
-    <div class="nav-footer-right">
-      &nbsp;
-    </div>
   </div>
 </footer>
 
