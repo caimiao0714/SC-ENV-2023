@@ -711,7 +711,7 @@ $ smoking_status  &lt;fct&gt; 0. Never, 0. Never, 0. Never, 0. Never, 1. Previou
 <section id="混合效应模型" class="level3">
 <h3 class="anchored" data-anchor-id="混合效应模型">混合效应模型</h3>
 <p><span class="math display">\[y_{ij} = \beta_0 + \beta_{1}\text{PM}_{i}\times\text{year}_{ij} + \beta_{2}\text{year}_{ij}  + \beta_3\text{age}_i + \beta_4\text{sex}_i + \beta_5\text{smoking}_i + \epsilon_{ij}\]</span></p>
-<div class="cell" data-hash="5.cohort_cache/html/unnamed-chunk-15_63280a8dcf489d0a3156a4db1b0f29e1">
+<div class="cell" data-hash="5.cohort_cache/html/unnamed-chunk-15_870684d82e408238f88799cbed6d75e0">
 <div class="sourceCode cell-code" id="cb36"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb36-1"><a href="#cb36-1"></a>fit_lme <span class="ot">=</span> <span class="cf">function</span>(y){</span>
 <span id="cb36-2"><a href="#cb36-2"></a>  f0 <span class="ot">=</span> <span class="fu">lmer</span>(<span class="fu">as.formula</span>(<span class="fu">glue</span>(<span class="st">'{y} ~ PM2.5:delta_t + delta_t + age + sex + smoking_status +</span></span>
 <span id="cb36-3"><a href="#cb36-3"></a><span class="st">              (1|id)'</span>)), <span class="at">data =</span> cohort_lme)</span>
@@ -730,7 +730,7 @@ $ smoking_status  &lt;fct&gt; 0. Never, 0. Never, 0. Never, 0. Never, 1. Previou
 <span id="cb36-16"><a href="#cb36-16"></a>                       <span class="st">')'</span>)) <span class="sc">%&gt;%</span></span>
 <span id="cb36-17"><a href="#cb36-17"></a>    <span class="fu">mutate</span>(<span class="at">y =</span> y,</span>
 <span id="cb36-18"><a href="#cb36-18"></a>           <span class="at">N =</span> <span class="fu">nobs</span>(f0)) <span class="sc">%&gt;%</span> </span>
-<span id="cb36-19"><a href="#cb36-19"></a>    dplyr<span class="sc">::</span><span class="fu">select</span>(y, term, estimate, CI, conf.low, conf.high, std.error)</span>
+<span id="cb36-19"><a href="#cb36-19"></a>    dplyr<span class="sc">::</span><span class="fu">select</span>(y, term, estimate, conf.low, conf.high, CI, std.error)</span>
 <span id="cb36-20"><a href="#cb36-20"></a>}</span>
 <span id="cb36-21"><a href="#cb36-21"></a></span>
 <span id="cb36-22"><a href="#cb36-22"></a>res <span class="ot">=</span> <span class="fu">map_dfr</span>(</span>
@@ -741,14 +741,14 @@ $ smoking_status  &lt;fct&gt; 0. Never, 0. Never, 0. Never, 0. Never, 1. Previou
 <span id="cb36-27"><a href="#cb36-27"></a>res</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code># A tibble: 6 × 7
-  y               term          estimate CI         conf.low conf.high std.error
-  &lt;chr&gt;           &lt;chr&gt;            &lt;dbl&gt; &lt;chr&gt;         &lt;dbl&gt;     &lt;dbl&gt;     &lt;dbl&gt;
-1 body_fat_p      PM2.5:delta_t  0.0283  0.028 (0.…  0.0186     0.0381   0.00498
-2 arm_left_fat_p  PM2.5:delta_t  0.0577  0.058 (0.…  0.0437     0.0717   0.00713
-3 arm_right_fat_p PM2.5:delta_t  0.0770  0.077 (0.…  0.0633     0.0907   0.00699
-4 leg_left_fat_p  PM2.5:delta_t  0.00748 0.007 (0.…  0.00134    0.0136   0.00313
-5 leg_right_fat_p PM2.5:delta_t  0.00783 0.008 (0.…  0.00129    0.0144   0.00333
-6 trunk_fat_p     PM2.5:delta_t  0.00659 0.007 (-0… -0.00237    0.0155   0.00457</code></pre>
+  y               term          estimate conf.low conf.high CI         std.error
+  &lt;chr&gt;           &lt;chr&gt;            &lt;dbl&gt;    &lt;dbl&gt;     &lt;dbl&gt; &lt;chr&gt;          &lt;dbl&gt;
+1 body_fat_p      PM2.5:delta_t  0.0283   0.0186     0.0381 0.028 (0.…   0.00498
+2 arm_left_fat_p  PM2.5:delta_t  0.0577   0.0437     0.0717 0.058 (0.…   0.00713
+3 arm_right_fat_p PM2.5:delta_t  0.0770   0.0633     0.0907 0.077 (0.…   0.00699
+4 leg_left_fat_p  PM2.5:delta_t  0.00748  0.00134    0.0136 0.007 (0.…   0.00313
+5 leg_right_fat_p PM2.5:delta_t  0.00783  0.00129    0.0144 0.008 (0.…   0.00333
+6 trunk_fat_p     PM2.5:delta_t  0.00659 -0.00237    0.0155 0.007 (-0…   0.00457</code></pre>
 </div>
 </div>
 

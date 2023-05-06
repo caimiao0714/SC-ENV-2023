@@ -259,6 +259,11 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
   <li><a href="#表1制作" id="toc-表1制作" class="nav-link" data-scroll-target="#表1制作">表1制作</a></li>
   <li><a href="#逻辑回归" id="toc-逻辑回归" class="nav-link" data-scroll-target="#逻辑回归">逻辑回归</a></li>
   <li><a href="#暴露反应关系" id="toc-暴露反应关系" class="nav-link" data-scroll-target="#暴露反应关系">暴露反应关系</a></li>
+  <li><a href="#paf" id="toc-paf" class="nav-link" data-scroll-target="#paf">PAF</a>
+  <ul class="collapse">
+  <li><a href="#paf点估计值" id="toc-paf点估计值" class="nav-link" data-scroll-target="#paf点估计值">PAF点估计值</a></li>
+  <li><a href="#paf区间估计" id="toc-paf区间估计" class="nav-link" data-scroll-target="#paf区间估计">PAF区间估计</a></li>
+  </ul></li>
   </ul></li>
   </ul>
 </nav>
@@ -294,9 +299,9 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <h1>R语言代码实战</h1>
 <section id="数据读取" class="level2">
 <h2 class="anchored" data-anchor-id="数据读取">数据读取</h2>
-<div class="cell" data-hash="4.cross-sec_cache/html/unnamed-chunk-1_b9622a66b26353c8857d588972aba622">
+<div class="cell" data-hash="4.cross-sec_cache/html/unnamed-chunk-1_7ca840124888f950054d69fa5414ac9c">
 <div class="sourceCode cell-code" id="cb1"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb1-1"><a href="#cb1-1"></a>pacman<span class="sc">::</span><span class="fu">p_load</span>(</span>
-<span id="cb1-2"><a href="#cb1-2"></a>  arrow, dplyr, ggplot2, data.table, broom, splines, purrr, tableone, patchwork, latex2exp)</span>
+<span id="cb1-2"><a href="#cb1-2"></a>  arrow, dplyr, ggplot2, data.table, broom, splines, purrr, tableone, patchwork, latex2exp, glue)</span>
 <span id="cb1-3"><a href="#cb1-3"></a></span>
 <span id="cb1-4"><a href="#cb1-4"></a>cs_pm <span class="ot">=</span> arrow<span class="sc">::</span><span class="fu">read_parquet</span>(</span>
 <span id="cb1-5"><a href="#cb1-5"></a>  <span class="st">'Data/cs_synthetic_pm_components.parquet'</span>)</span>
@@ -750,8 +755,281 @@ BC_MA_365</code></pre>
 <p><img src="4.cross-sec_files/figure-html/unnamed-chunk-8-1.png" class="img-fluid" width="672"></p>
 </div>
 </div>
+</section>
+<section id="paf" class="level2">
+<h2 class="anchored" data-anchor-id="paf">PAF</h2>
+<section id="paf点估计值" class="level3">
+<h3 class="anchored" data-anchor-id="paf点估计值">PAF点估计值</h3>
+<div class="cell" data-hash="4.cross-sec_cache/html/unnamed-chunk-9_efdca1657e125adcf21635da05651d09">
+<div class="sourceCode cell-code" id="cb21"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb21-1"><a href="#cb21-1"></a>af_point <span class="ot">=</span> <span class="cf">function</span>(<span class="at">quantile_threshold =</span> <span class="fl">0.05</span>, <span class="at">dat =</span> cs_pm){</span>
+<span id="cb21-2"><a href="#cb21-2"></a></span>
+<span id="cb21-3"><a href="#cb21-3"></a>  PM2<span class="fl">.5</span>_threshold <span class="ot">=</span> dat[,<span class="fu">quantile</span>(PM2<span class="fl">.5</span>_MA_365, quantile_threshold, <span class="at">na.rm =</span> <span class="cn">TRUE</span>)]</span>
+<span id="cb21-4"><a href="#cb21-4"></a>  </span>
+<span id="cb21-5"><a href="#cb21-5"></a>  dshort_new <span class="ot">=</span> dat <span class="sc">%&gt;%</span> </span>
+<span id="cb21-6"><a href="#cb21-6"></a>    <span class="fu">copy</span>() <span class="sc">%&gt;%</span> </span>
+<span id="cb21-7"><a href="#cb21-7"></a>    .[,<span class="st">`</span><span class="at">:=</span><span class="st">`</span>(<span class="at">PM2.5_MA_365 =</span> <span class="fu">fifelse</span>(PM2<span class="fl">.5</span>_MA_365 <span class="sc">&gt;=</span> PM2<span class="fl">.5</span>_threshold, </span>
+<span id="cb21-8"><a href="#cb21-8"></a>                                   PM2<span class="fl">.5</span>_threshold, </span>
+<span id="cb21-9"><a href="#cb21-9"></a>                                   PM2<span class="fl">.5</span>_MA_365))]</span>
+<span id="cb21-10"><a href="#cb21-10"></a>  </span>
+<span id="cb21-11"><a href="#cb21-11"></a>  fit_PM2<span class="fl">.5</span> <span class="ot">=</span> <span class="fu">glm</span>(<span class="at">formula =</span> <span class="fu">as.formula</span>(glue<span class="sc">::</span><span class="fu">glue</span>(</span>
+<span id="cb21-12"><a href="#cb21-12"></a>      <span class="st">"inhosp_death ~ PM2.5_MA_365  + age + sex + ethnicity + occupation + marriage + </span></span>
+<span id="cb21-13"><a href="#cb21-13"></a><span class="st">      stroke_subtype + hypertension + diabetes + </span></span>
+<span id="cb21-14"><a href="#cb21-14"></a><span class="st">      ns(Temperature_MA_07 , df = 5) + ns(RH_MA_07, df = 5)"</span>)), </span>
+<span id="cb21-15"><a href="#cb21-15"></a>      <span class="at">family =</span> binomial, <span class="at">data =</span> dat)</span>
+<span id="cb21-16"><a href="#cb21-16"></a>  </span>
+<span id="cb21-17"><a href="#cb21-17"></a>  </span>
+<span id="cb21-18"><a href="#cb21-18"></a>  dshort_pred <span class="ot">=</span> dat <span class="sc">%&gt;%</span> </span>
+<span id="cb21-19"><a href="#cb21-19"></a>    .[,.(inhosp_death,</span>
+<span id="cb21-20"><a href="#cb21-20"></a>         <span class="at">death_PM2.5_pred =</span> <span class="fu">predict</span>(fit_PM2<span class="fl">.5</span>, <span class="at">newdata =</span> dshort_new, <span class="at">type =</span> <span class="st">'response'</span>))]</span>
+<span id="cb21-21"><a href="#cb21-21"></a>  </span>
+<span id="cb21-22"><a href="#cb21-22"></a>  <span class="fu">return</span>(dshort_pred[,.(<span class="at">obs_outcome =</span> <span class="fu">mean</span>(inhosp_death),</span>
+<span id="cb21-23"><a href="#cb21-23"></a>                        <span class="at">PM2.5_pred =</span> <span class="fu">mean</span>(death_PM2<span class="fl">.5</span>_pred, <span class="at">na.rm =</span> T))] <span class="sc">%&gt;%</span> </span>
+<span id="cb21-24"><a href="#cb21-24"></a>           <span class="fu">mutate</span>(<span class="at">PAF =</span> (obs_outcome <span class="sc">-</span> PM2<span class="fl">.5</span>_pred)<span class="sc">/</span>obs_outcome))</span>
+<span id="cb21-25"><a href="#cb21-25"></a>}</span>
+<span id="cb21-26"><a href="#cb21-26"></a></span>
+<span id="cb21-27"><a href="#cb21-27"></a>af_result_0<span class="fl">.05</span> <span class="ot">=</span> <span class="fu">af_point</span>(<span class="fl">0.05</span>)</span>
+<span id="cb21-28"><a href="#cb21-28"></a></span>
+<span id="cb21-29"><a href="#cb21-29"></a>af_result_0<span class="fl">.05</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>   obs_outcome  PM2.5_pred       PAF
+1: 0.008949429 0.007508829 0.1609711</code></pre>
+</div>
+</div>
+</section>
+<section id="paf区间估计" class="level3">
+<h3 class="anchored" data-anchor-id="paf区间估计">PAF区间估计</h3>
+<p>利用Bootstrap 20次估计PAF的95%置信区间。这里作为示例只展示Bootstrap 20次，实际研究过程中建议bootstrap至少200次以上，一般都需要bootstrap 1000次。</p>
+<div class="cell" data-hash="4.cross-sec_cache/html/unnamed-chunk-10_8bfbb67b61cd5a4d5960605143919021">
+<div class="sourceCode cell-code" id="cb23"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb23-1"><a href="#cb23-1"></a><span class="fu">set.seed</span>(<span class="dv">123</span>)</span>
+<span id="cb23-2"><a href="#cb23-2"></a>n_interations <span class="ot">=</span> <span class="dv">100</span></span>
+<span id="cb23-3"><a href="#cb23-3"></a>paf_container <span class="ot">=</span> <span class="fu">vector</span>(<span class="st">"list"</span>, <span class="at">length =</span> n_interations)</span>
+<span id="cb23-4"><a href="#cb23-4"></a></span>
+<span id="cb23-5"><a href="#cb23-5"></a><span class="cf">for</span> (i <span class="cf">in</span> <span class="dv">1</span><span class="sc">:</span>n_interations) {</span>
+<span id="cb23-6"><a href="#cb23-6"></a>  <span class="fu">print</span>(<span class="fu">glue</span>(<span class="st">'***********{i}/{n_interations}, {round(i/n_interations*100, 1)}%***********'</span>))</span>
+<span id="cb23-7"><a href="#cb23-7"></a>  cs_pm_resample <span class="ot">=</span> cs_pm[<span class="fu">sample</span>(.N, .N, <span class="at">replace =</span> <span class="cn">TRUE</span>), ]</span>
+<span id="cb23-8"><a href="#cb23-8"></a>  </span>
+<span id="cb23-9"><a href="#cb23-9"></a>  paf_container[[i]] <span class="ot">=</span> <span class="fu">af_point</span>(<span class="at">dat =</span> cs_pm_resample)</span>
+<span id="cb23-10"><a href="#cb23-10"></a>}</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>***********1/100, 1%***********
+***********2/100, 2%***********
+***********3/100, 3%***********
+***********4/100, 4%***********
+***********5/100, 5%***********
+***********6/100, 6%***********
+***********7/100, 7%***********
+***********8/100, 8%***********
+***********9/100, 9%***********
+***********10/100, 10%***********
+***********11/100, 11%***********
+***********12/100, 12%***********
+***********13/100, 13%***********
+***********14/100, 14%***********
+***********15/100, 15%***********
+***********16/100, 16%***********
+***********17/100, 17%***********
+***********18/100, 18%***********
+***********19/100, 19%***********
+***********20/100, 20%***********
+***********21/100, 21%***********
+***********22/100, 22%***********
+***********23/100, 23%***********
+***********24/100, 24%***********
+***********25/100, 25%***********
+***********26/100, 26%***********
+***********27/100, 27%***********
+***********28/100, 28%***********
+***********29/100, 29%***********
+***********30/100, 30%***********
+***********31/100, 31%***********
+***********32/100, 32%***********
+***********33/100, 33%***********
+***********34/100, 34%***********
+***********35/100, 35%***********
+***********36/100, 36%***********
+***********37/100, 37%***********
+***********38/100, 38%***********
+***********39/100, 39%***********
+***********40/100, 40%***********
+***********41/100, 41%***********
+***********42/100, 42%***********
+***********43/100, 43%***********
+***********44/100, 44%***********
+***********45/100, 45%***********
+***********46/100, 46%***********
+***********47/100, 47%***********
+***********48/100, 48%***********
+***********49/100, 49%***********
+***********50/100, 50%***********
+***********51/100, 51%***********
+***********52/100, 52%***********
+***********53/100, 53%***********
+***********54/100, 54%***********
+***********55/100, 55%***********
+***********56/100, 56%***********
+***********57/100, 57%***********
+***********58/100, 58%***********
+***********59/100, 59%***********
+***********60/100, 60%***********
+***********61/100, 61%***********
+***********62/100, 62%***********
+***********63/100, 63%***********
+***********64/100, 64%***********
+***********65/100, 65%***********
+***********66/100, 66%***********
+***********67/100, 67%***********
+***********68/100, 68%***********
+***********69/100, 69%***********
+***********70/100, 70%***********
+***********71/100, 71%***********
+***********72/100, 72%***********
+***********73/100, 73%***********
+***********74/100, 74%***********
+***********75/100, 75%***********
+***********76/100, 76%***********
+***********77/100, 77%***********
+***********78/100, 78%***********
+***********79/100, 79%***********
+***********80/100, 80%***********
+***********81/100, 81%***********
+***********82/100, 82%***********
+***********83/100, 83%***********
+***********84/100, 84%***********
+***********85/100, 85%***********
+***********86/100, 86%***********
+***********87/100, 87%***********
+***********88/100, 88%***********
+***********89/100, 89%***********
+***********90/100, 90%***********
+***********91/100, 91%***********
+***********92/100, 92%***********
+***********93/100, 93%***********
+***********94/100, 94%***********
+***********95/100, 95%***********
+***********96/100, 96%***********
+***********97/100, 97%***********
+***********98/100, 98%***********
+***********99/100, 99%***********
+***********100/100, 100%***********</code></pre>
+</div>
+<div class="sourceCode cell-code" id="cb25"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb25-1"><a href="#cb25-1"></a>paf_ci <span class="ot">=</span> <span class="fu">rbindlist</span>(paf_container)</span>
+<span id="cb25-2"><a href="#cb25-2"></a>paf_ci</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>     obs_outcome  PM2.5_pred           PAF
+  1: 0.008620406 0.007681057  0.1089680657
+  2: 0.009179745 0.008659459  0.0566776718
+  3: 0.008752015 0.006253478  0.2854814080
+  4: 0.009837792 0.006377192  0.3517658983
+  5: 0.009739085 0.007615361  0.2180619775
+  6: 0.009574573 0.007910489  0.1738023853
+  7: 0.009936499 0.008899455  0.1043670505
+  8: 0.009212648 0.006777885  0.2642848170
+  9: 0.007830751 0.006827075  0.1281710132
+ 10: 0.008620406 0.007781756  0.0972865861
+ 11: 0.009146843 0.007734354  0.1544236551
+ 12: 0.009179745 0.008443804  0.0801701249
+ 13: 0.008686211 0.007134025  0.1786953767
+ 14: 0.009344257 0.008165864  0.1261088339
+ 15: 0.009442964 0.007166227  0.2411040393
+ 16: 0.008357188 0.006683295  0.2002937134
+ 17: 0.009344257 0.008217721  0.1205591614
+ 18: 0.008916527 0.006886432  0.2276777558
+ 19: 0.010035205 0.008648296  0.1382043644
+ 20: 0.008784918 0.005455455  0.3789975504
+ 21: 0.007337216 0.005090031  0.3062721336
+ 22: 0.009113941 0.009101538  0.0013608323
+ 23: 0.009278452 0.007436352  0.1985353426
+ 24: 0.008719113 0.007863549  0.0981250576
+ 25: 0.008455894 0.006710232  0.2064433148
+ 26: 0.009377159 0.007469204  0.2034683349
+ 27: 0.008159774 0.008824539 -0.0814686645
+ 28: 0.008357188 0.006498610  0.2223926509
+ 29: 0.010101010 0.008610808  0.1475300196
+ 30: 0.008949429 0.006611611  0.2612254203
+ 31: 0.009640378 0.008126957  0.1569877047
+ 32: 0.008554601 0.007683337  0.1018474280
+ 33: 0.009771987 0.008388531  0.1415737064
+ 34: 0.009870694 0.008891180  0.0992345595
+ 35: 0.009081038 0.007691470  0.1530186919
+ 36: 0.008126871 0.006469609  0.2039237834
+ 37: 0.009771987 0.008752927  0.1042838305
+ 38: 0.008554601 0.006142376  0.2819798891
+ 39: 0.008455894 0.006618378  0.2173059278
+ 40: 0.008784918 0.006405792  0.2708192900
+ 41: 0.008159774 0.007544559  0.0753960324
+ 42: 0.007896555 0.007108500  0.0997973453
+ 43: 0.009344257 0.007038899  0.2467138592
+ 44: 0.008455894 0.007447039  0.1193079011
+ 45: 0.008817820 0.008030363  0.0893028858
+ 46: 0.009344257 0.007250965  0.2240191203
+ 47: 0.008784918 0.007685911  0.1251015271
+ 48: 0.008554601 0.005838311  0.3175238467
+ 49: 0.008883625 0.007912897  0.1092715815
+ 50: 0.009245550 0.007243881  0.2165008287
+ 51: 0.009574573 0.009036782  0.0561687166
+ 52: 0.009410062 0.007154873  0.2396571524
+ 53: 0.010002303 0.008537752  0.1464214248
+ 54: 0.008719113 0.007580557  0.1305816801
+ 55: 0.009541671 0.007707775  0.1921985957
+ 56: 0.008883625 0.007255302  0.1832947972
+ 57: 0.009804889 0.008590274  0.1238785335
+ 58: 0.009706182 0.008019480  0.1737760371
+ 59: 0.008488797 0.008486176  0.0003087035
+ 60: 0.009081038 0.008144506  0.1031305619
+ 61: 0.009048136 0.008198673  0.0938826819
+ 62: 0.009607475 0.008311688  0.1348728758
+ 63: 0.009048136 0.007776896  0.1404974944
+ 64: 0.008455894 0.007575844  0.1040753604
+ 65: 0.009377159 0.007608957  0.1885648219
+ 66: 0.008357188 0.007318631  0.1242710357
+ 67: 0.009015234 0.007737264  0.1417567305
+ 68: 0.008093969 0.006485356  0.1987421185
+ 69: 0.008817820 0.006924460  0.2147197696
+ 70: 0.009344257 0.008036570  0.1399455578
+ 71: 0.009377159 0.009474904 -0.0104237503
+ 72: 0.008521699 0.006982849  0.1805802273
+ 73: 0.009410062 0.009012932  0.0422026435
+ 74: 0.009212648 0.007879372  0.1447223365
+ 75: 0.008784918 0.008637802  0.0167464061
+ 76: 0.009179745 0.008190551  0.1077584053
+ 77: 0.009212648 0.007134454  0.2255805287
+ 78: 0.007929457 0.006998025  0.1174648460
+ 79: 0.010364229 0.007860364  0.2415872084
+ 80: 0.009969401 0.009802350  0.0167563156
+ 81: 0.008488797 0.007865742  0.0733973121
+ 82: 0.008258481 0.006478380  0.2155481958
+ 83: 0.008883625 0.006996482  0.2124293387
+ 84: 0.008521699 0.006974390  0.1815728790
+ 85: 0.008028164 0.005682696  0.2921549703
+ 86: 0.008949429 0.007296405  0.1847072211
+ 87: 0.009377159 0.007287803  0.2228133652
+ 88: 0.007995262 0.006496246  0.1874880446
+ 89: 0.009146843 0.008397647  0.0819076001
+ 90: 0.009015234 0.007131814  0.2089152432
+ 91: 0.009311355 0.008389162  0.0990395410
+ 92: 0.008291383 0.005797898  0.3007321204
+ 93: 0.009245550 0.008421172  0.0891647998
+ 94: 0.008093969 0.006994094  0.1358882429
+ 95: 0.008752015 0.008070753  0.0778406294
+ 96: 0.009146843 0.006956689  0.2394436688
+ 97: 0.008916527 0.006976922  0.2175292227
+ 98: 0.008653308 0.006339787  0.2673568962
+ 99: 0.008686211 0.005955926  0.3143240527
+100: 0.008620406 0.006505312  0.2453589781
+     obs_outcome  PM2.5_pred           PAF</code></pre>
+</div>
+</div>
+<p>报告PAF的95%置信区间</p>
+<div class="cell" data-hash="4.cross-sec_cache/html/unnamed-chunk-11_80576a3a0c339b62260ffea22fb50451">
+<div class="sourceCode cell-code" id="cb27"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb27-1"><a href="#cb27-1"></a>paf_ci[,<span class="fu">quantile</span>(PAF, <span class="fu">c</span>(<span class="fl">0.025</span>, <span class="fl">0.975</span>))]</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>        2.5%        97.5% 
+0.0008084647 0.3160039446 </code></pre>
+</div>
+</div>
 
 
+</section>
 </section>
 </section>
 
