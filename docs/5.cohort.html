@@ -639,7 +639,7 @@ n= 8262, number of events= 2474 </code></pre>
 </section>
 <section id="限制性立方样条" class="level3">
 <h3 class="anchored" data-anchor-id="限制性立方样条">限制性立方样条</h3>
-<div class="cell">
+<div class="cell" data-hash="5.cohort_cache/html/unnamed-chunk-13_bd5382d65fcffbb1b0d563a067cdcabd">
 <div class="sourceCode cell-code" id="cb31"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb31-1"><a href="#cb31-1"></a>rcs_cox_pm2<span class="fl">.5</span> <span class="ot">&lt;-</span> <span class="fu">cph</span>(<span class="fu">Surv</span>(t2rehosp, rehosp_staus) <span class="sc">~</span> <span class="fu">rcs</span>(PM2<span class="fl">.5</span>_MA_365, <span class="fu">c</span>(<span class="fl">40.48</span>, <span class="dv">60</span>, <span class="dv">63</span>)) <span class="sc">+</span> age <span class="sc">+</span> ethnicity <span class="sc">+</span> marriage <span class="sc">+</span> occupation <span class="sc">+</span> <span class="fu">rcs</span>(Temperature_MA_07, <span class="at">df =</span> <span class="dv">5</span>), </span>
 <span id="cb31-2"><a href="#cb31-2"></a>                     <span class="at">data =</span> cohort_cox <span class="sc">%&gt;%</span> </span>
 <span id="cb31-3"><a href="#cb31-3"></a>    <span class="fu">filter</span>(PM2<span class="fl">.5</span>_MA_365 <span class="sc">&gt;</span> <span class="fl">21.55</span> <span class="sc">&amp;</span> PM2<span class="fl">.5</span>_MA_365 <span class="sc">&lt;</span> <span class="dv">67</span>))</span>
@@ -710,7 +710,7 @@ $ smoking_status  &lt;fct&gt; 0. Never, 0. Never, 0. Never, 0. Never, 1. Previou
 </section>
 <section id="混合效应模型" class="level3">
 <h3 class="anchored" data-anchor-id="混合效应模型">混合效应模型</h3>
-<p><span class="math display">\[y_{ij} = \beta_0 + \beta_{1}\text{PM}_{i}\times\text{year}_{ij} + \beta_{2}\text{year}_{ij}  + \beta_3\text{age}_i + \beta_4\text{sex_i} + \beta_5\text{smoking_i} + \epsilon_{ij}\]</span></p>
+<p><span class="math display">\[y_{ij} = \beta_0 + \beta_{1}\text{PM}_{i}\times\text{year}_{ij} + \beta_{2}\text{year}_{ij}  + \beta_3\text{age}_i + \beta_4\text{sex}_i + \beta_5\text{smoking}_i + \epsilon_{ij}\]</span></p>
 <div class="cell" data-hash="5.cohort_cache/html/unnamed-chunk-15_63280a8dcf489d0a3156a4db1b0f29e1">
 <div class="sourceCode cell-code" id="cb36"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb36-1"><a href="#cb36-1"></a>fit_lme <span class="ot">=</span> <span class="cf">function</span>(y){</span>
 <span id="cb36-2"><a href="#cb36-2"></a>  f0 <span class="ot">=</span> <span class="fu">lmer</span>(<span class="fu">as.formula</span>(<span class="fu">glue</span>(<span class="st">'{y} ~ PM2.5:delta_t + delta_t + age + sex + smoking_status +</span></span>
