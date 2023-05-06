@@ -267,6 +267,7 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
   <li><a href="#混合线性模型" id="toc-混合线性模型" class="nav-link" data-scroll-target="#混合线性模型">混合线性模型</a>
   <ul class="collapse">
   <li><a href="#读取数据-1" id="toc-读取数据-1" class="nav-link" data-scroll-target="#读取数据-1">读取数据</a></li>
+  <li><a href="#混合效应模型" id="toc-混合效应模型" class="nav-link" data-scroll-target="#混合效应模型">混合效应模型</a></li>
   </ul></li>
   </ul></li>
   </ul>
@@ -312,46 +313,12 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <h3 class="anchored" data-anchor-id="读取数据">读取数据</h3>
 <div class="cell">
 <div class="sourceCode cell-code" id="cb1"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb1-1"><a href="#cb1-1"></a>pacman<span class="sc">::</span><span class="fu">p_load</span>(</span>
-<span id="cb1-2"><a href="#cb1-2"></a>  arrow, dplyr, ggplot2, data.table, broom, survival, splines, survival, purrr, latex2exp, patchwork, rms)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<div class="cell-output cell-output-stderr">
-<pre><code>also installing the dependencies 'Formula', 'mvtnorm', 'TH.data', 'sandwich', 'checkmate', 'webshot', 'svglite', 'Hmisc', 'polspline', 'multcomp', 'htmlTable', 'kableExtra'</code></pre>
-</div>
-<div class="cell-output cell-output-stderr">
-<pre><code>Warning: unable to access index for repository http://www.stats.ox.ac.uk/pub/RWin/bin/windows/contrib/4.2:
-  cannot open URL 'http://www.stats.ox.ac.uk/pub/RWin/bin/windows/contrib/4.2/PACKAGES'</code></pre>
-</div>
-<div class="cell-output cell-output-stdout">
-<pre><code>package 'Formula' successfully unpacked and MD5 sums checked
-package 'mvtnorm' successfully unpacked and MD5 sums checked
-package 'TH.data' successfully unpacked and MD5 sums checked
-package 'sandwich' successfully unpacked and MD5 sums checked
-package 'checkmate' successfully unpacked and MD5 sums checked
-package 'webshot' successfully unpacked and MD5 sums checked
-package 'svglite' successfully unpacked and MD5 sums checked
-package 'Hmisc' successfully unpacked and MD5 sums checked
-package 'polspline' successfully unpacked and MD5 sums checked
-package 'multcomp' successfully unpacked and MD5 sums checked
-package 'htmlTable' successfully unpacked and MD5 sums checked
-package 'kableExtra' successfully unpacked and MD5 sums checked
-package 'rms' successfully unpacked and MD5 sums checked
-
-The downloaded binary packages are in
-    C:\Users\miaoc\AppData\Local\Temp\Rtmpc1tzv9\downloaded_packages</code></pre>
-</div>
-<div class="cell-output cell-output-stderr">
-<pre><code>
-rms installed</code></pre>
-</div>
-<div class="cell-output cell-output-stderr">
-<pre><code>Warning: package 'rms' was built under R version 4.2.3</code></pre>
-</div>
-<div class="cell-output cell-output-stderr">
-<pre><code>Warning: package 'Hmisc' was built under R version 4.2.3</code></pre>
-</div>
-<div class="sourceCode cell-code" id="cb8"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb8-1"><a href="#cb8-1"></a>cohort_cox <span class="ot">=</span> arrow<span class="sc">::</span><span class="fu">read_parquet</span>(</span>
-<span id="cb8-2"><a href="#cb8-2"></a>  <span class="st">'Data/cohort_Cox_synthetic.parquet'</span>)</span>
-<span id="cb8-3"><a href="#cb8-3"></a></span>
-<span id="cb8-4"><a href="#cb8-4"></a><span class="fu">glimpse</span>(cohort_cox)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<span id="cb1-2"><a href="#cb1-2"></a>  arrow, dplyr, ggplot2, data.table, broom, survival, splines, survival, purrr, latex2exp, patchwork, rms)</span>
+<span id="cb1-3"><a href="#cb1-3"></a></span>
+<span id="cb1-4"><a href="#cb1-4"></a>cohort_cox <span class="ot">=</span> arrow<span class="sc">::</span><span class="fu">read_parquet</span>(</span>
+<span id="cb1-5"><a href="#cb1-5"></a>  <span class="st">'Data/cohort_Cox_synthetic.parquet'</span>)</span>
+<span id="cb1-6"><a href="#cb1-6"></a></span>
+<span id="cb1-7"><a href="#cb1-7"></a><span class="fu">glimpse</span>(cohort_cox)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>Rows: 8,262
 Columns: 12
@@ -373,16 +340,16 @@ $ RH_MA_07          &lt;dbl&gt; 73.08185, 67.75124, 87.87124, 72.36949, 68.59028
 <section id="拟合模型" class="level3">
 <h3 class="anchored" data-anchor-id="拟合模型">拟合模型</h3>
 <div class="cell" data-hash="5.cohort_cache/html/unnamed-chunk-3_ce2231f3f485423e3d2391cfe118d9c5">
-<div class="sourceCode cell-code" id="cb10"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb10-1"><a href="#cb10-1"></a>fit0 <span class="ot">=</span> <span class="fu">coxph</span>(</span>
-<span id="cb10-2"><a href="#cb10-2"></a>    <span class="at">formula =</span> <span class="fu">Surv</span>(t2rehosp, rehosp_staus) <span class="sc">~</span> PM1_MA_365 <span class="sc">+</span> age <span class="sc">+</span> ethnicity <span class="sc">+</span> </span>
-<span id="cb10-3"><a href="#cb10-3"></a>      marriage <span class="sc">+</span> occupation <span class="sc">+</span> <span class="fu">ns</span>(Temperature_MA_07, <span class="at">df =</span> <span class="dv">5</span>) <span class="sc">+</span> <span class="fu">ns</span>(RH_MA_07, <span class="at">df =</span> <span class="dv">5</span>), </span>
-<span id="cb10-4"><a href="#cb10-4"></a>    <span class="at">data =</span> cohort_cox)</span>
-<span id="cb10-5"><a href="#cb10-5"></a></span>
-<span id="cb10-6"><a href="#cb10-6"></a><span class="fu">class</span>(fit0)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb3"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb3-1"><a href="#cb3-1"></a>fit0 <span class="ot">=</span> <span class="fu">coxph</span>(</span>
+<span id="cb3-2"><a href="#cb3-2"></a>    <span class="at">formula =</span> <span class="fu">Surv</span>(t2rehosp, rehosp_staus) <span class="sc">~</span> PM1_MA_365 <span class="sc">+</span> age <span class="sc">+</span> ethnicity <span class="sc">+</span> </span>
+<span id="cb3-3"><a href="#cb3-3"></a>      marriage <span class="sc">+</span> occupation <span class="sc">+</span> <span class="fu">ns</span>(Temperature_MA_07, <span class="at">df =</span> <span class="dv">5</span>) <span class="sc">+</span> <span class="fu">ns</span>(RH_MA_07, <span class="at">df =</span> <span class="dv">5</span>), </span>
+<span id="cb3-4"><a href="#cb3-4"></a>    <span class="at">data =</span> cohort_cox)</span>
+<span id="cb3-5"><a href="#cb3-5"></a></span>
+<span id="cb3-6"><a href="#cb3-6"></a><span class="fu">class</span>(fit0)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>[1] "coxph"</code></pre>
 </div>
-<div class="sourceCode cell-code" id="cb12"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb12-1"><a href="#cb12-1"></a>fit0</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb5"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb5-1"><a href="#cb5-1"></a>fit0</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>Call:
 coxph(formula = Surv(t2rehosp, rehosp_staus) ~ PM1_MA_365 + age + 
@@ -418,9 +385,9 @@ n= 8262, number of events= 2474 </code></pre>
 </div>
 </div>
 <div class="cell" data-hash="5.cohort_cache/html/unnamed-chunk-4_e62f5235e8e0a04d7e858af7d7441f07">
-<div class="sourceCode cell-code" id="cb14"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb14-1"><a href="#cb14-1"></a><span class="co"># 提取结果成数据框，方便导出excel</span></span>
-<span id="cb14-2"><a href="#cb14-2"></a>fit0 <span class="sc">%&gt;%</span> </span>
-<span id="cb14-3"><a href="#cb14-3"></a>  <span class="fu">tidy</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb7"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb7-1"><a href="#cb7-1"></a><span class="co"># 提取结果成数据框，方便导出excel</span></span>
+<span id="cb7-2"><a href="#cb7-2"></a>fit0 <span class="sc">%&gt;%</span> </span>
+<span id="cb7-3"><a href="#cb7-3"></a>  <span class="fu">tidy</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code># A tibble: 22 × 5
    term                          estimate std.error statistic p.value
@@ -439,9 +406,9 @@ n= 8262, number of events= 2474 </code></pre>
 </div>
 </div>
 <div class="cell" data-hash="5.cohort_cache/html/unnamed-chunk-5_24e3eda0b0cf8103d705e3a3e73d9e59">
-<div class="sourceCode cell-code" id="cb16"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb16-1"><a href="#cb16-1"></a><span class="co"># 提取结果为exp后的HR值，而非线性项的值</span></span>
-<span id="cb16-2"><a href="#cb16-2"></a>fit0 <span class="sc">%&gt;%</span> </span>
-<span id="cb16-3"><a href="#cb16-3"></a>  <span class="fu">tidy</span>(<span class="at">exponentiate =</span> <span class="cn">TRUE</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb9"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb9-1"><a href="#cb9-1"></a><span class="co"># 提取结果为exp后的HR值，而非线性项的值</span></span>
+<span id="cb9-2"><a href="#cb9-2"></a>fit0 <span class="sc">%&gt;%</span> </span>
+<span id="cb9-3"><a href="#cb9-3"></a>  <span class="fu">tidy</span>(<span class="at">exponentiate =</span> <span class="cn">TRUE</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code># A tibble: 22 × 5
    term                          estimate std.error statistic p.value
@@ -460,9 +427,9 @@ n= 8262, number of events= 2474 </code></pre>
 </div>
 </div>
 <div class="cell" data-hash="5.cohort_cache/html/unnamed-chunk-6_153f2cfd24808edc59624dea846cfa83">
-<div class="sourceCode cell-code" id="cb18"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb18-1"><a href="#cb18-1"></a><span class="co"># 提取结果为exp后的HR值，而非线性项的值</span></span>
-<span id="cb18-2"><a href="#cb18-2"></a>fit0 <span class="sc">%&gt;%</span> </span>
-<span id="cb18-3"><a href="#cb18-3"></a>  <span class="fu">tidy</span>(<span class="at">exponentiate =</span> <span class="cn">TRUE</span>, <span class="at">conf.int =</span> T, <span class="at">conf.level =</span> <span class="fl">0.95</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb11"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb11-1"><a href="#cb11-1"></a><span class="co"># 提取结果为exp后的HR值，而非线性项的值</span></span>
+<span id="cb11-2"><a href="#cb11-2"></a>fit0 <span class="sc">%&gt;%</span> </span>
+<span id="cb11-3"><a href="#cb11-3"></a>  <span class="fu">tidy</span>(<span class="at">exponentiate =</span> <span class="cn">TRUE</span>, <span class="at">conf.int =</span> T, <span class="at">conf.level =</span> <span class="fl">0.95</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code># A tibble: 22 × 7
    term                  estimate std.error statistic p.value conf.low conf.high
@@ -481,46 +448,46 @@ n= 8262, number of events= 2474 </code></pre>
 </div>
 </div>
 <div class="cell" data-hash="5.cohort_cache/html/unnamed-chunk-7_ef68da21654554f2120860e8f539b62b">
-<div class="sourceCode cell-code" id="cb20"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb20-1"><a href="#cb20-1"></a>fit_cox <span class="ot">=</span> <span class="cf">function</span>(x, <span class="at">dat =</span> drehosp, <span class="at">scale_num =</span> <span class="dv">10</span>){</span>
-<span id="cb20-2"><a href="#cb20-2"></a>  clean_fit <span class="ot">=</span> <span class="fu">coxph</span>(</span>
-<span id="cb20-3"><a href="#cb20-3"></a>    <span class="at">formula =</span> <span class="fu">as.formula</span>(<span class="fu">paste0</span>(<span class="st">"Surv(t2rehosp, rehosp_staus) ~ "</span>, </span>
-<span id="cb20-4"><a href="#cb20-4"></a>                    x, </span>
-<span id="cb20-5"><a href="#cb20-5"></a>                    <span class="st">' + age + ethnicity + marriage + occupation + </span></span>
-<span id="cb20-6"><a href="#cb20-6"></a><span class="st">                    ns(Temperature_MA_07, df = 5) + ns(RH_MA_07, df = 5)'</span>)), </span>
-<span id="cb20-7"><a href="#cb20-7"></a>    <span class="at">data =</span> dat) <span class="sc">%&gt;%</span> </span>
-<span id="cb20-8"><a href="#cb20-8"></a>    <span class="fu">tidy</span>() <span class="sc">%&gt;%</span> </span>
-<span id="cb20-9"><a href="#cb20-9"></a>    <span class="fu">filter</span>(<span class="fu">grepl</span>(<span class="st">'PM|O3|CO|NO2|SO2'</span>, term)) <span class="sc">%&gt;%</span> </span>
-<span id="cb20-10"><a href="#cb20-10"></a>    <span class="fu">mutate</span>(<span class="at">OR =</span> <span class="fu">exp</span>(estimate<span class="sc">*</span>scale_num), <span class="dv">3</span>,</span>
-<span id="cb20-11"><a href="#cb20-11"></a>           <span class="at">OR_round =</span> <span class="fu">round</span>(<span class="fu">exp</span>(estimate<span class="sc">*</span>scale_num), <span class="dv">3</span>),</span>
-<span id="cb20-12"><a href="#cb20-12"></a>           <span class="at">CI_low =</span> <span class="fu">exp</span>(estimate<span class="sc">*</span>scale_num <span class="sc">-</span> <span class="fl">1.96</span><span class="sc">*</span>std.error<span class="sc">*</span>scale_num),</span>
-<span id="cb20-13"><a href="#cb20-13"></a>           <span class="at">CI_high =</span> <span class="fu">exp</span>(estimate<span class="sc">*</span>scale_num <span class="sc">+</span> <span class="fl">1.96</span><span class="sc">*</span>std.error<span class="sc">*</span>scale_num),</span>
-<span id="cb20-14"><a href="#cb20-14"></a>           <span class="at">CI_low_round =</span> <span class="fu">round</span>(<span class="fu">exp</span>(estimate<span class="sc">*</span>scale_num <span class="sc">-</span> <span class="fl">1.96</span><span class="sc">*</span>std.error<span class="sc">*</span>scale_num), <span class="dv">3</span>),</span>
-<span id="cb20-15"><a href="#cb20-15"></a>           <span class="at">CI_high_round =</span> <span class="fu">round</span>(<span class="fu">exp</span>(estimate<span class="sc">*</span>scale_num <span class="sc">+</span> <span class="fl">1.96</span><span class="sc">*</span>std.error<span class="sc">*</span>scale_num), <span class="dv">3</span>),</span>
-<span id="cb20-16"><a href="#cb20-16"></a>           <span class="at">predictor =</span> x) <span class="sc">%&gt;%</span> </span>
-<span id="cb20-17"><a href="#cb20-17"></a>    <span class="fu">mutate</span>(<span class="at">result =</span> <span class="fu">paste0</span>(<span class="fu">format</span>(OR_round, <span class="at">nsmall =</span> <span class="dv">3</span>), </span>
-<span id="cb20-18"><a href="#cb20-18"></a>                           <span class="st">' ('</span>, </span>
-<span id="cb20-19"><a href="#cb20-19"></a>                           <span class="fu">format</span>(CI_low_round, <span class="at">nsmall =</span> <span class="dv">3</span>), </span>
-<span id="cb20-20"><a href="#cb20-20"></a>                           <span class="st">'-'</span>, </span>
-<span id="cb20-21"><a href="#cb20-21"></a>                           <span class="fu">format</span>(CI_high_round, <span class="at">nsmall =</span> <span class="dv">3</span>),</span>
-<span id="cb20-22"><a href="#cb20-22"></a>                           <span class="st">')'</span>)) <span class="sc">%&gt;%</span> </span>
-<span id="cb20-23"><a href="#cb20-23"></a>    <span class="fu">select</span>(predictor, term, result, OR, CI_low, CI_high, p.value) </span>
-<span id="cb20-24"><a href="#cb20-24"></a>  </span>
-<span id="cb20-25"><a href="#cb20-25"></a>  <span class="fu">print</span>(x)</span>
-<span id="cb20-26"><a href="#cb20-26"></a>  </span>
-<span id="cb20-27"><a href="#cb20-27"></a>  <span class="fu">return</span>(clean_fit)</span>
-<span id="cb20-28"><a href="#cb20-28"></a>}</span>
-<span id="cb20-29"><a href="#cb20-29"></a></span>
-<span id="cb20-30"><a href="#cb20-30"></a>estimate_cox <span class="ot">=</span> <span class="fu">map_dfr</span>(</span>
-<span id="cb20-31"><a href="#cb20-31"></a>     <span class="fu">c</span>(<span class="st">"PM1_MA_365"</span>, <span class="st">"PM2.5_MA_365"</span>, <span class="st">"PM10_MA_365"</span>), </span>
-<span id="cb20-32"><a href="#cb20-32"></a>     fit_cox, </span>
-<span id="cb20-33"><a href="#cb20-33"></a>     <span class="at">dat =</span> cohort_cox,</span>
-<span id="cb20-34"><a href="#cb20-34"></a>     <span class="at">scale_num =</span> <span class="dv">10</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb13"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb13-1"><a href="#cb13-1"></a>fit_cox <span class="ot">=</span> <span class="cf">function</span>(x, <span class="at">dat =</span> drehosp, <span class="at">scale_num =</span> <span class="dv">10</span>){</span>
+<span id="cb13-2"><a href="#cb13-2"></a>  clean_fit <span class="ot">=</span> <span class="fu">coxph</span>(</span>
+<span id="cb13-3"><a href="#cb13-3"></a>    <span class="at">formula =</span> <span class="fu">as.formula</span>(<span class="fu">paste0</span>(<span class="st">"Surv(t2rehosp, rehosp_staus) ~ "</span>, </span>
+<span id="cb13-4"><a href="#cb13-4"></a>                    x, </span>
+<span id="cb13-5"><a href="#cb13-5"></a>                    <span class="st">' + age + ethnicity + marriage + occupation + </span></span>
+<span id="cb13-6"><a href="#cb13-6"></a><span class="st">                    ns(Temperature_MA_07, df = 5) + ns(RH_MA_07, df = 5)'</span>)), </span>
+<span id="cb13-7"><a href="#cb13-7"></a>    <span class="at">data =</span> dat) <span class="sc">%&gt;%</span> </span>
+<span id="cb13-8"><a href="#cb13-8"></a>    <span class="fu">tidy</span>() <span class="sc">%&gt;%</span> </span>
+<span id="cb13-9"><a href="#cb13-9"></a>    <span class="fu">filter</span>(<span class="fu">grepl</span>(<span class="st">'PM|O3|CO|NO2|SO2'</span>, term)) <span class="sc">%&gt;%</span> </span>
+<span id="cb13-10"><a href="#cb13-10"></a>    <span class="fu">mutate</span>(<span class="at">OR =</span> <span class="fu">exp</span>(estimate<span class="sc">*</span>scale_num), <span class="dv">3</span>,</span>
+<span id="cb13-11"><a href="#cb13-11"></a>           <span class="at">OR_round =</span> <span class="fu">round</span>(<span class="fu">exp</span>(estimate<span class="sc">*</span>scale_num), <span class="dv">3</span>),</span>
+<span id="cb13-12"><a href="#cb13-12"></a>           <span class="at">CI_low =</span> <span class="fu">exp</span>(estimate<span class="sc">*</span>scale_num <span class="sc">-</span> <span class="fl">1.96</span><span class="sc">*</span>std.error<span class="sc">*</span>scale_num),</span>
+<span id="cb13-13"><a href="#cb13-13"></a>           <span class="at">CI_high =</span> <span class="fu">exp</span>(estimate<span class="sc">*</span>scale_num <span class="sc">+</span> <span class="fl">1.96</span><span class="sc">*</span>std.error<span class="sc">*</span>scale_num),</span>
+<span id="cb13-14"><a href="#cb13-14"></a>           <span class="at">CI_low_round =</span> <span class="fu">round</span>(<span class="fu">exp</span>(estimate<span class="sc">*</span>scale_num <span class="sc">-</span> <span class="fl">1.96</span><span class="sc">*</span>std.error<span class="sc">*</span>scale_num), <span class="dv">3</span>),</span>
+<span id="cb13-15"><a href="#cb13-15"></a>           <span class="at">CI_high_round =</span> <span class="fu">round</span>(<span class="fu">exp</span>(estimate<span class="sc">*</span>scale_num <span class="sc">+</span> <span class="fl">1.96</span><span class="sc">*</span>std.error<span class="sc">*</span>scale_num), <span class="dv">3</span>),</span>
+<span id="cb13-16"><a href="#cb13-16"></a>           <span class="at">predictor =</span> x) <span class="sc">%&gt;%</span> </span>
+<span id="cb13-17"><a href="#cb13-17"></a>    <span class="fu">mutate</span>(<span class="at">result =</span> <span class="fu">paste0</span>(<span class="fu">format</span>(OR_round, <span class="at">nsmall =</span> <span class="dv">3</span>), </span>
+<span id="cb13-18"><a href="#cb13-18"></a>                           <span class="st">' ('</span>, </span>
+<span id="cb13-19"><a href="#cb13-19"></a>                           <span class="fu">format</span>(CI_low_round, <span class="at">nsmall =</span> <span class="dv">3</span>), </span>
+<span id="cb13-20"><a href="#cb13-20"></a>                           <span class="st">'-'</span>, </span>
+<span id="cb13-21"><a href="#cb13-21"></a>                           <span class="fu">format</span>(CI_high_round, <span class="at">nsmall =</span> <span class="dv">3</span>),</span>
+<span id="cb13-22"><a href="#cb13-22"></a>                           <span class="st">')'</span>)) <span class="sc">%&gt;%</span> </span>
+<span id="cb13-23"><a href="#cb13-23"></a>    <span class="fu">select</span>(predictor, term, result, OR, CI_low, CI_high, p.value) </span>
+<span id="cb13-24"><a href="#cb13-24"></a>  </span>
+<span id="cb13-25"><a href="#cb13-25"></a>  <span class="fu">print</span>(x)</span>
+<span id="cb13-26"><a href="#cb13-26"></a>  </span>
+<span id="cb13-27"><a href="#cb13-27"></a>  <span class="fu">return</span>(clean_fit)</span>
+<span id="cb13-28"><a href="#cb13-28"></a>}</span>
+<span id="cb13-29"><a href="#cb13-29"></a></span>
+<span id="cb13-30"><a href="#cb13-30"></a>estimate_cox <span class="ot">=</span> <span class="fu">map_dfr</span>(</span>
+<span id="cb13-31"><a href="#cb13-31"></a>     <span class="fu">c</span>(<span class="st">"PM1_MA_365"</span>, <span class="st">"PM2.5_MA_365"</span>, <span class="st">"PM10_MA_365"</span>), </span>
+<span id="cb13-32"><a href="#cb13-32"></a>     fit_cox, </span>
+<span id="cb13-33"><a href="#cb13-33"></a>     <span class="at">dat =</span> cohort_cox,</span>
+<span id="cb13-34"><a href="#cb13-34"></a>     <span class="at">scale_num =</span> <span class="dv">10</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>[1] "PM1_MA_365"
 [1] "PM2.5_MA_365"
 [1] "PM10_MA_365"</code></pre>
 </div>
-<div class="sourceCode cell-code" id="cb22"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb22-1"><a href="#cb22-1"></a>estimate_cox</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb15"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb15-1"><a href="#cb15-1"></a>estimate_cox</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code># A tibble: 3 × 7
   predictor    term         result                 OR CI_low CI_high     p.value
@@ -534,33 +501,33 @@ n= 8262, number of events= 2474 </code></pre>
 <section id="暴露反应关系" class="level3">
 <h3 class="anchored" data-anchor-id="暴露反应关系">暴露反应关系</h3>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb24"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb24-1"><a href="#cb24-1"></a><span class="fu">quantile</span>(cohort_cox<span class="sc">$</span>PM2<span class="fl">.5</span>_MA_365, <span class="fu">c</span>(<span class="fl">0.25</span>, <span class="fl">0.5</span>, <span class="fl">0.75</span>))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb17"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb17-1"><a href="#cb17-1"></a><span class="fu">quantile</span>(cohort_cox<span class="sc">$</span>PM2<span class="fl">.5</span>_MA_365, <span class="fu">c</span>(<span class="fl">0.25</span>, <span class="fl">0.5</span>, <span class="fl">0.75</span>))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>     25%      50%      75% 
 38.12038 42.49512 48.53397 </code></pre>
 </div>
-<div class="sourceCode cell-code" id="cb26"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb26-1"><a href="#cb26-1"></a><span class="fu">quantile</span>(cohort_cox<span class="sc">$</span>PM2<span class="fl">.5</span>_MA_365, <span class="fu">c</span>(<span class="fl">0.01</span>, <span class="fl">0.99</span>))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb19"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb19-1"><a href="#cb19-1"></a><span class="fu">quantile</span>(cohort_cox<span class="sc">$</span>PM2<span class="fl">.5</span>_MA_365, <span class="fu">c</span>(<span class="fl">0.01</span>, <span class="fl">0.99</span>))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>      1%      99% 
 21.55512 67.39910 </code></pre>
 </div>
-<div class="sourceCode cell-code" id="cb28"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb28-1"><a href="#cb28-1"></a>fit_cox_pm2<span class="fl">.5</span> <span class="ot">=</span> <span class="fu">coxph</span>(</span>
-<span id="cb28-2"><a href="#cb28-2"></a>  <span class="fu">Surv</span>(t2rehosp, rehosp_staus) <span class="sc">~</span> <span class="fu">ns</span>(PM2<span class="fl">.5</span>_MA_365, <span class="at">knots =</span> <span class="fu">c</span>(<span class="fl">40.48</span>, <span class="dv">60</span>, <span class="dv">63</span>)) <span class="sc">+</span> </span>
-<span id="cb28-3"><a href="#cb28-3"></a>    age <span class="sc">+</span> ethnicity <span class="sc">+</span> marriage <span class="sc">+</span> occupation <span class="sc">+</span> <span class="fu">ns</span>(Temperature_MA_07, <span class="at">df =</span> <span class="dv">5</span>) <span class="sc">+</span> <span class="fu">ns</span>(RH_MA_07, <span class="at">df =</span> <span class="dv">5</span>),</span>
-<span id="cb28-4"><a href="#cb28-4"></a>  <span class="at">data =</span> cohort_cox <span class="sc">%&gt;%</span> </span>
-<span id="cb28-5"><a href="#cb28-5"></a>    <span class="fu">filter</span>(PM2<span class="fl">.5</span>_MA_365 <span class="sc">&gt;</span> <span class="fl">21.55</span> <span class="sc">&amp;</span> PM2<span class="fl">.5</span>_MA_365 <span class="sc">&lt;</span> <span class="dv">67</span>)) </span>
-<span id="cb28-6"><a href="#cb28-6"></a></span>
-<span id="cb28-7"><a href="#cb28-7"></a>sp_cox_pm2<span class="fl">.5</span> <span class="ot">=</span> fit_cox_pm2<span class="fl">.5</span> <span class="sc">%&gt;%</span></span>
-<span id="cb28-8"><a href="#cb28-8"></a>  <span class="fu">termplot</span>(<span class="at">se =</span> T, <span class="at">plot =</span> F) <span class="sc">%&gt;%</span></span>
-<span id="cb28-9"><a href="#cb28-9"></a>  .[[<span class="st">'PM2.5_MA_365'</span>]] <span class="sc">%&gt;%</span></span>
-<span id="cb28-10"><a href="#cb28-10"></a>  <span class="fu">as.data.table</span>() <span class="sc">%&gt;%</span> </span>
-<span id="cb28-11"><a href="#cb28-11"></a>  .[,<span class="st">`</span><span class="at">:=</span><span class="st">`</span>(<span class="at">HR =</span> <span class="fu">exp</span>(y),</span>
-<span id="cb28-12"><a href="#cb28-12"></a>          <span class="at">HRmin =</span> <span class="fu">exp</span>(y <span class="sc">-</span> <span class="fl">1.96</span><span class="sc">*</span>se),</span>
-<span id="cb28-13"><a href="#cb28-13"></a>          <span class="at">HRmax =</span> <span class="fu">exp</span>(y <span class="sc">+</span> <span class="fl">1.96</span><span class="sc">*</span>se))] <span class="sc">%&gt;%</span> </span>
-<span id="cb28-14"><a href="#cb28-14"></a>  .[, <span class="st">`</span><span class="at">:=</span><span class="st">`</span>(<span class="at">pollutant =</span> <span class="st">'PM2.5'</span>)] <span class="sc">%&gt;%</span> </span>
-<span id="cb28-15"><a href="#cb28-15"></a>  .[]</span>
-<span id="cb28-16"><a href="#cb28-16"></a></span>
-<span id="cb28-17"><a href="#cb28-17"></a>sp_cox_pm2<span class="fl">.5</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb21"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb21-1"><a href="#cb21-1"></a>fit_cox_pm2<span class="fl">.5</span> <span class="ot">=</span> <span class="fu">coxph</span>(</span>
+<span id="cb21-2"><a href="#cb21-2"></a>  <span class="fu">Surv</span>(t2rehosp, rehosp_staus) <span class="sc">~</span> <span class="fu">ns</span>(PM2<span class="fl">.5</span>_MA_365, <span class="at">knots =</span> <span class="fu">c</span>(<span class="fl">40.48</span>, <span class="dv">60</span>, <span class="dv">63</span>)) <span class="sc">+</span> </span>
+<span id="cb21-3"><a href="#cb21-3"></a>    age <span class="sc">+</span> ethnicity <span class="sc">+</span> marriage <span class="sc">+</span> occupation <span class="sc">+</span> <span class="fu">ns</span>(Temperature_MA_07, <span class="at">df =</span> <span class="dv">5</span>) <span class="sc">+</span> <span class="fu">ns</span>(RH_MA_07, <span class="at">df =</span> <span class="dv">5</span>),</span>
+<span id="cb21-4"><a href="#cb21-4"></a>  <span class="at">data =</span> cohort_cox <span class="sc">%&gt;%</span> </span>
+<span id="cb21-5"><a href="#cb21-5"></a>    <span class="fu">filter</span>(PM2<span class="fl">.5</span>_MA_365 <span class="sc">&gt;</span> <span class="fl">21.55</span> <span class="sc">&amp;</span> PM2<span class="fl">.5</span>_MA_365 <span class="sc">&lt;</span> <span class="dv">67</span>)) </span>
+<span id="cb21-6"><a href="#cb21-6"></a></span>
+<span id="cb21-7"><a href="#cb21-7"></a>sp_cox_pm2<span class="fl">.5</span> <span class="ot">=</span> fit_cox_pm2<span class="fl">.5</span> <span class="sc">%&gt;%</span></span>
+<span id="cb21-8"><a href="#cb21-8"></a>  <span class="fu">termplot</span>(<span class="at">se =</span> T, <span class="at">plot =</span> F) <span class="sc">%&gt;%</span></span>
+<span id="cb21-9"><a href="#cb21-9"></a>  .[[<span class="st">'PM2.5_MA_365'</span>]] <span class="sc">%&gt;%</span></span>
+<span id="cb21-10"><a href="#cb21-10"></a>  <span class="fu">as.data.table</span>() <span class="sc">%&gt;%</span> </span>
+<span id="cb21-11"><a href="#cb21-11"></a>  .[,<span class="st">`</span><span class="at">:=</span><span class="st">`</span>(<span class="at">HR =</span> <span class="fu">exp</span>(y),</span>
+<span id="cb21-12"><a href="#cb21-12"></a>          <span class="at">HRmin =</span> <span class="fu">exp</span>(y <span class="sc">-</span> <span class="fl">1.96</span><span class="sc">*</span>se),</span>
+<span id="cb21-13"><a href="#cb21-13"></a>          <span class="at">HRmax =</span> <span class="fu">exp</span>(y <span class="sc">+</span> <span class="fl">1.96</span><span class="sc">*</span>se))] <span class="sc">%&gt;%</span> </span>
+<span id="cb21-14"><a href="#cb21-14"></a>  .[, <span class="st">`</span><span class="at">:=</span><span class="st">`</span>(<span class="at">pollutant =</span> <span class="st">'PM2.5'</span>)] <span class="sc">%&gt;%</span> </span>
+<span id="cb21-15"><a href="#cb21-15"></a>  .[]</span>
+<span id="cb21-16"><a href="#cb21-16"></a></span>
+<span id="cb21-17"><a href="#cb21-17"></a>sp_cox_pm2<span class="fl">.5</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>             x          y        se        HR     HRmin     HRmax pollutant
    1: 21.57385 -0.3434542 0.1633379 0.7093160 0.5149958 0.9769578     PM2.5
@@ -577,29 +544,29 @@ n= 8262, number of events= 2474 </code></pre>
 </div>
 </div>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb30"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb30-1"><a href="#cb30-1"></a>arr <span class="ot">=</span> <span class="fu">list</span>(<span class="st">'PM1'</span> <span class="ot">=</span> <span class="fu">TeX</span>(<span class="st">"PM$_{1}$"</span>),  </span>
-<span id="cb30-2"><a href="#cb30-2"></a>           <span class="st">"PM2.5"</span> <span class="ot">=</span> <span class="fu">TeX</span>(<span class="st">"PM$_{2.5}$"</span>), </span>
-<span id="cb30-3"><a href="#cb30-3"></a>           <span class="st">"PM10"</span> <span class="ot">=</span> <span class="fu">TeX</span>(<span class="st">"PM$_{10}$"</span>))</span>
-<span id="cb30-4"><a href="#cb30-4"></a>mylabel <span class="ot">=</span> <span class="cf">function</span>(val) { <span class="fu">return</span>(<span class="fu">lapply</span>(val, <span class="cf">function</span>(x) arr[x])) }</span>
-<span id="cb30-5"><a href="#cb30-5"></a></span>
-<span id="cb30-6"><a href="#cb30-6"></a>color7 <span class="ot">=</span> <span class="fu">c</span>(<span class="st">'#7570b3'</span>, <span class="st">'#d95f02'</span>, <span class="st">'#1b9e77'</span>)</span>
-<span id="cb30-7"><a href="#cb30-7"></a></span>
-<span id="cb30-8"><a href="#cb30-8"></a>p_cox_pm2<span class="fl">.5</span> <span class="ot">=</span> sp_cox_pm2<span class="fl">.5</span> <span class="sc">%&gt;%</span> </span>
-<span id="cb30-9"><a href="#cb30-9"></a>  <span class="fu">ggplot</span>(<span class="fu">aes</span>(<span class="at">x =</span> x, <span class="at">y =</span> HR)) <span class="sc">+</span></span>
-<span id="cb30-10"><a href="#cb30-10"></a>  <span class="fu">geom_hline</span>(<span class="at">yintercept =</span> <span class="dv">1</span>, <span class="at">linewidth =</span> <span class="fl">0.8</span>, <span class="at">alpha =</span> <span class="fl">0.6</span>, <span class="at">linetype =</span> <span class="st">'dashed'</span>) <span class="sc">+</span></span>
-<span id="cb30-11"><a href="#cb30-11"></a>  <span class="fu">geom_ribbon</span>(<span class="fu">aes</span>(<span class="at">ymin =</span> HRmin, <span class="at">ymax =</span> HRmax), <span class="at">alpha =</span> <span class="fl">0.3</span>, <span class="at">color =</span> <span class="cn">NA</span>, <span class="at">fill =</span> color7[<span class="dv">1</span>]) <span class="sc">+</span></span>
-<span id="cb30-12"><a href="#cb30-12"></a>  <span class="fu">geom_line</span>(<span class="at">linewidth =</span> <span class="fl">1.5</span>, <span class="at">color =</span> color7[<span class="dv">1</span>]) <span class="sc">+</span></span>
-<span id="cb30-13"><a href="#cb30-13"></a>  <span class="fu">facet_wrap</span>(<span class="sc">~</span> pollutant, <span class="at">scales =</span> <span class="st">'free'</span>, <span class="at">labeller =</span> mylabel) <span class="sc">+</span></span>
-<span id="cb30-14"><a href="#cb30-14"></a>  <span class="fu">scale_x_continuous</span>(<span class="at">expand =</span> <span class="fu">c</span>(<span class="dv">0</span>, <span class="dv">0</span>)) <span class="sc">+</span></span>
-<span id="cb30-15"><a href="#cb30-15"></a>  <span class="fu">scale_y_continuous</span>(<span class="at">expand =</span> <span class="fu">c</span>(<span class="dv">0</span>, <span class="fl">0.05</span>)) <span class="sc">+</span></span>
-<span id="cb30-16"><a href="#cb30-16"></a>  <span class="fu">labs</span>(<span class="at">x =</span> <span class="cn">NULL</span>, <span class="at">y =</span> <span class="st">'Hazard of death'</span>) <span class="sc">+</span></span>
-<span id="cb30-17"><a href="#cb30-17"></a>  <span class="fu">theme_test</span>(<span class="at">base_size =</span> <span class="dv">20</span>, <span class="at">base_family =</span> <span class="st">'serif'</span>) <span class="sc">+</span> <span class="co"># , base_family = 'serif'</span></span>
-<span id="cb30-18"><a href="#cb30-18"></a>  <span class="fu">theme</span>(<span class="at">plot.margin =</span> <span class="fu">unit</span>(<span class="fu">c</span>(<span class="dv">0</span>, <span class="fl">0.5</span>, <span class="dv">0</span>, <span class="fl">0.2</span>), <span class="st">'cm'</span>),</span>
-<span id="cb30-19"><a href="#cb30-19"></a>        <span class="at">plot.title =</span> <span class="fu">element_text</span>(<span class="at">size =</span> <span class="dv">20</span>, <span class="at">face =</span> <span class="st">'bold'</span>),</span>
-<span id="cb30-20"><a href="#cb30-20"></a>        <span class="at">strip.background =</span> <span class="fu">element_rect</span>(<span class="at">fill =</span> ggplot2<span class="sc">::</span><span class="fu">alpha</span>(color7[<span class="dv">1</span>], <span class="fl">0.3</span>), <span class="at">color =</span> <span class="cn">NA</span>),</span>
-<span id="cb30-21"><a href="#cb30-21"></a>        <span class="at">strip.text =</span> <span class="fu">element_text</span>(<span class="at">size =</span> <span class="dv">18</span>, <span class="at">face =</span> <span class="st">'bold'</span>))</span>
-<span id="cb30-22"><a href="#cb30-22"></a></span>
-<span id="cb30-23"><a href="#cb30-23"></a>p_cox_pm2<span class="fl">.5</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb23"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb23-1"><a href="#cb23-1"></a>arr <span class="ot">=</span> <span class="fu">list</span>(<span class="st">'PM1'</span> <span class="ot">=</span> <span class="fu">TeX</span>(<span class="st">"PM$_{1}$"</span>),  </span>
+<span id="cb23-2"><a href="#cb23-2"></a>           <span class="st">"PM2.5"</span> <span class="ot">=</span> <span class="fu">TeX</span>(<span class="st">"PM$_{2.5}$"</span>), </span>
+<span id="cb23-3"><a href="#cb23-3"></a>           <span class="st">"PM10"</span> <span class="ot">=</span> <span class="fu">TeX</span>(<span class="st">"PM$_{10}$"</span>))</span>
+<span id="cb23-4"><a href="#cb23-4"></a>mylabel <span class="ot">=</span> <span class="cf">function</span>(val) { <span class="fu">return</span>(<span class="fu">lapply</span>(val, <span class="cf">function</span>(x) arr[x])) }</span>
+<span id="cb23-5"><a href="#cb23-5"></a></span>
+<span id="cb23-6"><a href="#cb23-6"></a>color7 <span class="ot">=</span> <span class="fu">c</span>(<span class="st">'#7570b3'</span>, <span class="st">'#d95f02'</span>, <span class="st">'#1b9e77'</span>)</span>
+<span id="cb23-7"><a href="#cb23-7"></a></span>
+<span id="cb23-8"><a href="#cb23-8"></a>p_cox_pm2<span class="fl">.5</span> <span class="ot">=</span> sp_cox_pm2<span class="fl">.5</span> <span class="sc">%&gt;%</span> </span>
+<span id="cb23-9"><a href="#cb23-9"></a>  <span class="fu">ggplot</span>(<span class="fu">aes</span>(<span class="at">x =</span> x, <span class="at">y =</span> HR)) <span class="sc">+</span></span>
+<span id="cb23-10"><a href="#cb23-10"></a>  <span class="fu">geom_hline</span>(<span class="at">yintercept =</span> <span class="dv">1</span>, <span class="at">linewidth =</span> <span class="fl">0.8</span>, <span class="at">alpha =</span> <span class="fl">0.6</span>, <span class="at">linetype =</span> <span class="st">'dashed'</span>) <span class="sc">+</span></span>
+<span id="cb23-11"><a href="#cb23-11"></a>  <span class="fu">geom_ribbon</span>(<span class="fu">aes</span>(<span class="at">ymin =</span> HRmin, <span class="at">ymax =</span> HRmax), <span class="at">alpha =</span> <span class="fl">0.3</span>, <span class="at">color =</span> <span class="cn">NA</span>, <span class="at">fill =</span> color7[<span class="dv">1</span>]) <span class="sc">+</span></span>
+<span id="cb23-12"><a href="#cb23-12"></a>  <span class="fu">geom_line</span>(<span class="at">linewidth =</span> <span class="fl">1.5</span>, <span class="at">color =</span> color7[<span class="dv">1</span>]) <span class="sc">+</span></span>
+<span id="cb23-13"><a href="#cb23-13"></a>  <span class="fu">facet_wrap</span>(<span class="sc">~</span> pollutant, <span class="at">scales =</span> <span class="st">'free'</span>, <span class="at">labeller =</span> mylabel) <span class="sc">+</span></span>
+<span id="cb23-14"><a href="#cb23-14"></a>  <span class="fu">scale_x_continuous</span>(<span class="at">expand =</span> <span class="fu">c</span>(<span class="dv">0</span>, <span class="dv">0</span>)) <span class="sc">+</span></span>
+<span id="cb23-15"><a href="#cb23-15"></a>  <span class="fu">scale_y_continuous</span>(<span class="at">expand =</span> <span class="fu">c</span>(<span class="dv">0</span>, <span class="fl">0.05</span>)) <span class="sc">+</span></span>
+<span id="cb23-16"><a href="#cb23-16"></a>  <span class="fu">labs</span>(<span class="at">x =</span> <span class="cn">NULL</span>, <span class="at">y =</span> <span class="st">'Hazard of death'</span>) <span class="sc">+</span></span>
+<span id="cb23-17"><a href="#cb23-17"></a>  <span class="fu">theme_test</span>(<span class="at">base_size =</span> <span class="dv">20</span>, <span class="at">base_family =</span> <span class="st">'serif'</span>) <span class="sc">+</span> <span class="co"># , base_family = 'serif'</span></span>
+<span id="cb23-18"><a href="#cb23-18"></a>  <span class="fu">theme</span>(<span class="at">plot.margin =</span> <span class="fu">unit</span>(<span class="fu">c</span>(<span class="dv">0</span>, <span class="fl">0.5</span>, <span class="dv">0</span>, <span class="fl">0.2</span>), <span class="st">'cm'</span>),</span>
+<span id="cb23-19"><a href="#cb23-19"></a>        <span class="at">plot.title =</span> <span class="fu">element_text</span>(<span class="at">size =</span> <span class="dv">20</span>, <span class="at">face =</span> <span class="st">'bold'</span>),</span>
+<span id="cb23-20"><a href="#cb23-20"></a>        <span class="at">strip.background =</span> <span class="fu">element_rect</span>(<span class="at">fill =</span> ggplot2<span class="sc">::</span><span class="fu">alpha</span>(color7[<span class="dv">1</span>], <span class="fl">0.3</span>), <span class="at">color =</span> <span class="cn">NA</span>),</span>
+<span id="cb23-21"><a href="#cb23-21"></a>        <span class="at">strip.text =</span> <span class="fu">element_text</span>(<span class="at">size =</span> <span class="dv">18</span>, <span class="at">face =</span> <span class="st">'bold'</span>))</span>
+<span id="cb23-22"><a href="#cb23-22"></a></span>
+<span id="cb23-23"><a href="#cb23-23"></a>p_cox_pm2<span class="fl">.5</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output-display">
 <p><img src="5.cohort_files/figure-html/unnamed-chunk-9-1.png" class="img-fluid" width="672"></p>
 </div>
@@ -610,61 +577,61 @@ n= 8262, number of events= 2474 </code></pre>
 <h3 class="anchored" data-anchor-id="多个图形进行拼图">多个图形进行拼图</h3>
 <p>先拟合一个PM<span class="math inline">\(_1\)</span>的图形：</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb31"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb31-1"><a href="#cb31-1"></a><span class="fu">quantile</span>(cohort_cox<span class="sc">$</span>PM10_MA_365, <span class="fu">c</span>(<span class="fl">0.25</span>, <span class="fl">0.5</span>, <span class="fl">0.75</span>))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb24"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb24-1"><a href="#cb24-1"></a><span class="fu">quantile</span>(cohort_cox<span class="sc">$</span>PM10_MA_365, <span class="fu">c</span>(<span class="fl">0.25</span>, <span class="fl">0.5</span>, <span class="fl">0.75</span>))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>     25%      50%      75% 
 61.18076 69.45975 77.40257 </code></pre>
 </div>
-<div class="sourceCode cell-code" id="cb33"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb33-1"><a href="#cb33-1"></a><span class="fu">quantile</span>(cohort_cox<span class="sc">$</span>PM10_MA_365, <span class="fu">c</span>(<span class="fl">0.01</span>, <span class="fl">0.99</span>))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb26"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb26-1"><a href="#cb26-1"></a><span class="fu">quantile</span>(cohort_cox<span class="sc">$</span>PM10_MA_365, <span class="fu">c</span>(<span class="fl">0.01</span>, <span class="fl">0.99</span>))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>       1%       99% 
  39.12063 105.25648 </code></pre>
 </div>
-<div class="sourceCode cell-code" id="cb35"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb35-1"><a href="#cb35-1"></a>fit_cox_pm10 <span class="ot">=</span> <span class="fu">coxph</span>(</span>
-<span id="cb35-2"><a href="#cb35-2"></a>  <span class="fu">Surv</span>(t2rehosp, rehosp_staus) <span class="sc">~</span> <span class="fu">ns</span>(PM10_MA_365, <span class="at">knots =</span> <span class="fu">c</span>(<span class="fl">40.48</span>, <span class="dv">80</span>, <span class="dv">90</span>)) <span class="sc">+</span> </span>
-<span id="cb35-3"><a href="#cb35-3"></a>    age <span class="sc">+</span> ethnicity <span class="sc">+</span> marriage <span class="sc">+</span> occupation <span class="sc">+</span> <span class="fu">ns</span>(Temperature_MA_07, <span class="at">df =</span> <span class="dv">5</span>) <span class="sc">+</span> <span class="fu">ns</span>(RH_MA_07, <span class="at">df =</span> <span class="dv">5</span>),</span>
-<span id="cb35-4"><a href="#cb35-4"></a>  <span class="at">data =</span> cohort_cox <span class="sc">%&gt;%</span> </span>
-<span id="cb35-5"><a href="#cb35-5"></a>    <span class="fu">filter</span>(PM10_MA_365 <span class="sc">&gt;</span> <span class="dv">40</span> <span class="sc">&amp;</span> PM10_MA_365 <span class="sc">&lt;</span> <span class="dv">105</span>)) </span>
-<span id="cb35-6"><a href="#cb35-6"></a></span>
-<span id="cb35-7"><a href="#cb35-7"></a>sp_cox_pm10 <span class="ot">=</span> fit_cox_pm10 <span class="sc">%&gt;%</span></span>
-<span id="cb35-8"><a href="#cb35-8"></a>  <span class="fu">termplot</span>(<span class="at">se =</span> T, <span class="at">plot =</span> F) <span class="sc">%&gt;%</span></span>
-<span id="cb35-9"><a href="#cb35-9"></a>  .[[<span class="st">'PM10_MA_365'</span>]] <span class="sc">%&gt;%</span></span>
-<span id="cb35-10"><a href="#cb35-10"></a>  <span class="fu">as.data.table</span>() <span class="sc">%&gt;%</span> </span>
-<span id="cb35-11"><a href="#cb35-11"></a>  .[,<span class="st">`</span><span class="at">:=</span><span class="st">`</span>(<span class="at">HR =</span> <span class="fu">exp</span>(y),</span>
-<span id="cb35-12"><a href="#cb35-12"></a>          <span class="at">HRmin =</span> <span class="fu">exp</span>(y <span class="sc">-</span> <span class="fl">1.96</span><span class="sc">*</span>se),</span>
-<span id="cb35-13"><a href="#cb35-13"></a>          <span class="at">HRmax =</span> <span class="fu">exp</span>(y <span class="sc">+</span> <span class="fl">1.96</span><span class="sc">*</span>se))] <span class="sc">%&gt;%</span> </span>
-<span id="cb35-14"><a href="#cb35-14"></a>  .[, <span class="st">`</span><span class="at">:=</span><span class="st">`</span>(<span class="at">pollutant =</span> <span class="st">'PM10'</span>)] <span class="sc">%&gt;%</span> </span>
-<span id="cb35-15"><a href="#cb35-15"></a>  .[]</span>
-<span id="cb35-16"><a href="#cb35-16"></a></span>
-<span id="cb35-17"><a href="#cb35-17"></a>p_cox_pm10 <span class="ot">=</span> sp_cox_pm10 <span class="sc">%&gt;%</span> </span>
-<span id="cb35-18"><a href="#cb35-18"></a>  <span class="fu">ggplot</span>(<span class="fu">aes</span>(<span class="at">x =</span> x, <span class="at">y =</span> HR)) <span class="sc">+</span></span>
-<span id="cb35-19"><a href="#cb35-19"></a>  <span class="fu">geom_hline</span>(<span class="at">yintercept =</span> <span class="dv">1</span>, <span class="at">linewidth =</span> <span class="fl">0.8</span>, <span class="at">alpha =</span> <span class="fl">0.6</span>, <span class="at">linetype =</span> <span class="st">'dashed'</span>) <span class="sc">+</span></span>
-<span id="cb35-20"><a href="#cb35-20"></a>  <span class="fu">geom_ribbon</span>(<span class="fu">aes</span>(<span class="at">ymin =</span> HRmin, <span class="at">ymax =</span> HRmax), <span class="at">alpha =</span> <span class="fl">0.3</span>, <span class="at">color =</span> <span class="cn">NA</span>, <span class="at">fill =</span> color7[<span class="dv">2</span>]) <span class="sc">+</span></span>
-<span id="cb35-21"><a href="#cb35-21"></a>  <span class="fu">geom_line</span>(<span class="at">linewidth =</span> <span class="fl">1.5</span>, <span class="at">color =</span> color7[<span class="dv">2</span>]) <span class="sc">+</span></span>
-<span id="cb35-22"><a href="#cb35-22"></a>  <span class="fu">facet_wrap</span>(<span class="sc">~</span> pollutant, <span class="at">scales =</span> <span class="st">'free'</span>, <span class="at">labeller =</span> mylabel) <span class="sc">+</span></span>
-<span id="cb35-23"><a href="#cb35-23"></a>  <span class="fu">scale_x_continuous</span>(<span class="at">expand =</span> <span class="fu">c</span>(<span class="dv">0</span>, <span class="dv">0</span>)) <span class="sc">+</span></span>
-<span id="cb35-24"><a href="#cb35-24"></a>  <span class="fu">scale_y_continuous</span>(<span class="at">expand =</span> <span class="fu">c</span>(<span class="dv">0</span>, <span class="fl">0.05</span>)) <span class="sc">+</span></span>
-<span id="cb35-25"><a href="#cb35-25"></a>  <span class="fu">labs</span>(<span class="at">x =</span> <span class="cn">NULL</span>, <span class="at">y =</span> <span class="st">'Hazard of death'</span>) <span class="sc">+</span></span>
-<span id="cb35-26"><a href="#cb35-26"></a>  <span class="fu">theme_test</span>(<span class="at">base_size =</span> <span class="dv">20</span>, <span class="at">base_family =</span> <span class="st">'serif'</span>) <span class="sc">+</span> <span class="co"># , base_family = 'serif'</span></span>
-<span id="cb35-27"><a href="#cb35-27"></a>  <span class="fu">theme</span>(<span class="at">plot.margin =</span> <span class="fu">unit</span>(<span class="fu">c</span>(<span class="dv">0</span>, <span class="fl">0.5</span>, <span class="dv">0</span>, <span class="fl">0.2</span>), <span class="st">'cm'</span>),</span>
-<span id="cb35-28"><a href="#cb35-28"></a>        <span class="at">plot.title =</span> <span class="fu">element_text</span>(<span class="at">size =</span> <span class="dv">20</span>, <span class="at">face =</span> <span class="st">'bold'</span>),</span>
-<span id="cb35-29"><a href="#cb35-29"></a>        <span class="at">strip.background =</span> <span class="fu">element_rect</span>(<span class="at">fill =</span> ggplot2<span class="sc">::</span><span class="fu">alpha</span>(color7[<span class="dv">2</span>], <span class="fl">0.3</span>), <span class="at">color =</span> <span class="cn">NA</span>),</span>
-<span id="cb35-30"><a href="#cb35-30"></a>        <span class="at">strip.text =</span> <span class="fu">element_text</span>(<span class="at">size =</span> <span class="dv">18</span>, <span class="at">face =</span> <span class="st">'bold'</span>))</span>
-<span id="cb35-31"><a href="#cb35-31"></a></span>
-<span id="cb35-32"><a href="#cb35-32"></a>p_cox_pm10</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb28"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb28-1"><a href="#cb28-1"></a>fit_cox_pm10 <span class="ot">=</span> <span class="fu">coxph</span>(</span>
+<span id="cb28-2"><a href="#cb28-2"></a>  <span class="fu">Surv</span>(t2rehosp, rehosp_staus) <span class="sc">~</span> <span class="fu">ns</span>(PM10_MA_365, <span class="at">knots =</span> <span class="fu">c</span>(<span class="fl">40.48</span>, <span class="dv">80</span>, <span class="dv">90</span>)) <span class="sc">+</span> </span>
+<span id="cb28-3"><a href="#cb28-3"></a>    age <span class="sc">+</span> ethnicity <span class="sc">+</span> marriage <span class="sc">+</span> occupation <span class="sc">+</span> <span class="fu">ns</span>(Temperature_MA_07, <span class="at">df =</span> <span class="dv">5</span>) <span class="sc">+</span> <span class="fu">ns</span>(RH_MA_07, <span class="at">df =</span> <span class="dv">5</span>),</span>
+<span id="cb28-4"><a href="#cb28-4"></a>  <span class="at">data =</span> cohort_cox <span class="sc">%&gt;%</span> </span>
+<span id="cb28-5"><a href="#cb28-5"></a>    <span class="fu">filter</span>(PM10_MA_365 <span class="sc">&gt;</span> <span class="dv">40</span> <span class="sc">&amp;</span> PM10_MA_365 <span class="sc">&lt;</span> <span class="dv">105</span>)) </span>
+<span id="cb28-6"><a href="#cb28-6"></a></span>
+<span id="cb28-7"><a href="#cb28-7"></a>sp_cox_pm10 <span class="ot">=</span> fit_cox_pm10 <span class="sc">%&gt;%</span></span>
+<span id="cb28-8"><a href="#cb28-8"></a>  <span class="fu">termplot</span>(<span class="at">se =</span> T, <span class="at">plot =</span> F) <span class="sc">%&gt;%</span></span>
+<span id="cb28-9"><a href="#cb28-9"></a>  .[[<span class="st">'PM10_MA_365'</span>]] <span class="sc">%&gt;%</span></span>
+<span id="cb28-10"><a href="#cb28-10"></a>  <span class="fu">as.data.table</span>() <span class="sc">%&gt;%</span> </span>
+<span id="cb28-11"><a href="#cb28-11"></a>  .[,<span class="st">`</span><span class="at">:=</span><span class="st">`</span>(<span class="at">HR =</span> <span class="fu">exp</span>(y),</span>
+<span id="cb28-12"><a href="#cb28-12"></a>          <span class="at">HRmin =</span> <span class="fu">exp</span>(y <span class="sc">-</span> <span class="fl">1.96</span><span class="sc">*</span>se),</span>
+<span id="cb28-13"><a href="#cb28-13"></a>          <span class="at">HRmax =</span> <span class="fu">exp</span>(y <span class="sc">+</span> <span class="fl">1.96</span><span class="sc">*</span>se))] <span class="sc">%&gt;%</span> </span>
+<span id="cb28-14"><a href="#cb28-14"></a>  .[, <span class="st">`</span><span class="at">:=</span><span class="st">`</span>(<span class="at">pollutant =</span> <span class="st">'PM10'</span>)] <span class="sc">%&gt;%</span> </span>
+<span id="cb28-15"><a href="#cb28-15"></a>  .[]</span>
+<span id="cb28-16"><a href="#cb28-16"></a></span>
+<span id="cb28-17"><a href="#cb28-17"></a>p_cox_pm10 <span class="ot">=</span> sp_cox_pm10 <span class="sc">%&gt;%</span> </span>
+<span id="cb28-18"><a href="#cb28-18"></a>  <span class="fu">ggplot</span>(<span class="fu">aes</span>(<span class="at">x =</span> x, <span class="at">y =</span> HR)) <span class="sc">+</span></span>
+<span id="cb28-19"><a href="#cb28-19"></a>  <span class="fu">geom_hline</span>(<span class="at">yintercept =</span> <span class="dv">1</span>, <span class="at">linewidth =</span> <span class="fl">0.8</span>, <span class="at">alpha =</span> <span class="fl">0.6</span>, <span class="at">linetype =</span> <span class="st">'dashed'</span>) <span class="sc">+</span></span>
+<span id="cb28-20"><a href="#cb28-20"></a>  <span class="fu">geom_ribbon</span>(<span class="fu">aes</span>(<span class="at">ymin =</span> HRmin, <span class="at">ymax =</span> HRmax), <span class="at">alpha =</span> <span class="fl">0.3</span>, <span class="at">color =</span> <span class="cn">NA</span>, <span class="at">fill =</span> color7[<span class="dv">2</span>]) <span class="sc">+</span></span>
+<span id="cb28-21"><a href="#cb28-21"></a>  <span class="fu">geom_line</span>(<span class="at">linewidth =</span> <span class="fl">1.5</span>, <span class="at">color =</span> color7[<span class="dv">2</span>]) <span class="sc">+</span></span>
+<span id="cb28-22"><a href="#cb28-22"></a>  <span class="fu">facet_wrap</span>(<span class="sc">~</span> pollutant, <span class="at">scales =</span> <span class="st">'free'</span>, <span class="at">labeller =</span> mylabel) <span class="sc">+</span></span>
+<span id="cb28-23"><a href="#cb28-23"></a>  <span class="fu">scale_x_continuous</span>(<span class="at">expand =</span> <span class="fu">c</span>(<span class="dv">0</span>, <span class="dv">0</span>)) <span class="sc">+</span></span>
+<span id="cb28-24"><a href="#cb28-24"></a>  <span class="fu">scale_y_continuous</span>(<span class="at">expand =</span> <span class="fu">c</span>(<span class="dv">0</span>, <span class="fl">0.05</span>)) <span class="sc">+</span></span>
+<span id="cb28-25"><a href="#cb28-25"></a>  <span class="fu">labs</span>(<span class="at">x =</span> <span class="cn">NULL</span>, <span class="at">y =</span> <span class="st">'Hazard of death'</span>) <span class="sc">+</span></span>
+<span id="cb28-26"><a href="#cb28-26"></a>  <span class="fu">theme_test</span>(<span class="at">base_size =</span> <span class="dv">20</span>, <span class="at">base_family =</span> <span class="st">'serif'</span>) <span class="sc">+</span> <span class="co"># , base_family = 'serif'</span></span>
+<span id="cb28-27"><a href="#cb28-27"></a>  <span class="fu">theme</span>(<span class="at">plot.margin =</span> <span class="fu">unit</span>(<span class="fu">c</span>(<span class="dv">0</span>, <span class="fl">0.5</span>, <span class="dv">0</span>, <span class="fl">0.2</span>), <span class="st">'cm'</span>),</span>
+<span id="cb28-28"><a href="#cb28-28"></a>        <span class="at">plot.title =</span> <span class="fu">element_text</span>(<span class="at">size =</span> <span class="dv">20</span>, <span class="at">face =</span> <span class="st">'bold'</span>),</span>
+<span id="cb28-29"><a href="#cb28-29"></a>        <span class="at">strip.background =</span> <span class="fu">element_rect</span>(<span class="at">fill =</span> ggplot2<span class="sc">::</span><span class="fu">alpha</span>(color7[<span class="dv">2</span>], <span class="fl">0.3</span>), <span class="at">color =</span> <span class="cn">NA</span>),</span>
+<span id="cb28-30"><a href="#cb28-30"></a>        <span class="at">strip.text =</span> <span class="fu">element_text</span>(<span class="at">size =</span> <span class="dv">18</span>, <span class="at">face =</span> <span class="st">'bold'</span>))</span>
+<span id="cb28-31"><a href="#cb28-31"></a></span>
+<span id="cb28-32"><a href="#cb28-32"></a>p_cox_pm10</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output-display">
 <p><img src="5.cohort_files/figure-html/unnamed-chunk-10-1.png" class="img-fluid" width="672"></p>
 </div>
 </div>
 <p>使用<code>patchwork</code>包进行拼图</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb36"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb36-1"><a href="#cb36-1"></a>p_cox_pm2<span class="fl">.5</span><span class="sc">|</span>p_cox_pm10</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb29"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb29-1"><a href="#cb29-1"></a>p_cox_pm2<span class="fl">.5</span><span class="sc">|</span>p_cox_pm10</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output-display">
 <p><img src="5.cohort_files/figure-html/unnamed-chunk-11-1.png" class="img-fluid" width="672"></p>
 </div>
 </div>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb37"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb37-1"><a href="#cb37-1"></a>p_cox_pm2<span class="fl">.5</span><span class="sc">/</span>p_cox_pm10</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb30"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb30-1"><a href="#cb30-1"></a>p_cox_pm2<span class="fl">.5</span><span class="sc">/</span>p_cox_pm10</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output-display">
 <p><img src="5.cohort_files/figure-html/unnamed-chunk-12-1.png" class="img-fluid" width="672"></p>
 </div>
@@ -673,11 +640,11 @@ n= 8262, number of events= 2474 </code></pre>
 <section id="限制性立方样条" class="level3">
 <h3 class="anchored" data-anchor-id="限制性立方样条">限制性立方样条</h3>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb38"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb38-1"><a href="#cb38-1"></a>rcs_cox_pm2<span class="fl">.5</span> <span class="ot">&lt;-</span> <span class="fu">cph</span>(<span class="fu">Surv</span>(t2rehosp, rehosp_staus) <span class="sc">~</span> <span class="fu">rcs</span>(PM2<span class="fl">.5</span>_MA_365, <span class="fu">c</span>(<span class="fl">40.48</span>, <span class="dv">60</span>, <span class="dv">63</span>)) <span class="sc">+</span> age <span class="sc">+</span> ethnicity <span class="sc">+</span> marriage <span class="sc">+</span> occupation <span class="sc">+</span> <span class="fu">rcs</span>(Temperature_MA_07, <span class="at">df =</span> <span class="dv">5</span>), </span>
-<span id="cb38-2"><a href="#cb38-2"></a>                     <span class="at">data =</span> cohort_cox <span class="sc">%&gt;%</span> </span>
-<span id="cb38-3"><a href="#cb38-3"></a>    <span class="fu">filter</span>(PM2<span class="fl">.5</span>_MA_365 <span class="sc">&gt;</span> <span class="fl">21.55</span> <span class="sc">&amp;</span> PM2<span class="fl">.5</span>_MA_365 <span class="sc">&lt;</span> <span class="dv">67</span>))</span>
-<span id="cb38-4"><a href="#cb38-4"></a></span>
-<span id="cb38-5"><a href="#cb38-5"></a><span class="fu">anova</span>(rcs_cox_pm2<span class="fl">.5</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb31"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb31-1"><a href="#cb31-1"></a>rcs_cox_pm2<span class="fl">.5</span> <span class="ot">&lt;-</span> <span class="fu">cph</span>(<span class="fu">Surv</span>(t2rehosp, rehosp_staus) <span class="sc">~</span> <span class="fu">rcs</span>(PM2<span class="fl">.5</span>_MA_365, <span class="fu">c</span>(<span class="fl">40.48</span>, <span class="dv">60</span>, <span class="dv">63</span>)) <span class="sc">+</span> age <span class="sc">+</span> ethnicity <span class="sc">+</span> marriage <span class="sc">+</span> occupation <span class="sc">+</span> <span class="fu">rcs</span>(Temperature_MA_07, <span class="at">df =</span> <span class="dv">5</span>), </span>
+<span id="cb31-2"><a href="#cb31-2"></a>                     <span class="at">data =</span> cohort_cox <span class="sc">%&gt;%</span> </span>
+<span id="cb31-3"><a href="#cb31-3"></a>    <span class="fu">filter</span>(PM2<span class="fl">.5</span>_MA_365 <span class="sc">&gt;</span> <span class="fl">21.55</span> <span class="sc">&amp;</span> PM2<span class="fl">.5</span>_MA_365 <span class="sc">&lt;</span> <span class="dv">67</span>))</span>
+<span id="cb31-4"><a href="#cb31-4"></a></span>
+<span id="cb31-5"><a href="#cb31-5"></a><span class="fu">anova</span>(rcs_cox_pm2<span class="fl">.5</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>                Wald Statistics          Response: Surv(t2rehosp, rehosp_staus) 
 
@@ -693,17 +660,17 @@ n= 8262, number of events= 2474 </code></pre>
  TOTAL NONLINEAR    5.21       4   0.2661
  TOTAL             44.41      17   0.0003</code></pre>
 </div>
-<div class="sourceCode cell-code" id="cb40"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb40-1"><a href="#cb40-1"></a>dd <span class="ot">&lt;-</span> <span class="fu">datadist</span>(cohort_cox <span class="sc">%&gt;%</span> </span>
-<span id="cb40-2"><a href="#cb40-2"></a>    <span class="fu">filter</span>(PM2<span class="fl">.5</span>_MA_365 <span class="sc">&gt;</span> <span class="fl">21.55</span> <span class="sc">&amp;</span> PM2<span class="fl">.5</span>_MA_365 <span class="sc">&lt;</span> <span class="dv">67</span>))</span>
-<span id="cb40-3"><a href="#cb40-3"></a><span class="fu">options</span>(<span class="at">datadist =</span> <span class="st">'dd'</span>)</span>
-<span id="cb40-4"><a href="#cb40-4"></a>HR <span class="ot">&lt;-</span> <span class="fu">Predict</span>(rcs_cox_pm2<span class="fl">.5</span>, PM2<span class="fl">.5</span>_MA_365, <span class="at">fun =</span> exp, <span class="at">ref.zero =</span> <span class="cn">TRUE</span>) <span class="sc">%&gt;%</span> </span>
-<span id="cb40-5"><a href="#cb40-5"></a>  <span class="fu">setDT</span>()</span>
-<span id="cb40-6"><a href="#cb40-6"></a>p2 <span class="ot">&lt;-</span> HR <span class="sc">%&gt;%</span> </span>
-<span id="cb40-7"><a href="#cb40-7"></a>  <span class="fu">ggplot</span>(<span class="fu">aes</span>(<span class="at">x =</span> PM2<span class="fl">.5</span>_MA_365, <span class="at">y =</span> yhat)) <span class="sc">+</span></span>
-<span id="cb40-8"><a href="#cb40-8"></a>  <span class="fu">geom_ribbon</span>(<span class="fu">aes</span>(<span class="at">ymin =</span> lower, <span class="at">ymax =</span> upper), <span class="at">alpha =</span> <span class="fl">0.3</span>) <span class="sc">+</span></span>
-<span id="cb40-9"><a href="#cb40-9"></a>  <span class="fu">geom_line</span>(<span class="at">linewidth =</span> <span class="dv">1</span>) <span class="sc">+</span></span>
-<span id="cb40-10"><a href="#cb40-10"></a>  <span class="fu">theme_classic</span>()</span>
-<span id="cb40-11"><a href="#cb40-11"></a>p2</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb33"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb33-1"><a href="#cb33-1"></a>dd <span class="ot">&lt;-</span> <span class="fu">datadist</span>(cohort_cox <span class="sc">%&gt;%</span> </span>
+<span id="cb33-2"><a href="#cb33-2"></a>    <span class="fu">filter</span>(PM2<span class="fl">.5</span>_MA_365 <span class="sc">&gt;</span> <span class="fl">21.55</span> <span class="sc">&amp;</span> PM2<span class="fl">.5</span>_MA_365 <span class="sc">&lt;</span> <span class="dv">67</span>))</span>
+<span id="cb33-3"><a href="#cb33-3"></a><span class="fu">options</span>(<span class="at">datadist =</span> <span class="st">'dd'</span>)</span>
+<span id="cb33-4"><a href="#cb33-4"></a>HR <span class="ot">&lt;-</span> <span class="fu">Predict</span>(rcs_cox_pm2<span class="fl">.5</span>, PM2<span class="fl">.5</span>_MA_365, <span class="at">fun =</span> exp, <span class="at">ref.zero =</span> <span class="cn">TRUE</span>) <span class="sc">%&gt;%</span> </span>
+<span id="cb33-5"><a href="#cb33-5"></a>  <span class="fu">setDT</span>()</span>
+<span id="cb33-6"><a href="#cb33-6"></a>p2 <span class="ot">&lt;-</span> HR <span class="sc">%&gt;%</span> </span>
+<span id="cb33-7"><a href="#cb33-7"></a>  <span class="fu">ggplot</span>(<span class="fu">aes</span>(<span class="at">x =</span> PM2<span class="fl">.5</span>_MA_365, <span class="at">y =</span> yhat)) <span class="sc">+</span></span>
+<span id="cb33-8"><a href="#cb33-8"></a>  <span class="fu">geom_ribbon</span>(<span class="fu">aes</span>(<span class="at">ymin =</span> lower, <span class="at">ymax =</span> upper), <span class="at">alpha =</span> <span class="fl">0.3</span>) <span class="sc">+</span></span>
+<span id="cb33-9"><a href="#cb33-9"></a>  <span class="fu">geom_line</span>(<span class="at">linewidth =</span> <span class="dv">1</span>) <span class="sc">+</span></span>
+<span id="cb33-10"><a href="#cb33-10"></a>  <span class="fu">theme_classic</span>()</span>
+<span id="cb33-11"><a href="#cb33-11"></a>p2</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output-display">
 <p><img src="5.cohort_files/figure-html/unnamed-chunk-13-1.png" class="img-fluid" width="672"></p>
 </div>
@@ -714,22 +681,23 @@ n= 8262, number of events= 2474 </code></pre>
 <h2 class="anchored" data-anchor-id="混合线性模型">混合线性模型</h2>
 <section id="读取数据-1" class="level3">
 <h3 class="anchored" data-anchor-id="读取数据-1">读取数据</h3>
-<div class="cell" data-hash="5.cohort_cache/html/unnamed-chunk-14_5f8d4fda74da9367084e9c25a2f84685">
-<div class="sourceCode cell-code" id="cb41"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb41-1"><a href="#cb41-1"></a>pacman<span class="sc">::</span><span class="fu">p_load</span>(</span>
-<span id="cb41-2"><a href="#cb41-2"></a>  arrow, dplyr, ggplot2, data.table, broom, lme4, splines)</span>
-<span id="cb41-3"><a href="#cb41-3"></a></span>
-<span id="cb41-4"><a href="#cb41-4"></a>cohort_lme <span class="ot">=</span> arrow<span class="sc">::</span><span class="fu">read_parquet</span>(</span>
-<span id="cb41-5"><a href="#cb41-5"></a>  <span class="st">'Data/cohort_lmer_synthetic.parquet'</span>)</span>
-<span id="cb41-6"><a href="#cb41-6"></a></span>
-<span id="cb41-7"><a href="#cb41-7"></a><span class="fu">glimpse</span>(cohort_lme)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell" data-hash="5.cohort_cache/html/unnamed-chunk-14_e0175891d44ef7c3b13047ca6d0606ce">
+<div class="sourceCode cell-code" id="cb34"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb34-1"><a href="#cb34-1"></a>pacman<span class="sc">::</span><span class="fu">p_load</span>(</span>
+<span id="cb34-2"><a href="#cb34-2"></a>  arrow, dplyr, ggplot2, data.table, broom.mixed, lme4, purrr, glue, stringr)</span>
+<span id="cb34-3"><a href="#cb34-3"></a></span>
+<span id="cb34-4"><a href="#cb34-4"></a>cohort_lme <span class="ot">=</span> arrow<span class="sc">::</span><span class="fu">read_parquet</span>(</span>
+<span id="cb34-5"><a href="#cb34-5"></a>  <span class="st">'Data/cohort_lmer_synthetic.parquet'</span>)</span>
+<span id="cb34-6"><a href="#cb34-6"></a></span>
+<span id="cb34-7"><a href="#cb34-7"></a><span class="fu">glimpse</span>(cohort_lme)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>Rows: 22,138
-Columns: 12
+Columns: 13
 $ id              &lt;int&gt; 1, 1, 2, 2, 3, 3, 3, 4, 4, 5, 5, 6, 6, 7, 7, 8, 8, 9, …
-$ PM2.5           &lt;dbl&gt; 10.44, 10.44, 10.44, 10.44, 10.92, 10.92, 10.92, 9.69,…
-$ body_fat_p      &lt;dbl&gt; 19.4, 21.8, 23.0, 27.3, 22.3, 24.7, 25.9, 34.2, 38.2, …
-$ arm_left_fat_p  &lt;dbl&gt; 17.3, 19.3, 22.5, 25.8, 21.5, 22.3, 21.6, 33.2, 36.2, …
-$ arm_right_fat_p &lt;dbl&gt; 17.0, 18.6, 19.9, 23.6, 19.7, 19.9, 19.2, 31.3, 34.4, …
+$ delta_t         &lt;dbl&gt; 0.00, 10.54, 0.00, 9.20, 0.00, 4.71, 9.06, 0.00, 7.54,…
+$ PM2.5           &lt;dbl&gt; 10.4, 10.4, 10.4, 10.4, 10.9, 10.9, 10.9, 9.7, 9.7, 11…
+$ body_fat_p      &lt;dbl&gt; 1.94000, 25.15878, 2.30000, 27.85871, 2.23000, 14.0947…
+$ arm_left_fat_p  &lt;dbl&gt; 0.17300, 20.53660, 0.22500, 24.00601, 0.21500, 10.7182…
+$ arm_right_fat_p &lt;dbl&gt; 1.70000, 21.46575, 1.99000, 24.08298, 1.97000, 11.3556…
 $ leg_left_fat_p  &lt;dbl&gt; 17.3, 18.7, 17.1, 21.8, 17.5, 19.6, 22.4, 37.2, 40.6, …
 $ leg_right_fat_p &lt;dbl&gt; 17.7, 20.3, 14.3, 20.8, 17.2, 20.7, 22.5, 37.4, 41.1, …
 $ trunk_fat_p     &lt;dbl&gt; 20.8, 23.5, 27.5, 31.2, 25.4, 27.8, 28.8, 32.6, 37.2, …
@@ -739,8 +707,49 @@ $ ethnicity       &lt;chr&gt; "White", "White", "White", "White", "White", "Whit
 $ smoking_status  &lt;fct&gt; 0. Never, 0. Never, 0. Never, 0. Never, 1. Previous, 1…</code></pre>
 </div>
 </div>
-<div class="cell">
-
+</section>
+<section id="混合效应模型" class="level3">
+<h3 class="anchored" data-anchor-id="混合效应模型">混合效应模型</h3>
+<p><span class="math display">\[y_{ij} = \beta_0 + \beta_{1}\text{PM}_{i}\times\text{year}_{ij} + \beta_{2}\text{year}_{ij}  + \beta_3\text{age}_i + \beta_4\text{sex_i} + \beta_5\text{smoking_i} + \epsilon_{ij}\]</span></p>
+<div class="cell" data-hash="5.cohort_cache/html/unnamed-chunk-15_63280a8dcf489d0a3156a4db1b0f29e1">
+<div class="sourceCode cell-code" id="cb36"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb36-1"><a href="#cb36-1"></a>fit_lme <span class="ot">=</span> <span class="cf">function</span>(y){</span>
+<span id="cb36-2"><a href="#cb36-2"></a>  f0 <span class="ot">=</span> <span class="fu">lmer</span>(<span class="fu">as.formula</span>(<span class="fu">glue</span>(<span class="st">'{y} ~ PM2.5:delta_t + delta_t + age + sex + smoking_status +</span></span>
+<span id="cb36-3"><a href="#cb36-3"></a><span class="st">              (1|id)'</span>)), <span class="at">data =</span> cohort_lme)</span>
+<span id="cb36-4"><a href="#cb36-4"></a>  </span>
+<span id="cb36-5"><a href="#cb36-5"></a>  f0 <span class="sc">%&gt;%</span> </span>
+<span id="cb36-6"><a href="#cb36-6"></a>    <span class="fu">tidy</span>(<span class="at">conf.int =</span> <span class="cn">TRUE</span>) <span class="sc">%&gt;%</span> </span>
+<span id="cb36-7"><a href="#cb36-7"></a>    <span class="fu">filter</span>(<span class="fu">grepl</span>(<span class="st">'PM2.5'</span>, term)) <span class="sc">%&gt;%</span> </span>
+<span id="cb36-8"><a href="#cb36-8"></a>    <span class="fu">mutate</span>(<span class="at">estimate =</span> estimate,</span>
+<span id="cb36-9"><a href="#cb36-9"></a>           <span class="at">conf.low =</span> conf.low,</span>
+<span id="cb36-10"><a href="#cb36-10"></a>           <span class="at">conf.high =</span> conf.high) <span class="sc">%&gt;%</span> </span>
+<span id="cb36-11"><a href="#cb36-11"></a>    <span class="fu">mutate</span>(<span class="at">CI =</span> <span class="fu">paste0</span>(<span class="fu">str_pad</span>(<span class="fu">round</span>(estimate, <span class="dv">3</span>), <span class="at">width =</span> <span class="dv">5</span>, <span class="at">side =</span> <span class="st">'right'</span>, <span class="at">pad =</span> <span class="st">'0'</span>), </span>
+<span id="cb36-12"><a href="#cb36-12"></a>                       <span class="st">' ('</span>, </span>
+<span id="cb36-13"><a href="#cb36-13"></a>                       <span class="fu">str_pad</span>(<span class="fu">round</span>(conf.low, <span class="dv">3</span>), <span class="at">width =</span> <span class="dv">5</span>, <span class="at">side =</span> <span class="st">'right'</span>, <span class="at">pad =</span> <span class="st">'0'</span>), </span>
+<span id="cb36-14"><a href="#cb36-14"></a>                       <span class="st">', '</span>, </span>
+<span id="cb36-15"><a href="#cb36-15"></a>                       <span class="fu">str_pad</span>(<span class="fu">round</span>(conf.high, <span class="dv">3</span>), <span class="at">width =</span> <span class="dv">5</span>, <span class="at">side =</span> <span class="st">'right'</span>, <span class="at">pad =</span> <span class="st">'0'</span>), </span>
+<span id="cb36-16"><a href="#cb36-16"></a>                       <span class="st">')'</span>)) <span class="sc">%&gt;%</span></span>
+<span id="cb36-17"><a href="#cb36-17"></a>    <span class="fu">mutate</span>(<span class="at">y =</span> y,</span>
+<span id="cb36-18"><a href="#cb36-18"></a>           <span class="at">N =</span> <span class="fu">nobs</span>(f0)) <span class="sc">%&gt;%</span> </span>
+<span id="cb36-19"><a href="#cb36-19"></a>    dplyr<span class="sc">::</span><span class="fu">select</span>(y, term, estimate, CI, conf.low, conf.high, std.error)</span>
+<span id="cb36-20"><a href="#cb36-20"></a>}</span>
+<span id="cb36-21"><a href="#cb36-21"></a></span>
+<span id="cb36-22"><a href="#cb36-22"></a>res <span class="ot">=</span> <span class="fu">map_dfr</span>(</span>
+<span id="cb36-23"><a href="#cb36-23"></a>  <span class="fu">c</span>(<span class="st">"body_fat_p"</span>, <span class="st">"arm_left_fat_p"</span>, <span class="st">"arm_right_fat_p"</span>, </span>
+<span id="cb36-24"><a href="#cb36-24"></a>    <span class="st">"leg_left_fat_p"</span>, <span class="st">"leg_right_fat_p"</span>, <span class="st">"trunk_fat_p"</span>),</span>
+<span id="cb36-25"><a href="#cb36-25"></a>  fit_lme)</span>
+<span id="cb36-26"><a href="#cb36-26"></a></span>
+<span id="cb36-27"><a href="#cb36-27"></a>res</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code># A tibble: 6 × 7
+  y               term          estimate CI         conf.low conf.high std.error
+  &lt;chr&gt;           &lt;chr&gt;            &lt;dbl&gt; &lt;chr&gt;         &lt;dbl&gt;     &lt;dbl&gt;     &lt;dbl&gt;
+1 body_fat_p      PM2.5:delta_t  0.0283  0.028 (0.…  0.0186     0.0381   0.00498
+2 arm_left_fat_p  PM2.5:delta_t  0.0577  0.058 (0.…  0.0437     0.0717   0.00713
+3 arm_right_fat_p PM2.5:delta_t  0.0770  0.077 (0.…  0.0633     0.0907   0.00699
+4 leg_left_fat_p  PM2.5:delta_t  0.00748 0.007 (0.…  0.00134    0.0136   0.00313
+5 leg_right_fat_p PM2.5:delta_t  0.00783 0.008 (0.…  0.00129    0.0144   0.00333
+6 trunk_fat_p     PM2.5:delta_t  0.00659 0.007 (-0… -0.00237    0.0155   0.00457</code></pre>
+</div>
 </div>
 
 
